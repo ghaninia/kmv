@@ -11,11 +11,10 @@ help:
 	@echo "  make ps       - List running containers"
 	@echo "  make logs     - Show logs from all containers"
 
-setup: build
+setup: build up
 	docker-compose exec -T app php artisan key:generate || true
 	docker-compose exec -T app php artisan migrate --force || true
-	docker-compose exec -T react npm install || true
-	docker-compose exec -T react npm run build || true
+	@echo "Setup complete! React will install dependencies and start on port 5173"
 
 build:
 	docker-compose build
