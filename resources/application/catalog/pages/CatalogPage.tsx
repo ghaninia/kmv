@@ -97,7 +97,7 @@ export function CatalogPage() {
                         <button
                             type="button"
                             onClick={retry}
-                            className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2"
+                            className="rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:ring-offset-2"
                         >
                             تلاش دوباره
                         </button>
@@ -110,10 +110,10 @@ export function CatalogPage() {
     const hasProducts = catalog.products.length > 0;
 
     return (
-        <div className="min-h-dvh bg-slate-100">
+        <div className="min-h-dvh bg-[#f4faf5]">
             <a
                 href="#catalog-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+                className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand-700 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
             >
                 پرش به محصولات
             </a>
@@ -158,7 +158,7 @@ export function CatalogPage() {
                                 <button
                                     type="button"
                                     onClick={() => setQuery('')}
-                                    className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2"
+                                    className="rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:ring-offset-2"
                                 >
                                     پاک کردن جستجو
                                 </button>
@@ -210,7 +210,7 @@ export function CatalogPage() {
 /** Simple full-height wrapper to vertically center standalone states. */
 function CenteredState({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex min-h-dvh items-center justify-center bg-slate-100 px-4 py-12">
+        <div className="flex min-h-dvh items-center justify-center bg-[#f4faf5] px-4 py-12">
             <div className="w-full max-w-lg">{children}</div>
         </div>
     );

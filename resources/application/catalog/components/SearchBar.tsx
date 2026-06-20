@@ -45,7 +45,7 @@ export function SearchBar({
                 className={clsx(
                     'w-full rounded-xl border border-slate-200 bg-white py-2.5 ps-11 pe-11 text-sm text-slate-900 shadow-sm',
                     'placeholder:text-slate-400',
-                    'transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30',
+                    'transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30',
                 )}
             />
             {hasValue && (
@@ -55,7 +55,7 @@ export function SearchBar({
                     aria-label="پاک کردن جستجو"
                     className={clsx(
                         'absolute end-2.5 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400',
-                        'transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40',
+                        'transition hover:bg-brand-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/40',
                     )}
                 >
                     <X aria-hidden="true" className="size-4" />

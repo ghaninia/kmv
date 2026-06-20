@@ -35,10 +35,10 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
             whileHover={{ y: -6 }}
             transition={{ type: 'spring', stiffness: 320, damping: 24 }}
             className={clsx(
-                'group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white',
+                'group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-100 bg-white',
                 'shadow-sm ring-1 ring-transparent transition-all duration-300',
-                'hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/60 hover:ring-indigo-100',
-                'focus-within:ring-2 focus-within:ring-indigo-500/40',
+                'hover:border-brand-300 hover:shadow-xl hover:shadow-brand-200/50 hover:ring-brand-100',
+                'focus-within:ring-2 focus-within:ring-brand-500/40',
             )}
             aria-label={product.name}
         >
@@ -46,11 +46,11 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
             <button
                 type="button"
                 onClick={() => onViewDetails?.(product)}
-                className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-100 text-start focus:outline-none"
+                className="relative block aspect-[4/3] w-full overflow-hidden bg-brand-50 text-start focus:outline-none"
                 aria-label={`مشاهده جزئیات ${product.name}`}
             >
                 {imageFailed ? (
-                    <div className="flex h-full w-full items-center justify-center text-slate-300">
+                    <div className="flex h-full w-full items-center justify-center text-brand-200">
                         <ImageOff aria-hidden="true" className="size-10" />
                         <span className="sr-only">تصویر در دسترس نیست</span>
                     </div>
@@ -65,10 +65,10 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                 )}
 
                 {/* Subtle gradient for legibility of badges. */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-950/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 {imageCount > 1 && (
-                    <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
+                    <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-brand-900/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
                         <Layers aria-hidden="true" className="size-3.5" />
                         {formatPersianNumber(imageCount)}
                     </span>
@@ -79,7 +79,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                         className={clsx(
                             'absolute start-3 top-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur',
                             inStock
-                                ? 'bg-emerald-50/90 text-emerald-700'
+                                ? 'bg-brand-50/90 text-brand-700'
                                 : 'bg-rose-50/90 text-rose-700',
                         )}
                     >
@@ -98,7 +98,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
             {/* Body. */}
             <div className="flex flex-1 flex-col p-5">
                 <div className="flex-1">
-                    <h3 className="line-clamp-2 text-base font-semibold leading-snug text-slate-900">
+                    <h3 className="line-clamp-2 text-base font-semibold leading-snug text-brand-950">
                         {product.name}
                     </h3>
 
@@ -116,11 +116,11 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                 </div>
 
                 {/* Pricing. */}
-                <div className="mt-4 border-t border-slate-100 pt-4">
-                    <p className="text-[0.7rem] font-medium text-slate-400">قیمت</p>
+                <div className="mt-4 rounded-2xl border border-brand-100 bg-brand-50/60 px-4 py-3">
+                    <p className="text-[0.7rem] font-medium text-brand-600">قیمت</p>
                     <p
                         dir="rtl"
-                        className="mt-0.5 text-lg font-bold tracking-tight text-slate-900"
+                        className="mt-0.5 text-lg font-bold tracking-tight text-brand-800"
                     >
                         {formatToman(product.priceToman)}
                     </p>
@@ -131,8 +131,8 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                     type="button"
                     onClick={() => onViewDetails?.(product)}
                     className={clsx(
-                        'mt-4 inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white',
-                        'transition hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2',
+                        'mt-4 inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white',
+                        'transition hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:ring-offset-2',
                     )}
                 >
                     مشاهده جزئیات

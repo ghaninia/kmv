@@ -7,7 +7,7 @@
  */
 export function LoadingState() {
     return (
-        <div className="min-h-dvh bg-slate-100" role="status" aria-busy="true">
+        <div className="min-h-dvh bg-[#f4faf5]" role="status" aria-busy="true">
             <span className="sr-only">در حال بارگذاری کاتالوگ…</span>
 
             {/* Header skeleton. */}

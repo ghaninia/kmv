@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { LayoutGrid } from 'lucide-react';
+import { Leaf } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { CategoryGroup } from '../types/catalog';
 import { formatPersianNumber } from '../utils/currency';
@@ -28,9 +28,9 @@ export function CatalogSidebar({
 
     return (
         <nav aria-label="دسته‌بندی محصولات" className="lg:sticky lg:top-24">
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-                <div className="flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    <LayoutGrid aria-hidden="true" className="size-3.5" />
+            <div className="rounded-2xl border border-brand-100 bg-white p-3 shadow-sm shadow-brand-900/5">
+                <div className="flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-brand-600">
+                    <Leaf aria-hidden="true" className="size-3.5" />
                     دسته‌بندی‌ها
                 </div>
 
@@ -45,17 +45,17 @@ export function CatalogSidebar({
                                     aria-current={isActive ? 'true' : undefined}
                                     className={clsx(
                                         'group relative flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-start text-sm transition',
-                                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50',
+                                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50',
                                         isActive
-                                            ? 'bg-slate-900 text-white'
-                                            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                                            ? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30'
+                                            : 'text-slate-600 hover:bg-brand-50 hover:text-brand-800',
                                     )}
                                 >
                                     {isActive && (
                                         <motion.span
                                             layoutId="active-category-indicator"
                                             aria-hidden="true"
-                                            className="absolute inset-y-1.5 start-0 w-1 rounded-full bg-indigo-400"
+                                            className="absolute inset-y-1.5 start-0 w-1 rounded-full bg-lime-300"
                                             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                                         />
                                     )}
@@ -66,8 +66,8 @@ export function CatalogSidebar({
                                         className={clsx(
                                             'shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums transition',
                                             isActive
-                                                ? 'bg-white/15 text-white'
-                                                : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200',
+                                                ? 'bg-white/20 text-white'
+                                                : 'bg-brand-50 text-brand-600 group-hover:bg-brand-100',
                                         )}
                                     >
                                         {formatPersianNumber(group.products.length)}
@@ -78,8 +78,8 @@ export function CatalogSidebar({
                     })}
                 </ul>
 
-                <div className="mt-2 border-t border-slate-100 px-3 pb-1 pt-3 text-xs text-slate-400">
-                    <span className="font-semibold text-slate-600">
+                <div className="mt-2 border-t border-brand-100 px-3 pb-1 pt-3 text-xs text-slate-400">
+                    <span className="font-semibold text-brand-700">
                         {formatPersianNumber(totalProducts)}
                     </span>{' '}
                     محصول در {formatPersianNumber(groups.length)} دسته‌بندی

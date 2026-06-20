@@ -37,7 +37,7 @@ export function CatalogPasswordGate({
     }
 
     return (
-        <div className="flex min-h-dvh items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 px-4 py-12">
+        <div className="flex min-h-dvh items-center justify-center bg-gradient-to-br from-brand-900 via-brand-800 to-emerald-950 px-4 py-12">
             <motion.div
                 initial={{ opacity: 0, y: 24, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -50,7 +50,7 @@ export function CatalogPasswordGate({
                             initial={{ scale: 0.6, rotate: -8 }}
                             animate={{ scale: 1, rotate: 0 }}
                             transition={{ delay: 0.1, type: 'spring', stiffness: 260, damping: 18 }}
-                            className="flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30"
+                            className="flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-lg shadow-brand-500/30"
                             aria-hidden="true"
                         >
                             <Lock className="size-7" />
@@ -94,7 +94,7 @@ export function CatalogPasswordGate({
                                     'placeholder:text-slate-400 focus:outline-none focus:ring-2',
                                     error
                                         ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/30'
-                                        : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-500/30',
+                                        : 'border-slate-200 focus:border-brand-500 focus:ring-brand-500/30',
                                 )}
                                 placeholder="رمز عبور کاتالوگ را وارد کنید"
                             />
@@ -102,7 +102,7 @@ export function CatalogPasswordGate({
                                 type="button"
                                 onClick={() => setShowPassword((shown) => !shown)}
                                 aria-label={showPassword ? 'مخفی کردن رمز عبور' : 'نمایش رمز عبور'}
-                                className="absolute end-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                                className="absolute end-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-brand-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/40"
                             >
                                 {showPassword ? (
                                     <EyeOff aria-hidden="true" className="size-4" />
@@ -129,8 +129,8 @@ export function CatalogPasswordGate({
                             type="submit"
                             disabled={isVerifying || password.trim().length === 0}
                             className={clsx(
-                                'mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition',
-                                'hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2',
+                                'mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition',
+                                'hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:ring-offset-2',
                                 'disabled:cursor-not-allowed disabled:opacity-60',
                             )}
                         >

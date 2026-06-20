@@ -17,7 +17,7 @@ export function App() {
             <Route
                 path="*"
                 element={
-                    <div className="flex min-h-dvh items-center justify-center bg-slate-100 px-4 py-12">
+                    <div className="flex min-h-dvh items-center justify-center bg-[#f4faf5] px-4 py-12">
                         <div className="w-full max-w-lg">
                             <EmptyState
                                 icon={FileQuestion}

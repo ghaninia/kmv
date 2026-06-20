@@ -104,15 +104,15 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                         <button
                             type="button"
                             onClick={onClose}
-                            className="absolute end-3 top-3 z-20 inline-flex size-9 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                            className="absolute end-3 top-3 z-20 inline-flex size-9 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500/50"
                             aria-label="بستن"
                         >
                             <X className="size-5" />
                         </button>
 
                         {/* Gallery */}
-                        <div className="flex w-full shrink-0 flex-col bg-slate-50 lg:w-1/2">
-                            <div className="relative aspect-square overflow-hidden bg-slate-100">
+                        <div className="flex w-full shrink-0 flex-col bg-brand-50/50 lg:w-1/2">
+                            <div className="relative aspect-square overflow-hidden bg-brand-50">
                                 <AnimatePresence mode="wait" initial={false}>
                                     <motion.div
                                         key={activeIndex}
@@ -155,7 +155,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                         <button
                                             type="button"
                                             onClick={goNext}
-                                            className="absolute start-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-slate-700 shadow-sm backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                            className="absolute start-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-slate-700 shadow-sm backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/50"
                                             aria-label="تصویر بعدی"
                                         >
                                             <ChevronRight className="size-5" />
@@ -163,7 +163,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                         <button
                                             type="button"
                                             onClick={goPrev}
-                                            className="absolute end-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-slate-700 shadow-sm backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                            className="absolute end-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-slate-700 shadow-sm backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/50"
                                             aria-label="تصویر قبلی"
                                         >
                                             <ChevronLeft className="size-5" />
@@ -202,7 +202,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                             className={clsx(
                                                 'relative size-16 shrink-0 overflow-hidden rounded-xl border-2 transition',
                                                 index === activeIndex
-                                                    ? 'border-indigo-500'
+                                                    ? 'border-brand-500'
                                                     : 'border-transparent opacity-70 hover:opacity-100',
                                             )}
                                             aria-label={`تصویر ${formatPersianNumber(
@@ -210,7 +210,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                             )}`}
                                         >
                                             {failedImages[index] ? (
-                                                <span className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
+                                                <span className="flex h-full w-full items-center justify-center bg-brand-50 text-brand-200">
                                                     <ImageOff className="size-5" />
                                                 </span>
                                             ) : (
@@ -235,12 +235,12 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                         {/* Details */}
                         <div className="flex w-full flex-col overflow-y-auto p-6 lg:w-1/2">
                             {product.categoryName && (
-                                <span className="inline-flex w-fit items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
+                                <span className="inline-flex w-fit items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700 ring-1 ring-brand-100">
                                     {product.categoryName}
                                 </span>
                             )}
 
-                            <h2 className="mt-3 text-xl font-bold leading-snug text-slate-900">
+                            <h2 className="mt-3 text-xl font-bold leading-snug text-brand-950">
                                 {product.name}
                             </h2>
 
@@ -255,7 +255,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                     className={clsx(
                                         'mt-3 inline-flex w-fit items-center gap-1 rounded-full px-3 py-1 text-xs font-medium',
                                         inStock
-                                            ? 'bg-emerald-50 text-emerald-700'
+                                            ? 'bg-brand-50 text-brand-700'
                                             : 'bg-rose-50 text-rose-700',
                                     )}
                                 >
@@ -280,11 +280,11 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                 </p>
                             )}
 
-                            <div className="mt-auto border-t border-slate-100 pt-5">
-                                <p className="text-xs font-medium text-slate-400">قیمت</p>
+                            <div className="mt-auto rounded-2xl border border-brand-100 bg-brand-50/60 px-4 py-4">
+                                <p className="text-xs font-medium text-brand-600">قیمت</p>
                                 <p
                                     dir="rtl"
-                                    className="mt-1 text-2xl font-bold tracking-tight text-slate-900"
+                                    className="mt-1 text-2xl font-bold tracking-tight text-brand-800"
                                 >
                                     {formatToman(product.priceToman)}
                                 </p>

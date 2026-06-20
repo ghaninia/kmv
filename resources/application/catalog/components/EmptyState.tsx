@@ -43,7 +43,7 @@ export function EmptyState({
             <span
                 className={clsx(
                     'mb-5 flex size-16 items-center justify-center rounded-2xl',
-                    tone === 'danger' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 text-slate-500',
+                    tone === 'danger' ? 'bg-rose-100 text-rose-600' : 'bg-brand-50 text-brand-600',
                 )}
             >
                 <Icon aria-hidden="true" className="size-8" />
