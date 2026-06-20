@@ -1,0 +1,72 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+    Home,
+    Package,
+    Tag,
+    Boxes,
+    X,
+} from 'lucide-react';
+
+export const Sidebar = ({ isOpen, onClose }) => {
+    const navItems = [
+        { icon: Home, label: 'Dashboard', href: '/' },
+        { icon: Tag, label: 'Categories', href: '/categories' },
+        { icon: Package, label: 'Products', href: '/products' },
+        { icon: Boxes, label: 'Catalogs', href: '/catalogs' },
+    ];
+
+    return (
+        <>
+            {/* Mobile overlay */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                    onClick={onClose}
+                />
+            )}
+
+            {/* Sidebar */}
+            <aside
+                className={`fixed md:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ${
+                    isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+                }`}
+            >
+                <div className="h-full flex flex-col">
+                    {/* Header */}
+                    <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                        <h2 className="text-xl font-bold text-gray-900">Dashboard</h2>
+                        <button
+                            onClick={onClose}
+                            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
+
+                    {/* Navigation */}
+                    <nav className="flex-1 px-4 py-6 space-y-2">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                to={item.href}
+                                onClick={onClose}
+                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-700 transition group"
+                            >
+                                <item.icon className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
+                                <span className="font-medium">{item.label}</span>
+                            </Link>
+                        ))}
+                    </nav>
+
+                    {/* Footer */}
+                    <div className="p-6 border-t border-gray-200">
+                        <p className="text-xs text-gray-500 text-center">
+                            Admin Dashboard v1.0
+                        </p>
+                    </div>
+                </div>
+            </aside>
+        </>
+    );
+};
