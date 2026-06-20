@@ -49,7 +49,7 @@ class Setting extends Model
         );
     }
 
-    public static function increment(string $key, int $amount = 1): void
+    public static function incrementValue(string $key, int $amount = 1): void
     {
         $current = (int) self::get($key, 0);
         self::set($key, $current + $amount);

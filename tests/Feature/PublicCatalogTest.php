@@ -7,10 +7,12 @@ use App\Models\CatalogLink;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PublicCatalogTest extends TestCase
 {
+    use RefreshDatabase;
     protected Catalog $catalog;
     protected CatalogLink $link;
 
@@ -29,10 +31,7 @@ class PublicCatalogTest extends TestCase
             ]);
         }
 
-        $this->link = CatalogLink::create([
-            'catalog_id' => $this->catalog->id,
-            'short_code' => 'test123',
-        ]);
+        $this->link = CatalogLink::factory()->for($this->catalog)->create();
     }
 
     public function test_public_can_access_catalog_via_short_link(): void
@@ -68,11 +67,10 @@ class PublicCatalogTest extends TestCase
 
     public function test_public_catalog_with_password_requires_password(): void
     {
-        $link = CatalogLink::create([
-            'catalog_id' => $this->catalog->id,
-            'short_code' => 'protected123',
-            'password_hash' => hash('sha256', 'secret'),
-        ]);
+        $link = CatalogLink::factory()
+            ->for($this->catalog)
+            ->withPassword('secret')
+            ->create();
 
         $response = $this->getJson("/api/catalog/{$link->short_code}");
 
@@ -86,11 +84,12 @@ class PublicCatalogTest extends TestCase
     public function test_public_catalog_with_password_accepts_correct_password(): void
     {
         $password = 'secret123';
-        $link = CatalogLink::create([
-            'catalog_id' => $this->catalog->id,
-            'short_code' => 'protected456',
-            'password_hash' => hash('sha256', $password),
-        ]);
+        $link = CatalogLink::factory()
+            ->for($this->catalog)
+            ->state([
+                'password_hash' => hash('sha256', $password),
+            ])
+            ->create();
 
         $response = $this->getJson("/api/catalog/{$link->short_code}?password={$password}");
 
@@ -102,11 +101,10 @@ class PublicCatalogTest extends TestCase
 
     public function test_public_catalog_with_password_rejects_wrong_password(): void
     {
-        $link = CatalogLink::create([
-            'catalog_id' => $this->catalog->id,
-            'short_code' => 'protected789',
-            'password_hash' => hash('sha256', 'correctpassword'),
-        ]);
+        $link = CatalogLink::factory()
+            ->for($this->catalog)
+            ->withPassword('correctpassword')
+            ->create();
 
         $response = $this->getJson("/api/catalog/{$link->short_code}?password=wrongpassword");
 
@@ -119,11 +117,10 @@ class PublicCatalogTest extends TestCase
 
     public function test_public_cannot_access_expired_catalog_link(): void
     {
-        $link = CatalogLink::create([
-            'catalog_id' => $this->catalog->id,
-            'short_code' => 'expired123',
-            'expires_at' => now()->subDay(),
-        ]);
+        $link = CatalogLink::factory()
+            ->for($this->catalog)
+            ->expired()
+            ->create();
 
         $response = $this->getJson("/api/catalog/{$link->short_code}");
 

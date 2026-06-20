@@ -1,57 +1,333 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎯 Admin Dashboard System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A professional admin dashboard with Laravel backend and React frontend. Manage products, categories, catalogs, and currency conversion all in one place.
 
-## About Laravel
+## 🐳 Quick Start with Docker (30 Seconds)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+**Docker is the recommended way** - everything runs in containers, no local setup needed!
 
 ```bash
-composer require laravel/boost --dev
+# 1. Start everything:
+make setup
 
-php artisan boost:install
+# 2. Open browser:
+# http://localhost:8000
+
+# Login:
+# Email: admin@example.com | Password: password
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+That's it! You now have a running admin dashboard. 🎉
 
-## Contributing
+👉 **Learn more:** [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 📚 Documentation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Method | Document | Time |
+|--------|----------|------|
+| **🐳 Docker** (Recommended) | **[DOCKER_GUIDE.md](DOCKER_GUIDE.md)** | 5 min |
+| 💻 Local Setup | [QUICK_SETUP.txt](QUICK_SETUP.txt) | 5 min |
+| Quick Reference | [QUICK_START.md](QUICK_START.md) | 5 min |
+| Complete Guide | [SETUP_SUMMARY.md](SETUP_SUMMARY.md) | 5 min |
+| All Guides | [DOCS_INDEX.md](DOCS_INDEX.md) | 5 min |
 
-## Security Vulnerabilities
+👉 **Start here:** [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
+
+## ✨ Features
+
+### Backend (Laravel 13)
+- ✅ 29 REST API endpoints
+- ✅ User authentication with Sanctum
+- ✅ Product management with galleries
+- ✅ Category system
+- ✅ Multi-catalog support
+- ✅ Public links with password protection
+- ✅ USD to Toman currency conversion
+- ✅ Daily scheduler for updates
+- ✅ 35 comprehensive tests
+
+### Frontend (React 18)
+- ✅ Modern Tailwind CSS design
+- ✅ Responsive layout
+- ✅ Real-time dashboard
+- ✅ State management with Zustand
+- ✅ Hot module reloading
+- ✅ Protected routes
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend:**
+- Laravel 13
+- PHP 8.3+
+- SQLite/MySQL/PostgreSQL
+- Spatie Media Library
+- PHPUnit
+
+**Frontend:**
+- React 18
+- React Router
+- Tailwind CSS 4
+- Zustand
+- Axios
+- Vite
+
+---
+
+## 📋 System Requirements
+
+### For Docker (Recommended)
+- ✅ Docker Desktop (macOS/Windows)
+- ✅ Docker & Docker Compose (Linux)
+
+Download: https://www.docker.com/products/docker-desktop
+
+### For Local Development (Optional)
+- PHP 8.3+
+- Node.js 18+
+- Composer
+- npm
+
+---
+
+## 🚀 Available Commands
+
+### Docker (Primary)
+```bash
+make setup              # Full Docker setup (first time) ⭐
+make up                 # Start containers
+make down               # Stop containers
+make logs               # View logs
+make ps                 # Show containers
+```
+
+### Database (Docker)
+```bash
+make migrate            # Run migrations
+make seed               # Seed database
+make fresh              # Reset everything
+```
+
+### Testing (Docker)
+```bash
+make test               # Run all tests
+```
+
+### Utilities (Docker)
+```bash
+make bash               # Access container shell
+make artisan CMD="..."  # Run Artisan command
+make tinker             # Open PHP shell
+```
+
+### Local Development (Alternative)
+```bash
+make install-local      # Install locally (no Docker)
+make dev-local          # Start local servers
+```
+
+### All Commands
+```bash
+make help               # Show all available commands
+```
+
+---
+
+## 🌐 Default URLs
+
+| Service | URL |
+|---------|-----|
+| App | http://localhost:8000 |
+| React Dev | http://localhost:5173 |
+| API | http://localhost:8000/api |
+
+---
+
+## 🔐 Default Credentials
+
+- **Email:** admin@example.com
+- **Password:** password
+
+⚠️ Change these in production!
+
+---
+
+## 📁 Project Structure
+
+```
+kmv/
+├── app/                    # Backend code
+├── resources/js/          # React components
+├── database/              # Migrations & seeds
+├── tests/                 # Test files
+├── routes/                # API routes
+├── Makefile               # Commands
+├── package.json           # Frontend deps
+└── composer.json          # Backend deps
+```
+
+See [SETUP.md](SETUP.md) for complete structure.
+
+---
+
+## 🧪 Testing
+
+```bash
+make test                    # Run all tests
+php artisan test tests/Feature/AuthenticationTest.php  # Single test
+php artisan test --watch    # Watch mode
+```
+
+**Coverage:**
+- 6 Authentication tests
+- 6 Category tests
+- 6 Product tests
+- 7 Catalog tests
+- 4 Currency tests
+- 6 Public catalog tests
+
+---
+
+## 🆘 Quick Troubleshooting
+
+### Docker not installed?
+Download: https://www.docker.com/products/docker-desktop
+
+### Containers won't start?
+```bash
+make down
+make setup
+```
+
+### Database errors?
+```bash
+make fresh  # Resets database
+```
+
+### Port already in use?
+- Stop other apps using ports 8000 or 5173, OR
+- Modify `docker-compose.yml`
+
+More help → See [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
+
+---
+
+## 📖 Learning Path
+
+1. **Setup:** Run `make setup`
+2. **Open:** http://localhost:8000
+3. **Explore:** Dashboard and features
+4. **Learn:** Read [QUICK_START.md](QUICK_START.md)
+5. **Extend:** Check [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md)
+
+---
+
+## 🚢 Production Deployment
+
+1. Build: `make build`
+2. Configure `.env` for production
+3. Setup database: `make migrate`
+4. Setup scheduler for daily updates
+5. Deploy container
+6. See [SETUP.md](SETUP.md) for full guide
+
+---
+
+## 📊 API Endpoints (29 Total)
+
+**Authentication:** 3 endpoints  
+**Dashboard:** 1 endpoint  
+**Categories:** 5 endpoints  
+**Products:** 7 endpoints  
+**Catalogs:** 10 endpoints  
+**Currency:** 3 endpoints  
+**Public:** 1 endpoint  
+
+See [QUICK_START.md](QUICK_START.md) for full API reference.
+
+---
+
+## 🎓 Documentation Files
+
+| File | Purpose |
+|------|---------|
+| **[DOCKER_GUIDE.md](DOCKER_GUIDE.md)** | 🐳 Docker setup (start here!) |
+| [QUICK_SETUP.txt](QUICK_SETUP.txt) | Local setup (no Docker) |
+| [SETUP_SUMMARY.md](SETUP_SUMMARY.md) | Quick reference |
+| [QUICK_START.md](QUICK_START.md) | API endpoints |
+| [GETTING_STARTED.md](GETTING_STARTED.md) | Complete guide |
+| [SETUP.md](SETUP.md) | Full documentation |
+| [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md) | Feature details |
+
+---
+
+## 💡 Pro Tips
+
+1. **Keep containers running:**
+   ```bash
+   make up      # Start
+   # Don't do make down constantly
+   ```
+
+2. **Monitor logs in second terminal:**
+   ```bash
+   make logs
+   ```
+
+3. **Quick database reset:**
+   ```bash
+   make fresh
+   ```
+
+4. **Access container shell:**
+   ```bash
+   make bash
+   ```
+
+5. **Run tests before commit:**
+   ```bash
+   make test
+   ```
+
+---
+
+## 🤝 Contributing
+
+Feel free to extend and customize this dashboard for your needs!
+
+---
+
+## 📝 License
+
+MIT License - Use and modify freely.
+
+---
+
+## 🎉 Ready to Start?
+
+```bash
+make setup
+```
+
+Then open: **http://localhost:8000**
+
+Login with: **admin@example.com** / **password**
+
+Happy coding! 🐳✨
+
+---
+
+## 📞 Need Help?
+
+1. **Docker questions?** → [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
+2. **Local setup?** → [QUICK_SETUP.txt](QUICK_SETUP.txt)
+3. **API reference?** → [QUICK_START.md](QUICK_START.md)
+4. **All documentation?** → [DOCS_INDEX.md](DOCS_INDEX.md)
 
 ## License
 

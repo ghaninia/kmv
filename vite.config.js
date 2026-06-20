@@ -19,8 +19,16 @@ export default defineConfig({
         react(),
     ],
     server: {
+        host: '0.0.0.0',
+        port: 5173,
+        strictPort: false,
+        hmr: {
+            host: 'localhost',
+            port: 5173,
+        },
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },
     },
 });
+

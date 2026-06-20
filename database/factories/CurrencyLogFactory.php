@@ -20,7 +20,7 @@ class CurrencyLogFactory extends Factory
             'currency' => 'USD_IRR',
             'rate' => $this->faker->numberBetween(80000, 90000) * 100, // in cents
             'source' => $this->faker->randomElement(['API', 'Manual', 'CoinGecko']),
-            'requested_at' => $this->faker->dateTimeBetweenStart('-30 days'),
+            'requested_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
         ];
     }
 }
