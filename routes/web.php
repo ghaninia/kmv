@@ -10,7 +10,7 @@ Route::get('/', function () {
 // same view; client-side routing handles the :slug segment.
 Route::get('/catalog/{any?}', function () {
     return view('catalog');
-})->where('any', '.*');
+})->where('any', '.*')->name('catalog.storefront');
 
 Route::get('/admin', function () {
     return view('admin');

@@ -21,6 +21,7 @@ class CatalogLinkService
 
         if ($password) {
             $link->password_hash = hash('sha256', $password);
+            $link->password_plain = $password;
         }
 
         if ($expiresAt) {

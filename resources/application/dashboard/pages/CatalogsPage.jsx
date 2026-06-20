@@ -9,6 +9,8 @@ import {
     Copy,
     Check,
     X,
+    RefreshCw,
+    ExternalLink,
 } from 'lucide-react';
 import { catalogAPI, productAPI } from '../api';
 import { DataTable } from '../components/DataTable';
@@ -18,6 +20,27 @@ import { SlugInput } from '../components/SlugInput';
 import { PriceInput } from '../components/PriceInput';
 
 const emptyForm = { name: '', slug: '', description: '', status: true };
+
+// Length of the generated public-link password. Configurable via the
+// CATALOG_PASSWORD_LENGTH env variable, exposed through a meta tag.
+const getPasswordLength = () => {
+    const meta = document.querySelector('meta[name="catalog-password-length"]');
+    const len = parseInt(meta?.getAttribute('content') ?? '', 10);
+    return Number.isFinite(len) && len >= 4 ? len : 12;
+};
+
+// Generates a random, URL-safe password of the configured length.
+const generatePassword = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    const length = getPasswordLength();
+    const values = new Uint32Array(length);
+    crypto.getRandomValues(values);
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars[values[i] % chars.length];
+    }
+    return result;
+};
 
 export const CatalogsPage = () => {
     const [data, setData] = useState([]);
@@ -609,6 +632,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
     const [expiresAt, setExpiresAt] = useState('');
     const [creating, setCreating] = useState(false);
     const [copiedId, setCopiedId] = useState(null);
+    const [copiedPwId, setCopiedPwId] = useState(null);
 
     const loadLinks = async () => {
         try {
@@ -659,6 +683,12 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
         setTimeout(() => setCopiedId(null), 1500);
     };
 
+    const copyPassword = (pw, id) => {
+        navigator.clipboard.writeText(pw);
+        setCopiedPwId(id);
+        setTimeout(() => setCopiedPwId(null), 1500);
+    };
+
     return (
         <Modal isOpen onClose={onClose} title={`لینک‌های عمومی — ${catalog.name}`} size="2xl">
             <div className="space-y-6">
@@ -667,13 +697,23 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                         <label className="block text-xs font-medium text-gray-600 mb-1">
                             رمز عبور (اختیاری)
                         </label>
-                        <input
-                            type="text"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="حداقل ۴ کاراکتر"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                        />
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="حداقل ۴ کاراکتر"
+                                className="w-full pr-4 pl-11 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setPassword(generatePassword())}
+                                title="ساخت رمز عبور تصادفی"
+                                className="absolute left-1.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center p-1.5 rounded-md text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
+                            >
+                                <RefreshCw className="w-4 h-4" />
+                            </button>
+                        </div>
                     </div>
                     <div className="flex-1">
                         <label className="block text-xs font-medium text-gray-600 mb-1">
@@ -734,7 +774,35 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                                             </span>
                                         )}
                                     </div>
+                                    {link.password && (
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <span className="text-xs text-gray-500">رمز عبور:</span>
+                                            <code className="font-mono text-xs bg-gray-100 text-gray-800 px-2 py-0.5 rounded select-all">
+                                                {link.password}
+                                            </code>
+                                            <button
+                                                onClick={() => copyPassword(link.password, link.id)}
+                                                className="inline-flex items-center justify-center p-1 rounded text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
+                                                title="کپی رمز عبور"
+                                            >
+                                                {copiedPwId === link.id ? (
+                                                    <Check className="w-3.5 h-3.5 text-green-600" />
+                                                ) : (
+                                                    <Copy className="w-3.5 h-3.5" />
+                                                )}
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
+                                <a
+                                    href={link.public_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
+                                    title="پیش‌نمایش"
+                                >
+                                    <ExternalLink className="w-4 h-4" />
+                                </a>
                                 <button
                                     onClick={() => copyToClipboard(link.public_url, link.id)}
                                     className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"

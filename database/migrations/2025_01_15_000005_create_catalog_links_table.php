@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('catalog_id')->constrained()->onDelete('cascade');
             $table->string('short_code')->unique();
             $table->string('password_hash')->nullable();
+            $table->string('password_plain')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
 

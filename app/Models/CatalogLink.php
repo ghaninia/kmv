@@ -15,6 +15,7 @@ class CatalogLink extends Model
         'catalog_id',
         'short_code',
         'password_hash',
+        'password_plain',
         'expires_at',
     ];
 

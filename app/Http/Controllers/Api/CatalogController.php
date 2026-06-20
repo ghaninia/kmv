@@ -243,8 +243,9 @@ class CatalogController extends Controller
                 'id' => $link->id,
                 'short_code' => $link->short_code,
                 'is_password_protected' => $link->isPasswordProtected(),
+                'password' => $link->password_plain,
                 'expires_at' => $link->expires_at,
-                'public_url' => route('catalog.public', $link->short_code),
+                'public_url' => route('catalog.storefront', $link->short_code),
             ],
         ], 201);
     }
@@ -261,9 +262,10 @@ class CatalogController extends Controller
                 'id' => $link->id,
                 'short_code' => $link->short_code,
                 'is_password_protected' => $link->isPasswordProtected(),
+                'password' => $link->password_plain,
                 'is_expired' => $link->isExpired(),
                 'expires_at' => $link->expires_at,
-                'public_url' => route('catalog.public', $link->short_code),
+                'public_url' => route('catalog.storefront', $link->short_code),
                 'created_at' => $link->created_at,
             ]),
         ]);
