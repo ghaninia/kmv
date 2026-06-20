@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useAppStore } from '../store/appStore';
 import { LogOut, DollarSign, Menu } from 'lucide-react';

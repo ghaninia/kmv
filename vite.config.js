@@ -9,7 +9,9 @@ export default defineConfig({
             input: ['resources/application/dashboard/app.jsx'],
             refresh: true,
         }),
-        react(),
+        react({
+            jsxRuntime: 'automatic',
+        }),
         tailwindcss(),
     ],
     server: {
