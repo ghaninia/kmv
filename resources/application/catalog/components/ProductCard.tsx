@@ -45,7 +45,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                 {imageFailed ? (
                     <div className="flex h-full w-full items-center justify-center text-slate-300">
                         <ImageOff aria-hidden="true" className="size-10" />
-                        <span className="sr-only">Image unavailable</span>
+                        <span className="sr-only">تصویر در دسترس نیست</span>
                     </div>
                 ) : (
                     <img
@@ -72,8 +72,8 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                             <PackageX aria-hidden="true" className="size-3.5" />
                         )}
                         {inStock
-                            ? `${formatPersianNumber(product.stock)} in stock`
-                            : 'Out of stock'}
+                            ? `${formatPersianNumber(product.stock)} عدد موجود`
+                            : 'ناموجود'}
                     </span>
                 )}
             </div>
@@ -87,7 +87,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
 
                     {product.sku && (
                         <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-400">
-                            SKU: {product.sku}
+                            کد کالا: {product.sku}
                         </p>
                     )}
 
@@ -120,10 +120,10 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                         'transition hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2',
                     )}
                 >
-                    View Details
+                    مشاهده جزئیات
                     <ArrowRight
                         aria-hidden="true"
-                        className="size-4 transition-transform group-hover:translate-x-0.5"
+                        className="size-4 transition-transform group-hover:-translate-x-0.5"
                     />
                 </button>
             </div>

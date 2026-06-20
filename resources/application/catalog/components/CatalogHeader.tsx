@@ -75,13 +75,13 @@ export function CatalogHeader({
                     />
                     <div
                         className="hidden shrink-0 items-center gap-2 rounded-xl bg-slate-50 px-3.5 py-2.5 text-sm font-medium text-slate-600 ring-1 ring-slate-200 sm:flex"
-                        aria-label={`${totalProducts} products in catalog`}
+                        aria-label={`${totalProducts} محصول در کاتالوگ`}
                     >
                         <Package aria-hidden="true" className="size-4 text-slate-400" />
                         <span className="tabular-nums text-slate-900">
                             {formatPersianNumber(totalProducts)}
                         </span>
-                        <span className="text-slate-400">products</span>
+                        <span className="text-slate-400">محصول</span>
                     </div>
                 </div>
             </div>

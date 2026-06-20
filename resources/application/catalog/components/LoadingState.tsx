@@ -8,7 +8,7 @@
 export function LoadingState() {
     return (
         <div className="min-h-dvh bg-slate-100" role="status" aria-busy="true">
-            <span className="sr-only">Loading catalog…</span>
+            <span className="sr-only">در حال بارگذاری کاتالوگ…</span>
 
             {/* Header skeleton. */}
             <div className="border-b border-slate-200 bg-white">

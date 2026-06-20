@@ -22,8 +22,8 @@ export function App() {
                             <EmptyState
                                 icon={FileQuestion}
                                 tone="danger"
-                                title="Catalog not found"
-                                description="No catalog was specified. Please use the full catalog link provided to you."
+                                title="کاتالوگ پیدا نشد"
+                                description="هیچ کاتالوگی مشخص نشده است. لطفاً از لینک کامل کاتالوگی که در اختیارتان قرار گرفته استفاده کنید."
                             />
                         </div>
                     </div>

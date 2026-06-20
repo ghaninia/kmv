@@ -21,7 +21,7 @@ export function SearchBar({
     value,
     onChange,
     resultCount,
-    placeholder = 'Search products, SKU, description…',
+    placeholder = 'جستجوی محصول، کد کالا، توضیحات…',
     className,
 }: SearchBarProps) {
     const hasValue = value.length > 0;
@@ -29,7 +29,7 @@ export function SearchBar({
     return (
         <div className={clsx('relative', className)} role="search">
             <label htmlFor="catalog-search" className="sr-only">
-                Search products
+                جستجوی محصولات
             </label>
             <Search
                 aria-hidden="true"
@@ -52,7 +52,7 @@ export function SearchBar({
                 <button
                     type="button"
                     onClick={() => onChange('')}
-                    aria-label="Clear search"
+                    aria-label="پاک کردن جستجو"
                     className={clsx(
                         'absolute end-2.5 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400',
                         'transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40',
@@ -63,7 +63,7 @@ export function SearchBar({
             )}
             <span aria-live="polite" className="sr-only">
                 {hasValue && resultCount !== undefined
-                    ? `${resultCount} ${resultCount === 1 ? 'result' : 'results'} found`
+                    ? `${resultCount} نتیجه یافت شد`
                     : ''}
             </span>
         </div>

@@ -56,7 +56,7 @@ export function CatalogPasswordGate({
                             <Lock className="size-7" />
                         </motion.span>
                         <h1 className="mt-6 text-2xl font-bold tracking-tight text-slate-900">
-                            Protected Catalog
+                            کاتالوگ محافظت‌شده
                         </h1>
                         <p className="mt-2 text-sm leading-relaxed text-slate-500">
                             {catalogTitle ? (
@@ -64,10 +64,10 @@ export function CatalogPasswordGate({
                                     <span className="font-medium text-slate-700">
                                         {catalogTitle}
                                     </span>{' '}
-                                    is password protected. Enter the password to continue.
+                                    با رمز عبور محافظت شده است. برای ادامه رمز عبور را وارد کنید.
                                 </>
                             ) : (
-                                'This catalog is password protected. Enter the password to continue.'
+                                'این کاتالوگ با رمز عبور محافظت شده است. برای ادامه رمز عبور را وارد کنید.'
                             )}
                         </p>
                     </div>
@@ -77,7 +77,7 @@ export function CatalogPasswordGate({
                             htmlFor="catalog-password"
                             className="block text-sm font-medium text-slate-700"
                         >
-                            Password
+                            رمز عبور
                         </label>
                         <div className="relative mt-2">
                             <input
@@ -96,12 +96,12 @@ export function CatalogPasswordGate({
                                         ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/30'
                                         : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-500/30',
                                 )}
-                                placeholder="Enter catalog password"
+                                placeholder="رمز عبور کاتالوگ را وارد کنید"
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword((shown) => !shown)}
-                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                aria-label={showPassword ? 'مخفی کردن رمز عبور' : 'نمایش رمز عبور'}
                                 className="absolute end-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
                             >
                                 {showPassword ? (
@@ -137,10 +137,10 @@ export function CatalogPasswordGate({
                             {isVerifying ? (
                                 <>
                                     <Loader2 aria-hidden="true" className="size-4 animate-spin" />
-                                    Verifying…
+                                    در حال بررسی…
                                 </>
                             ) : (
-                                'Unlock Catalog'
+                                'باز کردن کاتالوگ'
                             )}
                         </button>
                     </form>

@@ -67,8 +67,8 @@ export function CatalogPage() {
                 <EmptyState
                     icon={FileQuestion}
                     tone="danger"
-                    title="Catalog not found"
-                    description="The catalog you're looking for doesn't exist or the link is incorrect. Double-check the URL and try again."
+                    title="کاتالوگ پیدا نشد"
+                    description="کاتالوگی که به دنبال آن هستید وجود ندارد یا لینک نادرست است. آدرس را بررسی کرده و دوباره تلاش کنید."
                 />
             </CenteredState>
         );
@@ -80,8 +80,8 @@ export function CatalogPage() {
                 <EmptyState
                     icon={TimerOff}
                     tone="danger"
-                    title="This link has expired"
-                    description="The link to this catalog is no longer active. Please request an updated link from your supplier."
+                    title="این لینک منقضی شده است"
+                    description="لینک این کاتالوگ دیگر فعال نیست. لطفاً از تامین‌کننده خود لینک جدید درخواست کنید."
                 />
             </CenteredState>
         );
@@ -93,15 +93,15 @@ export function CatalogPage() {
                 <EmptyState
                     icon={FileQuestion}
                     tone="danger"
-                    title="Something went wrong"
-                    description="We couldn't load this catalog right now. Please check your connection and try again."
+                    title="مشکلی پیش آمد"
+                    description="در حال حاضر بارگذاری این کاتالوگ ممکن نشد. اتصال اینترنت خود را بررسی کرده و دوباره تلاش کنید."
                     action={
                         <button
                             type="button"
                             onClick={retry}
                             className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2"
                         >
-                            Try again
+                            تلاش دوباره
                         </button>
                     }
                 />
@@ -117,7 +117,7 @@ export function CatalogPage() {
                 href="#catalog-content"
                 className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
             >
-                Skip to products
+                پرش به محصولات
             </a>
 
             <CatalogHeader
@@ -148,21 +148,21 @@ export function CatalogPage() {
                     {!hasProducts ? (
                         <EmptyState
                             icon={PackageSearch}
-                            title="No products yet"
-                            description="This catalog doesn't contain any products at the moment. Please check back later."
+                            title="هنوز محصولی وجود ندارد"
+                            description="در حال حاضر این کاتالوگ هیچ محصولی ندارد. لطفاً بعداً دوباره سر بزنید."
                         />
                     ) : isEmpty ? (
                         <EmptyState
                             icon={SearchX}
-                            title="No results found"
-                            description={`No products match "${query}". Try a different keyword or clear your search.`}
+                            title="نتیجه‌ای یافت نشد"
+                            description={`هیچ محصولی با «${query}» مطابقت ندارد. کلمه دیگری امتحان کنید یا جستجو را پاک کنید.`}
                             action={
                                 <button
                                     type="button"
                                     onClick={() => setQuery('')}
                                     className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2"
                                 >
-                                    Clear search
+                                    پاک کردن جستجو
                                 </button>
                             }
                         />
@@ -170,13 +170,13 @@ export function CatalogPage() {
                         <div className="space-y-12">
                             {isSearching && (
                                 <p className="text-sm text-slate-500" aria-live="polite">
-                                    Showing{' '}
+                                    نمایش{' '}
                                     <span className="font-semibold text-slate-900">
                                         {resultCount}
                                     </span>{' '}
-                                    {resultCount === 1 ? 'result' : 'results'} for{' '}
+                                    نتیجه برای{' '}
                                     <span className="font-semibold text-slate-900">
-                                        &ldquo;{query}&rdquo;
+                                        &laquo;{query}&raquo;
                                     </span>
                                 </p>
                             )}

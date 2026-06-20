@@ -27,11 +27,11 @@ export function CatalogSidebar({
     const totalProducts = groups.reduce((sum, group) => sum + group.products.length, 0);
 
     return (
-        <nav aria-label="Product categories" className="lg:sticky lg:top-24">
+        <nav aria-label="دسته‌بندی محصولات" className="lg:sticky lg:top-24">
             <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
                 <div className="flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
                     <LayoutGrid aria-hidden="true" className="size-3.5" />
-                    Categories
+                    دسته‌بندی‌ها
                 </div>
 
                 <ul className="mt-1 space-y-1">
@@ -82,8 +82,7 @@ export function CatalogSidebar({
                     <span className="font-semibold text-slate-600">
                         {formatPersianNumber(totalProducts)}
                     </span>{' '}
-                    products in {formatPersianNumber(groups.length)}{' '}
-                    {groups.length === 1 ? 'category' : 'categories'}
+                    محصول در {formatPersianNumber(groups.length)} دسته‌بندی
                 </div>
             </div>
         </nav>

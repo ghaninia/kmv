@@ -44,8 +44,7 @@ export function CategorySection({ group, onViewProduct }: CategorySectionProps) 
                         {category.name}
                     </h2>
                     <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-medium text-slate-500">
-                        {formatPersianNumber(products.length)}{' '}
-                        {products.length === 1 ? 'product' : 'products'}
+                        {formatPersianNumber(products.length)} محصول
                     </span>
                 </div>
                 {category.description && (
