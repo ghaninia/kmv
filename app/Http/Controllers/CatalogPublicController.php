@@ -72,6 +72,8 @@ class CatalogPublicController extends Controller
             $this->currencyService
         );
 
+        $catalogData['has_password'] = $link->isPasswordProtected();
+
         return response()->json([
             'success' => true,
             'data' => $catalogData,

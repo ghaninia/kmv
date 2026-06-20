@@ -32,32 +32,32 @@ class DatabaseSeeder extends Seeder
         Setting::set('site_name', 'Admin Dashboard');
         Setting::set('site_description', 'Professional Admin Dashboard');
 
-        // // Create categories
-        // $categories = Category::factory(5)->create();
+        // Create categories
+        $categories = Category::factory(5)->create();
 
-        // // Create products
-        // foreach ($categories as $category) {
-        //     Product::factory(8)
-        //         ->for($category)
-        //         ->create();
-        // }
+        // Create products
+        foreach ($categories as $category) {
+            Product::factory(8)
+                ->for($category)
+                ->create();
+        }
 
-        // // Create catalogs
-        // $catalogs = Catalog::factory(3)->create();
+        // Create catalogs
+        $catalogs = Catalog::factory(3)->create();
 
-        // // Attach products to catalogs with custom prices
-        // foreach ($catalogs as $catalog) {
-        //     $products = Product::inRandomOrder()->limit(10)->get();
+        // Attach products to catalogs with custom prices
+        foreach ($catalogs as $catalog) {
+            $products = Product::inRandomOrder()->limit(10)->get();
 
-        //     foreach ($products as $product) {
-        //         $catalog->products()->attach($product->id, [
-        //             'custom_price_usd' => $this->getCustomPrice($product->base_price_usd),
-        //         ]);
-        //     }
-        // }
+            foreach ($products as $product) {
+                $catalog->products()->attach($product->id, [
+                    'custom_price_usd' => $this->getCustomPrice($product->base_price_usd),
+                ]);
+            }
+        }
 
-        // // Create currency logs
-        // CurrencyLog::factory(30)->create();
+        // Create currency logs
+        CurrencyLog::factory(30)->create();
     }
 
     private function getCustomPrice(int $basePrice): int
