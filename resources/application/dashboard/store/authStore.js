@@ -3,7 +3,7 @@ import axios from '../bootstrap';
 
 export const useAuthStore = create((set) => ({
     user: null,
-    isLoading: false,
+    isLoading: true,
     isAuthenticated: false,
 
     // Check if user is logged in

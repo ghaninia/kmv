@@ -17,7 +17,7 @@ Route::prefix('api')->group(function () {
     Route::post('/auth/login', [AuthController::class, 'login']);
 
     // Protected API routes
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('auth')->group(function () {
         // Auth
         Route::post('/auth/logout', [AuthController::class, 'logout']);
         Route::get('/auth/user', [AuthController::class, 'user']);
