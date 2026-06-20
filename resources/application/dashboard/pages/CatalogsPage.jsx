@@ -237,31 +237,51 @@ export const CatalogsPage = () => {
                 title={editing ? 'Edit Catalog' : 'Add Catalog'}
                 size="lg"
             >
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            value={form.name}
-                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                        />
-                        {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name[0]}</p>}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="flex items-start gap-3 p-3 bg-blue-50/60 border border-blue-100 rounded-lg">
+                        <div className="p-2 bg-blue-100 rounded-lg">
+                            <Boxes className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <p className="text-sm text-gray-600">
+                            {editing
+                                ? 'Update the catalog details. You can manage its products and public links from the catalog list.'
+                                : 'Create a catalog, then add products and generate shareable public links from the list.'}
+                        </p>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Slug</label>
-                        <input
-                            type="text"
-                            value={form.slug}
-                            onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                            placeholder="auto-generated if empty"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                        />
-                        {errors.slug && <p className="text-sm text-red-600 mt-1">{errors.slug[0]}</p>}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Name <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                value={form.name}
+                                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                required
+                                placeholder="e.g. Summer Collection"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                            />
+                            {errors.name && (
+                                <p className="text-sm text-red-600 mt-1">{errors.name[0]}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Slug
+                            </label>
+                            <input
+                                type="text"
+                                value={form.slug}
+                                onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                                placeholder="auto-generated if empty"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                            />
+                            {errors.slug && (
+                                <p className="text-sm text-red-600 mt-1">{errors.slug[0]}</p>
+                            )}
+                        </div>
                     </div>
 
                     <div>
@@ -272,21 +292,27 @@ export const CatalogsPage = () => {
                             value={form.description}
                             onChange={(e) => setForm({ ...form, description: e.target.value })}
                             rows={3}
+                            placeholder="Optional short description for this catalog"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </div>
 
-                    <label className="flex items-center gap-2 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
                         <input
                             type="checkbox"
                             checked={form.status}
                             onChange={(e) => setForm({ ...form, status: e.target.checked })}
                             className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">Active</span>
+                        <span>
+                            <span className="block text-sm font-medium text-gray-700">Active</span>
+                            <span className="block text-xs text-gray-500">
+                                Inactive catalogs are hidden from public links
+                            </span>
+                        </span>
                     </label>
 
-                    <div className="flex justify-end gap-3 pt-4">
+                    <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
                         <button
                             type="button"
                             onClick={() => setModalOpen(false)}
@@ -299,7 +325,7 @@ export const CatalogsPage = () => {
                             disabled={saving}
                             className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium transition"
                         >
-                            {saving ? 'Saving...' : editing ? 'Update' : 'Create'}
+                            {saving ? 'Saving...' : editing ? 'Update Catalog' : 'Create Catalog'}
                         </button>
                     </div>
                 </form>
@@ -337,10 +363,11 @@ export const CatalogsPage = () => {
 const CatalogProductsModal = ({ catalog, onClose }) => {
     const [attached, setAttached] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [allProducts, setAllProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState('');
-    const [customPrice, setCustomPrice] = useState('');
-    const [attaching, setAttaching] = useState(false);
+
+    const [search, setSearch] = useState('');
+    const [results, setResults] = useState([]);
+    const [searching, setSearching] = useState(false);
+    const [attachingId, setAttachingId] = useState(null);
 
     const loadAttached = async () => {
         try {
@@ -354,42 +381,45 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
         }
     };
 
-    const loadAllProducts = async () => {
+    const searchProducts = async (term) => {
         try {
-            const res = await productAPI.getList(1, '', null, 100);
-            setAllProducts(res.data);
+            setSearching(true);
+            const res = await productAPI.getList(1, term, null, 20);
+            setResults(res.data);
         } catch (error) {
-            console.error('Failed to load products:', error);
+            console.error('Failed to search products:', error);
+        } finally {
+            setSearching(false);
         }
     };
 
     useEffect(() => {
         loadAttached();
-        loadAllProducts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const attachedIds = new Set(attached.map((p) => p.id));
-    const availableProducts = allProducts.filter((p) => !attachedIds.has(p.id));
+    // Debounced live search
+    useEffect(() => {
+        const handle = setTimeout(() => searchProducts(search), 300);
+        return () => clearTimeout(handle);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [search]);
 
-    const handleAttach = async () => {
-        if (!selectedProduct) return;
-        setAttaching(true);
+    const attachedIds = new Set(attached.map((p) => p.id));
+    const availableResults = results.filter((p) => !attachedIds.has(p.id));
+
+    const handleAttach = async (product) => {
+        setAttachingId(product.id);
         try {
-            const product = allProducts.find((p) => p.id === Number(selectedProduct));
-            const priceCents = customPrice
-                ? Math.round(parseFloat(customPrice) * 100)
-                : Math.round((product?.base_price_usd ?? 0) * 100);
+            const priceCents = Math.round((product.base_price_usd ?? 0) * 100);
             await catalogAPI.attachProducts(catalog.id, [
-                { product_id: Number(selectedProduct), custom_price_usd: priceCents },
+                { product_id: product.id, custom_price_usd: priceCents },
             ]);
-            setSelectedProduct('');
-            setCustomPrice('');
-            loadAttached();
+            await loadAttached();
         } catch (error) {
             alert(error.response?.data?.message || 'Failed to attach product');
         } finally {
-            setAttaching(false);
+            setAttachingId(null);
         }
     };
 
@@ -413,90 +443,154 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
     };
 
     return (
-        <Modal isOpen onClose={onClose} title={`Products — ${catalog.name}`} size="2xl">
-            <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row gap-3 p-4 bg-gray-50 rounded-lg">
-                    <select
-                        value={selectedProduct}
-                        onChange={(e) => setSelectedProduct(e.target.value)}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                    >
-                        <option value="">Select product to add...</option>
-                        {availableProducts.map((p) => (
-                            <option key={p.id} value={p.id}>
-                                {p.name} (${Number(p.base_price_usd).toLocaleString()})
-                            </option>
-                        ))}
-                    </select>
-                    <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        value={customPrice}
-                        onChange={(e) => setCustomPrice(e.target.value)}
-                        placeholder="Custom price (optional)"
-                        className="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                    />
-                    <button
-                        onClick={handleAttach}
-                        disabled={!selectedProduct || attaching}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition"
-                    >
-                        <Plus className="w-4 h-4" />
-                        Add
-                    </button>
+        <Modal isOpen onClose={onClose} title={`Products — ${catalog.name}`} size="5xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Search & add products */}
+                <div className="flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900">
+                            Add Products
+                        </h3>
+                        <span className="text-xs text-gray-400">
+                            Search and click to add
+                        </span>
+                    </div>
+
+                    <div className="relative mb-3">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search products by name..."
+                            autoFocus
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                        />
+                    </div>
+
+                    <div className="border border-gray-100 rounded-lg divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                        {searching ? (
+                            <div className="flex justify-center py-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+                            </div>
+                        ) : availableResults.length === 0 ? (
+                            <p className="text-center text-sm text-gray-500 py-8">
+                                {search
+                                    ? 'No matching products found'
+                                    : 'No more products to add'}
+                            </p>
+                        ) : (
+                            availableResults.map((product) => (
+                                <button
+                                    key={product.id}
+                                    type="button"
+                                    onClick={() => handleAttach(product)}
+                                    disabled={attachingId === product.id}
+                                    className="w-full flex items-center gap-3 p-3 text-left hover:bg-blue-50/50 transition disabled:opacity-60"
+                                >
+                                    {product.image ? (
+                                        <img
+                                            src={product.image}
+                                            alt=""
+                                            className="w-10 h-10 rounded object-cover border border-gray-200"
+                                        />
+                                    ) : (
+                                        <div className="w-10 h-10 rounded bg-gray-100" />
+                                    )}
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-gray-900 truncate">
+                                            {product.name}
+                                        </p>
+                                        <p className="text-xs text-gray-500">
+                                            ${Number(product.base_price_usd).toLocaleString()}
+                                        </p>
+                                    </div>
+                                    <span className="inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                                        {attachingId === product.id ? (
+                                            <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
+                                        ) : (
+                                            <Plus className="w-4 h-4" />
+                                        )}
+                                        Add
+                                    </span>
+                                </button>
+                            ))
+                        )}
+                    </div>
                 </div>
 
-                {loading ? (
-                    <div className="flex justify-center py-12">
-                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
+                {/* Attached products */}
+                <div className="flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900">
+                            In This Catalog
+                        </h3>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
+                            {attached.length} product{attached.length === 1 ? '' : 's'}
+                        </span>
                     </div>
-                ) : attached.length === 0 ? (
-                    <p className="text-center text-gray-500 py-8">No products in this catalog yet</p>
-                ) : (
-                    <div className="space-y-2 max-h-96 overflow-y-auto">
-                        {attached.map((product) => (
-                            <div
-                                key={product.id}
-                                className="flex items-center gap-3 p-3 border border-gray-100 rounded-lg hover:bg-gray-50"
-                            >
-                                {product.image ? (
-                                    <img
-                                        src={product.image}
-                                        alt=""
-                                        className="w-10 h-10 rounded object-cover border border-gray-200"
-                                    />
-                                ) : (
-                                    <div className="w-10 h-10 rounded bg-gray-100" />
-                                )}
-                                <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-gray-900 truncate">{product.name}</p>
-                                    <p className="text-xs text-gray-500">
-                                        Base: ${Number(product.base_price_usd).toLocaleString()}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <span className="text-sm text-gray-500">$</span>
-                                    <input
-                                        type="number"
-                                        step="0.01"
-                                        min="0"
-                                        defaultValue={product.custom_price_usd}
-                                        onBlur={(e) => handlePriceUpdate(product.id, e.target.value)}
-                                        className="w-28 px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm"
-                                    />
-                                </div>
-                                <button
-                                    onClick={() => handleDetach(product.id)}
-                                    className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
-                                    title="Remove"
-                                >
-                                    <X className="w-4 h-4" />
-                                </button>
+
+                    <div className="border border-gray-100 rounded-lg max-h-96 overflow-y-auto">
+                        {loading ? (
+                            <div className="flex justify-center py-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
                             </div>
-                        ))}
+                        ) : attached.length === 0 ? (
+                            <p className="text-center text-sm text-gray-500 py-8">
+                                No products yet — add some from the left
+                            </p>
+                        ) : (
+                            <div className="divide-y divide-gray-100">
+                                {attached.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="flex items-center gap-3 p-3 hover:bg-gray-50"
+                                    >
+                                        {product.image ? (
+                                            <img
+                                                src={product.image}
+                                                alt=""
+                                                className="w-10 h-10 rounded object-cover border border-gray-200"
+                                            />
+                                        ) : (
+                                            <div className="w-10 h-10 rounded bg-gray-100" />
+                                        )}
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-medium text-gray-900 truncate">
+                                                {product.name}
+                                            </p>
+                                            <p className="text-xs text-gray-500">
+                                                Base: $
+                                                {Number(product.base_price_usd).toLocaleString()}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="text-sm text-gray-500">$</span>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                min="0"
+                                                defaultValue={product.custom_price_usd}
+                                                onBlur={(e) =>
+                                                    handlePriceUpdate(product.id, e.target.value)
+                                                }
+                                                title="Custom price in this catalog"
+                                                className="w-24 px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={() => handleDetach(product.id)}
+                                            className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
+                                            title="Remove"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
         </Modal>
     );

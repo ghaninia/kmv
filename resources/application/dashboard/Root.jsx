@@ -9,6 +9,7 @@ import { LoginPage } from './pages/LoginPage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { ProductsPage } from './pages/ProductsPage';
 import { CatalogsPage } from './pages/CatalogsPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 const Layout = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -101,6 +102,14 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <CatalogsPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/settings"
+                    element={
+                        <ProtectedRoute>
+                            <SettingsPage />
                         </ProtectedRoute>
                     }
                 />

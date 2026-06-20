@@ -5,6 +5,7 @@ import {
     Package,
     Tag,
     Boxes,
+    Settings,
     X,
 } from 'lucide-react';
 
@@ -14,6 +15,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
         { icon: Tag, label: 'Categories', href: '/categories' },
         { icon: Package, label: 'Products', href: '/products' },
         { icon: Boxes, label: 'Catalogs', href: '/catalogs' },
+        { icon: Settings, label: 'Settings', href: '/settings' },
     ];
 
     return (
