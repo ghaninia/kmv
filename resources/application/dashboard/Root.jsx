@@ -25,9 +25,9 @@ const Layout = ({ children }) => {
 
 const ProtectedRoute = ({ children }) => {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-    const isLoading = useAuthStore((state) => state.isLoading);
+    const isInitialized = useAuthStore((state) => state.isInitialized);
 
-    if (isLoading) {
+    if (!isInitialized) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
@@ -44,7 +44,7 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
     const checkAuth = useAuthStore((state) => state.checkAuth);
-    const isLoading = useAuthStore((state) => state.isLoading);
+    const isInitialized = useAuthStore((state) => state.isInitialized);
     const fetchUSDRate = useAppStore((state) => state.fetchUSDRate);
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const App = () => {
         return () => clearInterval(interval);
     }, []);
 
-    if (isLoading) {
+    if (!isInitialized) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />

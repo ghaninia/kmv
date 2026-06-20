@@ -3,19 +3,19 @@ import axios from '../bootstrap';
 
 export const useAuthStore = create((set) => ({
     user: null,
-    isLoading: true,
+    isLoading: false,
+    isInitialized: false,
     isAuthenticated: false,
 
     // Check if user is logged in
     checkAuth: async () => {
         try {
-            set({ isLoading: true });
             const response = await axios.get('/auth/user');
             set({ user: response.data.user, isAuthenticated: !!response.data.user });
         } catch (error) {
             set({ user: null, isAuthenticated: false });
         } finally {
-            set({ isLoading: false });
+            set({ isInitialized: true });
         }
     },
 
