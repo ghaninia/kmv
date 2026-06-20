@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
                 <main className="flex-1 overflow-y-auto p-6">
-                    <div className="max-w-7xl">{children}</div>
+                    <div className="w-full">{children}</div>
                 </main>
             </div>
         </div>
