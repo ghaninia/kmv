@@ -6,6 +6,7 @@ import { Modal } from '../components/Modal';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { SlugInput } from '../components/SlugInput';
 import { PriceInput } from '../components/PriceInput';
+import { SearchableSelect } from '../components/SearchableSelect';
 
 const emptyForm = {
     category_id: '',
@@ -269,18 +270,17 @@ export const ProductsPage = () => {
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </form>
-                    <select
-                        value={categoryFilter}
-                        onChange={(e) => handleCategoryFilter(e.target.value)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                    >
-                        <option value="">All Categories</option>
-                        {categories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>
-                                {cat.name}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="w-full sm:w-56">
+                        <SearchableSelect
+                            value={categoryFilter}
+                            onChange={(val) => handleCategoryFilter(val)}
+                            options={categories.map((cat) => ({
+                                value: cat.id,
+                                label: cat.name,
+                            }))}
+                            placeholder="All Categories"
+                        />
+                    </div>
                 </div>
                 <div className="p-2">
                     <DataTable
@@ -319,22 +319,17 @@ export const ProductsPage = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Category <span className="text-red-500">*</span>
                             </label>
-                            <select
+                            <SearchableSelect
                                 value={form.category_id}
-                                onChange={(e) => setForm({ ...form, category_id: e.target.value })}
-                                required
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                            >
-                                <option value="">Select category</option>
-                                {categories.map((cat) => (
-                                    <option key={cat.id} value={cat.id}>
-                                        {cat.name}
-                                    </option>
-                                ))}
-                            </select>
-                            {errors.category_id && (
-                                <p className="text-sm text-red-600 mt-1">{errors.category_id[0]}</p>
-                            )}
+                                onChange={(val) => setForm({ ...form, category_id: val })}
+                                options={categories.map((cat) => ({
+                                    value: cat.id,
+                                    label: cat.name,
+                                }))}
+                                placeholder="Select category"
+                                isClearable={false}
+                                error={errors.category_id && errors.category_id[0]}
+                            />
                         </div>
 
                         <div>
