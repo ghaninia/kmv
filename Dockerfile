@@ -17,10 +17,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock ./
-RUN composer install --prefer-dist --no-interaction --optimize-autoloader
-
 COPY . .
+RUN php -r "file_exists('.env') || copy('.env.example', '.env');" \
+    && composer install --prefer-dist --no-interaction --optimize-autoloader
 
 RUN mkdir -p storage/framework/cache/data \
     && chown -R www-data:www-data /var/www/html \
