@@ -200,7 +200,7 @@ export const ProductsPage = () => {
             key: 'base_price_usd',
             label: 'قیمت',
             render: (value) => (
-                <span className="font-medium text-gray-900">
+                <span dir="ltr" className="inline-block font-medium text-gray-900">
                     ${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </span>
             ),

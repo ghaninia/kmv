@@ -74,24 +74,25 @@ export const PriceInput = ({
             )}
             <div className="relative">
                 {prefix && (
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">
                         {prefix}
                     </span>
                 )}
                 <input
                     type="text"
+                    dir="ltr"
                     inputMode={allowDecimals ? 'decimal' : 'numeric'}
                     value={formatDisplay(value, allowDecimals)}
                     onChange={handleChange}
                     disabled={disabled}
                     placeholder={placeholder}
-                    className={`w-full py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition disabled:bg-gray-50 disabled:text-gray-400 ${
-                        prefix ? 'pr-7' : 'pr-4'
-                    } ${suffix ? 'pl-16' : 'pl-4'} ${inputClassName}`}
+                    className={`w-full py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-left disabled:bg-gray-50 disabled:text-gray-400 ${
+                        prefix ? 'pl-7' : 'pl-4'
+                    } ${suffix ? 'pr-16' : 'pr-4'} ${inputClassName}`}
                     {...rest}
                 />
                 {suffix && (
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">
                         {suffix}
                     </span>
                 )}

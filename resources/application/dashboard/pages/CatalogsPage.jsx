@@ -521,26 +521,29 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                                     type="button"
                                     onClick={() => handleAttach(product)}
                                     disabled={attachingId === product.id}
-                                    className="w-full flex items-center gap-3 p-3 text-left hover:bg-blue-50/50 transition disabled:opacity-60"
+                                    className="w-full flex items-start gap-3 p-3 text-right hover:bg-blue-50/50 transition disabled:opacity-60"
                                 >
                                     {product.image ? (
                                         <img
                                             src={product.image}
                                             alt=""
-                                            className="w-10 h-10 rounded object-cover border border-gray-200"
+                                            className="w-12 h-12 rounded object-cover border border-gray-200 shrink-0"
                                         />
                                     ) : (
-                                        <div className="w-10 h-10 rounded bg-gray-100" />
+                                        <div className="w-12 h-12 rounded bg-gray-100 shrink-0" />
                                     )}
                                     <div className="flex-1 min-w-0">
-                                        <p className="font-medium text-gray-900 truncate">
+                                        <p
+                                            className="text-sm font-medium text-gray-900 leading-snug line-clamp-2 break-words"
+                                            title={product.name}
+                                        >
                                             {product.name}
                                         </p>
-                                        <p className="text-xs text-gray-500">
+                                        <p dir="ltr" className="text-xs text-gray-500 mt-0.5 text-right">
                                             ${Number(product.base_price_usd).toLocaleString()}
                                         </p>
                                     </div>
-                                    <span className="inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                                    <span className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 shrink-0 mt-1">
                                         {attachingId === product.id ? (
                                             <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
                                         ) : (
@@ -579,37 +582,42 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                                 {attached.map((product) => (
                                     <div
                                         key={product.id}
-                                        className="flex items-center gap-3 p-3 hover:bg-gray-50"
+                                        className="flex items-start gap-3 p-3 hover:bg-gray-50"
                                     >
                                         {product.image ? (
                                             <img
                                                 src={product.image}
                                                 alt=""
-                                                className="w-10 h-10 rounded object-cover border border-gray-200"
+                                                className="w-12 h-12 rounded object-cover border border-gray-200 shrink-0"
                                             />
                                         ) : (
-                                            <div className="w-10 h-10 rounded bg-gray-100" />
+                                            <div className="w-12 h-12 rounded bg-gray-100 shrink-0" />
                                         )}
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-gray-900 truncate">
+                                            <p
+                                                className="text-sm font-medium text-gray-900 leading-snug line-clamp-2 break-words"
+                                                title={product.name}
+                                            >
                                                 {product.name}
                                             </p>
-                                            <p className="text-xs text-gray-500">
-                                                پایه: $
-                                                {Number(product.base_price_usd).toLocaleString()}
+                                            <p className="text-xs text-gray-500 mt-0.5">
+                                                پایه:{' '}
+                                                <span dir="ltr" className="inline-block">
+                                                    ${Number(product.base_price_usd).toLocaleString()}
+                                                </span>
                                             </p>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <CatalogPriceField
-                                                initialValue={product.custom_price_usd}
-                                                onSave={(val) =>
-                                                    handlePriceUpdate(product.id, val)
-                                                }
-                                            />
+                                            <div className="flex items-center gap-1 mt-2">
+                                                <CatalogPriceField
+                                                    initialValue={product.custom_price_usd}
+                                                    onSave={(val) =>
+                                                        handlePriceUpdate(product.id, val)
+                                                    }
+                                                />
+                                            </div>
                                         </div>
                                         <button
                                             onClick={() => handleDetach(product.id)}
-                                            className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
+                                            className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition shrink-0"
                                             title="حذف"
                                         >
                                             <X className="w-4 h-4" />
@@ -700,16 +708,17 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                         <div className="relative">
                             <input
                                 type="text"
+                                dir="ltr"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="حداقل ۴ کاراکتر"
-                                className="w-full pr-4 pl-11 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                                className="w-full pl-4 pr-11 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-left"
                             />
                             <button
                                 type="button"
                                 onClick={() => setPassword(generatePassword())}
                                 title="ساخت رمز عبور تصادفی"
-                                className="absolute left-1.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center p-1.5 rounded-md text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
+                                className="absolute right-1.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center p-1.5 rounded-md text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
                             >
                                 <RefreshCw className="w-4 h-4" />
                             </button>
@@ -721,9 +730,10 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                         </label>
                         <input
                             type="date"
+                            dir="ltr"
                             value={expiresAt}
                             onChange={(e) => setExpiresAt(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-left"
                         />
                     </div>
                     <button

@@ -56,9 +56,10 @@ export const LoginPage = () => {
                             <input
                                 type="email"
                                 name="email"
+                                dir="ltr"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-left"
                                 placeholder="admin@example.com"
                                 required
                             />
@@ -73,16 +74,17 @@ export const LoginPage = () => {
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     name="password"
+                                    dir="ltr"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition pl-10"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-left pr-10"
                                     placeholder="رمز عبور خود را وارد کنید"
                                     required
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute left-3 top-2.5 text-gray-500 hover:text-gray-700"
+                                    className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700"
                                 >
                                     {showPassword ? (
                                         <EyeOff className="w-5 h-5" />
