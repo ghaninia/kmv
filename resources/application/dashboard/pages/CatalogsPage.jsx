@@ -103,7 +103,7 @@ export const CatalogsPage = () => {
             if (error.response?.status === 422) {
                 setErrors(error.response.data.errors || {});
             } else {
-                alert(error.response?.data?.message || 'Failed to save catalog');
+                alert(error.response?.data?.message || 'ذخیره کاتالوگ ناموفق بود');
             }
         } finally {
             setSaving(false);
@@ -120,22 +120,22 @@ export const CatalogsPage = () => {
             setPage(nextPage);
             fetchData(nextPage, search);
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to delete catalog');
+            alert(error.response?.data?.message || 'حذف کاتالوگ ناموفق بود');
         } finally {
             setDeleting(false);
         }
     };
 
     const columns = [
-        { key: 'name', label: 'Name' },
+        { key: 'name', label: 'نام' },
         {
             key: 'slug',
-            label: 'Slug',
+            label: 'اسلاگ',
             render: (value) => <span className="text-gray-500">{value || '—'}</span>,
         },
         {
             key: 'product_count',
-            label: 'Products',
+            label: 'محصولات',
             render: (value) => (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
                     {value ?? 0}
@@ -144,47 +144,47 @@ export const CatalogsPage = () => {
         },
         {
             key: 'status',
-            label: 'Status',
+            label: 'وضعیت',
             render: (value) => (
                 <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         value ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'
                     }`}
                 >
-                    {value ? 'Active' : 'Inactive'}
+                    {value ? 'فعال' : 'غیرفعال'}
                 </span>
             ),
         },
         {
             key: 'id',
-            label: 'Actions',
+            label: 'عملیات',
             render: (_, row) => (
                 <div className="flex items-center gap-1">
                     <button
                         onClick={() => setProductsCatalog(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-purple-600 transition"
-                        title="Manage Products"
+                        title="مدیریت محصولات"
                     >
                         <Boxes className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => setLinksCatalog(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-green-600 transition"
-                        title="Public Links"
+                        title="لینک‌های عمومی"
                     >
                         <Link2 className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => openEdit(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-blue-600 transition"
-                        title="Edit"
+                        title="ویرایش"
                     >
                         <Pencil className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => setDeleteTarget(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-red-600 transition"
-                        title="Delete"
+                        title="حذف"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>
@@ -197,28 +197,28 @@ export const CatalogsPage = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Catalogs</h1>
-                    <p className="text-gray-500 mt-1">Manage your catalogs and public links</p>
+                    <h1 className="text-3xl font-bold text-gray-900">کاتالوگ‌ها</h1>
+                    <p className="text-gray-500 mt-1">کاتالوگ‌ها و لینک‌های عمومی خود را مدیریت کنید</p>
                 </div>
                 <button
                     onClick={openCreate}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
                 >
                     <Plus className="w-5 h-5" />
-                    Add Catalog
+                    افزودن کاتالوگ
                 </button>
             </div>
 
             <div className="bg-white rounded-lg shadow border border-gray-100">
                 <div className="p-4 border-b border-gray-100">
                     <form onSubmit={handleSearch} className="relative max-w-sm">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search catalogs..."
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                            placeholder="جستجوی کاتالوگ..."
+                            className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </form>
                 </div>
@@ -236,7 +236,7 @@ export const CatalogsPage = () => {
             <Modal
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
-                title={editing ? 'Edit Catalog' : 'Add Catalog'}
+                title={editing ? 'ویرایش کاتالوگ' : 'افزودن کاتالوگ'}
                 size="lg"
             >
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -246,22 +246,22 @@ export const CatalogsPage = () => {
                         </div>
                         <p className="text-sm text-gray-600">
                             {editing
-                                ? 'Update the catalog details. You can manage its products and public links from the catalog list.'
-                                : 'Create a catalog, then add products and generate shareable public links from the list.'}
+                                ? 'جزئیات کاتالوگ را به‌روزرسانی کنید. محصولات و لینک‌های عمومی آن را می‌توانید از فهرست کاتالوگ مدیریت کنید.'
+                                : 'یک کاتالوگ بسازید، سپس از فهرست، محصولات را اضافه کرده و لینک‌های عمومی قابل اشتراک بسازید.'}
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Name <span className="text-red-500">*</span>
+                                نام <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
                                 value={form.name}
                                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                                 required
-                                placeholder="e.g. Summer Collection"
+                                placeholder="مثلاً کاتالوگ بهاره"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                             />
                             {errors.name && (
@@ -279,13 +279,13 @@ export const CatalogsPage = () => {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Description
+                            توضیحات
                         </label>
                         <textarea
                             value={form.description}
                             onChange={(e) => setForm({ ...form, description: e.target.value })}
                             rows={3}
-                            placeholder="Optional short description for this catalog"
+                            placeholder="توضیح کوتاه و اختیاری برای این کاتالوگ"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </div>
@@ -298,9 +298,9 @@ export const CatalogsPage = () => {
                             className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                         <span>
-                            <span className="block text-sm font-medium text-gray-700">Active</span>
+                            <span className="block text-sm font-medium text-gray-700">فعال</span>
                             <span className="block text-xs text-gray-500">
-                                Inactive catalogs are hidden from public links
+                                کاتالوگ‌های غیرفعال در لینک‌های عمومی نمایش داده نمی‌شوند
                             </span>
                         </span>
                     </label>
@@ -311,14 +311,14 @@ export const CatalogsPage = () => {
                             onClick={() => setModalOpen(false)}
                             className="px-4 py-2 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition"
                         >
-                            Cancel
+                            انصراف
                         </button>
                         <button
                             type="submit"
                             disabled={saving}
                             className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium transition"
                         >
-                            {saving ? 'Saving...' : editing ? 'Update Catalog' : 'Create Catalog'}
+                            {saving ? 'در حال ذخیره...' : editing ? 'به‌روزرسانی کاتالوگ' : 'ایجاد کاتالوگ'}
                         </button>
                     </div>
                 </form>
@@ -329,8 +329,8 @@ export const CatalogsPage = () => {
                 onClose={() => setDeleteTarget(null)}
                 onConfirm={handleDelete}
                 isLoading={deleting}
-                title="Delete Catalog"
-                message={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
+                title="حذف کاتالوگ"
+                message={`آیا مطمئن هستید که می‌خواهید «${deleteTarget?.name}» را حذف کنید؟ این عمل قابل بازگشت نیست.`}
             />
 
             {productsCatalog && (
@@ -366,7 +366,7 @@ const CatalogPriceField = ({ initialValue, onSave }) => {
             onChange={setValue}
             onBlur={() => onSave(value)}
             prefix="$"
-            title="Custom price in this catalog"
+            title="قیمت اختصاصی در این کاتالوگ"
             inputClassName="!py-1 text-sm w-28"
         />
     );
@@ -429,7 +429,7 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
             ]);
             await loadAttached();
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to attach product');
+            alert(error.response?.data?.message || 'افزودن محصول ناموفق بود');
         } finally {
             setAttachingId(null);
         }
@@ -440,7 +440,7 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
             await catalogAPI.detachProduct(catalog.id, productId);
             loadAttached();
         } catch (error) {
-            alert('Failed to detach product');
+            alert('حذف محصول ناموفق بود');
         }
     };
 
@@ -450,33 +450,33 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
             await catalogAPI.updateProductPrice(catalog.id, productId, cents);
             loadAttached();
         } catch (error) {
-            alert('Failed to update price');
+            alert('به‌روزرسانی قیمت ناموفق بود');
         }
     };
 
     return (
-        <Modal isOpen onClose={onClose} title={`Products — ${catalog.name}`} size="5xl">
+        <Modal isOpen onClose={onClose} title={`محصولات — ${catalog.name}`} size="5xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Search & add products */}
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="text-sm font-semibold text-gray-900">
-                            Add Products
+                            افزودن محصول
                         </h3>
                         <span className="text-xs text-gray-400">
-                            Search and click to add
+                            جستجو کنید و برای افزودن کلیک کنید
                         </span>
                     </div>
 
                     <div className="relative mb-3">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search products by name..."
+                            placeholder="جستجوی محصول بر اساس نام..."
                             autoFocus
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                            className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </div>
 
@@ -488,8 +488,8 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                         ) : availableResults.length === 0 ? (
                             <p className="text-center text-sm text-gray-500 py-8">
                                 {search
-                                    ? 'No matching products found'
-                                    : 'No more products to add'}
+                                    ? 'محصولی مطابق جستجو یافت نشد'
+                                    : 'محصول دیگری برای افزودن وجود ندارد'}
                             </p>
                         ) : (
                             availableResults.map((product) => (
@@ -523,7 +523,7 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                                         ) : (
                                             <Plus className="w-4 h-4" />
                                         )}
-                                        Add
+                                        افزودن
                                     </span>
                                 </button>
                             ))
@@ -535,10 +535,10 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="text-sm font-semibold text-gray-900">
-                            In This Catalog
+                            در این کاتالوگ
                         </h3>
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
-                            {attached.length} product{attached.length === 1 ? '' : 's'}
+                            {attached.length} محصول
                         </span>
                     </div>
 
@@ -549,7 +549,7 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                             </div>
                         ) : attached.length === 0 ? (
                             <p className="text-center text-sm text-gray-500 py-8">
-                                No products yet — add some from the left
+                                هنوز محصولی اضافه نشده — از سمت راست اضافه کنید
                             </p>
                         ) : (
                             <div className="divide-y divide-gray-100">
@@ -572,7 +572,7 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                                                 {product.name}
                                             </p>
                                             <p className="text-xs text-gray-500">
-                                                Base: $
+                                                پایه: $
                                                 {Number(product.base_price_usd).toLocaleString()}
                                             </p>
                                         </div>
@@ -587,7 +587,7 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                                         <button
                                             onClick={() => handleDetach(product.id)}
                                             className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
-                                            title="Remove"
+                                            title="حذف"
                                         >
                                             <X className="w-4 h-4" />
                                         </button>
@@ -638,7 +638,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
             setExpiresAt('');
             loadLinks();
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to create link');
+            alert(error.response?.data?.message || 'ساخت لینک ناموفق بود');
         } finally {
             setCreating(false);
         }
@@ -649,7 +649,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
             await catalogAPI.deleteLink(catalog.id, linkId);
             loadLinks();
         } catch (error) {
-            alert('Failed to delete link');
+            alert('حذف لینک ناموفق بود');
         }
     };
 
@@ -660,24 +660,24 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
     };
 
     return (
-        <Modal isOpen onClose={onClose} title={`Public Links — ${catalog.name}`} size="2xl">
+        <Modal isOpen onClose={onClose} title={`لینک‌های عمومی — ${catalog.name}`} size="2xl">
             <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-3 p-4 bg-gray-50 rounded-lg items-end">
                     <div className="flex-1">
                         <label className="block text-xs font-medium text-gray-600 mb-1">
-                            Password (optional)
+                            رمز عبور (اختیاری)
                         </label>
                         <input
                             type="text"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Min 4 characters"
+                            placeholder="حداقل ۴ کاراکتر"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                         />
                     </div>
                     <div className="flex-1">
                         <label className="block text-xs font-medium text-gray-600 mb-1">
-                            Expires at (optional)
+                            تاریخ انقضا (اختیاری)
                         </label>
                         <input
                             type="date"
@@ -692,7 +692,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                         className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition"
                     >
                         <Plus className="w-4 h-4" />
-                        Create
+                        ایجاد
                     </button>
                 </div>
 
@@ -701,7 +701,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
                     </div>
                 ) : links.length === 0 ? (
-                    <p className="text-center text-gray-500 py-8">No public links created yet</p>
+                    <p className="text-center text-gray-500 py-8">هنوز لینک عمومی‌ای ساخته نشده است</p>
                 ) : (
                     <div className="space-y-2 max-h-96 overflow-y-auto">
                         {links.map((link) => (
@@ -716,21 +716,21 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                                     <div className="flex items-center gap-2 mt-1">
                                         {link.is_password_protected && (
                                             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700">
-                                                Protected
+                                                محافظت‌شده
                                             </span>
                                         )}
                                         {link.is_expired ? (
                                             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-50 text-red-700">
-                                                Expired
+                                                منقضی‌شده
                                             </span>
                                         ) : (
                                             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
-                                                Active
+                                                فعال
                                             </span>
                                         )}
                                         {link.expires_at && (
                                             <span className="text-xs text-gray-500">
-                                                Expires: {new Date(link.expires_at).toLocaleDateString()}
+                                                انقضا: {new Date(link.expires_at).toLocaleDateString('fa-IR')}
                                             </span>
                                         )}
                                     </div>
@@ -738,7 +738,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                                 <button
                                     onClick={() => copyToClipboard(link.public_url, link.id)}
                                     className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
-                                    title="Copy link"
+                                    title="کپی لینک"
                                 >
                                     {copiedId === link.id ? (
                                         <Check className="w-4 h-4 text-green-600" />
@@ -749,7 +749,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                                 <button
                                     onClick={() => handleDelete(link.id)}
                                     className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
-                                    title="Delete link"
+                                    title="حذف لینک"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>

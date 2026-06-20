@@ -89,7 +89,7 @@ export const CategoriesPage = () => {
             if (error.response?.status === 422) {
                 setErrors(error.response.data.errors || {});
             } else {
-                alert(error.response?.data?.message || 'Failed to save category');
+                alert(error.response?.data?.message || 'ذخیره دسته‌بندی ناموفق بود');
             }
         } finally {
             setSaving(false);
@@ -106,22 +106,22 @@ export const CategoriesPage = () => {
             setPage(nextPage);
             fetchData(nextPage, search);
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to delete category');
+            alert(error.response?.data?.message || 'حذف دسته‌بندی ناموفق بود');
         } finally {
             setDeleting(false);
         }
     };
 
     const columns = [
-        { key: 'name', label: 'Name' },
+        { key: 'name', label: 'نام' },
         {
             key: 'slug',
-            label: 'Slug',
+            label: 'اسلاگ',
             render: (value) => <span className="text-gray-500">{value || '—'}</span>,
         },
         {
             key: 'product_count',
-            label: 'Products',
+            label: 'محصولات',
             render: (value) => (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
                     {value ?? 0}
@@ -130,33 +130,33 @@ export const CategoriesPage = () => {
         },
         {
             key: 'status',
-            label: 'Status',
+            label: 'وضعیت',
             render: (value) => (
                 <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         value ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'
                     }`}
                 >
-                    {value ? 'Active' : 'Inactive'}
+                    {value ? 'فعال' : 'غیرفعال'}
                 </span>
             ),
         },
         {
             key: 'id',
-            label: 'Actions',
+            label: 'عملیات',
             render: (_, row) => (
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => openEdit(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-blue-600 transition"
-                        title="Edit"
+                        title="ویرایش"
                     >
                         <Pencil className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => setDeleteTarget(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-red-600 transition"
-                        title="Delete"
+                        title="حذف"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>
@@ -169,28 +169,28 @@ export const CategoriesPage = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Categories</h1>
-                    <p className="text-gray-500 mt-1">Manage your product categories</p>
+                    <h1 className="text-3xl font-bold text-gray-900">دسته‌بندی‌ها</h1>
+                    <p className="text-gray-500 mt-1">دسته‌بندی‌های محصولات خود را مدیریت کنید</p>
                 </div>
                 <button
                     onClick={openCreate}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
                 >
                     <Plus className="w-5 h-5" />
-                    Add Category
+                    افزودن دسته‌بندی
                 </button>
             </div>
 
             <div className="bg-white rounded-lg shadow border border-gray-100">
                 <div className="p-4 border-b border-gray-100">
                     <form onSubmit={handleSearch} className="relative max-w-sm">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search categories..."
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                            placeholder="جستجوی دسته‌بندی..."
+                            className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </form>
                 </div>
@@ -208,13 +208,13 @@ export const CategoriesPage = () => {
             <Modal
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
-                title={editing ? 'Edit Category' : 'Add Category'}
+                title={editing ? 'ویرایش دسته‌بندی' : 'افزودن دسته‌بندی'}
                 size="lg"
             >
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Name <span className="text-red-500">*</span>
+                            نام <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -235,7 +235,7 @@ export const CategoriesPage = () => {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Description
+                            توضیحات
                         </label>
                         <textarea
                             value={form.description}
@@ -252,7 +252,7 @@ export const CategoriesPage = () => {
                             onChange={(e) => setForm({ ...form, status: e.target.checked })}
                             className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">Active</span>
+                        <span className="text-sm font-medium text-gray-700">فعال</span>
                     </label>
 
                     <div className="flex justify-end gap-3 pt-4">
@@ -261,14 +261,14 @@ export const CategoriesPage = () => {
                             onClick={() => setModalOpen(false)}
                             className="px-4 py-2 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition"
                         >
-                            Cancel
+                            انصراف
                         </button>
                         <button
                             type="submit"
                             disabled={saving}
                             className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium transition"
                         >
-                            {saving ? 'Saving...' : editing ? 'Update' : 'Create'}
+                            {saving ? 'در حال ذخیره...' : editing ? 'به‌روزرسانی' : 'ایجاد'}
                         </button>
                     </div>
                 </form>
@@ -279,8 +279,8 @@ export const CategoriesPage = () => {
                 onClose={() => setDeleteTarget(null)}
                 onConfirm={handleDelete}
                 isLoading={deleting}
-                title="Delete Category"
-                message={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
+                title="حذف دسته‌بندی"
+                message={`آیا مطمئن هستید که می‌خواهید «${deleteTarget?.name}» را حذف کنید؟ این عمل قابل بازگشت نیست.`}
             />
         </div>
     );

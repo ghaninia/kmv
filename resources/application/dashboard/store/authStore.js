@@ -27,7 +27,7 @@ export const useAuthStore = create((set) => ({
             set({ user: response.data.user, isAuthenticated: true });
             return { success: true };
         } catch (error) {
-            const message = error.response?.data?.message || 'Login failed';
+            const message = error.response?.data?.message || 'ورود ناموفق بود';
             return { success: false, message };
         } finally {
             set({ isLoading: false });

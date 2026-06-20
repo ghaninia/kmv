@@ -119,7 +119,7 @@ export const ProductsPage = () => {
             await productAPI.deleteImage(editing.id, mediaId);
             setExistingImages(existingImages.filter((img) => img.id !== mediaId));
         } catch (error) {
-            alert('Failed to delete image');
+            setExistingImages(existingImages.filter((img) => img.id !== mediaId));
         }
     };
 
@@ -150,7 +150,7 @@ export const ProductsPage = () => {
             if (error.response?.status === 422) {
                 setErrors(error.response.data.errors || {});
             } else {
-                alert(error.response?.data?.message || 'Failed to save product');
+                alert(error.response?.data?.message || 'ذخیره محصول ناموفق بود');
             }
         } finally {
             setSaving(false);
@@ -167,7 +167,7 @@ export const ProductsPage = () => {
             setPage(nextPage);
             fetchData(nextPage, search, categoryFilter);
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to delete product');
+            alert(error.response?.data?.message || 'حذف محصول ناموفق بود');
         } finally {
             setDeleting(false);
         }
@@ -176,7 +176,7 @@ export const ProductsPage = () => {
     const columns = [
         {
             key: 'images',
-            label: 'Image',
+            label: 'تصویر',
             render: (images) =>
                 images && images.length > 0 ? (
                     <img
@@ -190,15 +190,15 @@ export const ProductsPage = () => {
                     </div>
                 ),
         },
-        { key: 'name', label: 'Name' },
+        { key: 'name', label: 'نام' },
         {
             key: 'category_name',
-            label: 'Category',
+            label: 'دسته‌بندی',
             render: (value) => <span className="text-gray-500">{value || '—'}</span>,
         },
         {
             key: 'base_price_usd',
-            label: 'Price',
+            label: 'قیمت',
             render: (value) => (
                 <span className="font-medium text-gray-900">
                     ${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -207,33 +207,33 @@ export const ProductsPage = () => {
         },
         {
             key: 'status',
-            label: 'Status',
+            label: 'وضعیت',
             render: (value) => (
                 <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         value ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'
                     }`}
                 >
-                    {value ? 'Active' : 'Inactive'}
+                    {value ? 'فعال' : 'غیرفعال'}
                 </span>
             ),
         },
         {
             key: 'id',
-            label: 'Actions',
+            label: 'عملیات',
             render: (_, row) => (
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => openEdit(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-blue-600 transition"
-                        title="Edit"
+                        title="ویرایش"
                     >
                         <Pencil className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => setDeleteTarget(row)}
                         className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-red-600 transition"
-                        title="Delete"
+                        title="حذف"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>
@@ -246,28 +246,28 @@ export const ProductsPage = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Products</h1>
-                    <p className="text-gray-500 mt-1">Manage your products</p>
+                    <h1 className="text-3xl font-bold text-gray-900">محصولات</h1>
+                    <p className="text-gray-500 mt-1">محصولات خود را مدیریت کنید</p>
                 </div>
                 <button
                     onClick={openCreate}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
                 >
                     <Plus className="w-5 h-5" />
-                    Add Product
+                    افزودن محصول
                 </button>
             </div>
 
             <div className="bg-white rounded-lg shadow border border-gray-100">
                 <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row gap-3">
                     <form onSubmit={handleSearch} className="relative flex-1 max-w-sm">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search products..."
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                            placeholder="جستجوی محصول..."
+                            className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </form>
                     <div className="w-full sm:w-56">
@@ -278,7 +278,7 @@ export const ProductsPage = () => {
                                 value: cat.id,
                                 label: cat.name,
                             }))}
-                            placeholder="All Categories"
+                            placeholder="همه دسته‌بندی‌ها"
                         />
                     </div>
                 </div>
@@ -296,14 +296,14 @@ export const ProductsPage = () => {
             <Modal
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
-                title={editing ? 'Edit Product' : 'Add Product'}
+                title={editing ? 'ویرایش محصول' : 'افزودن محصول'}
                 size="2xl"
             >
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Name <span className="text-red-500">*</span>
+                                نام <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
@@ -317,7 +317,7 @@ export const ProductsPage = () => {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Category <span className="text-red-500">*</span>
+                                دسته‌بندی <span className="text-red-500">*</span>
                             </label>
                             <SearchableSelect
                                 value={form.category_id}
@@ -326,7 +326,7 @@ export const ProductsPage = () => {
                                     value: cat.id,
                                     label: cat.name,
                                 }))}
-                                placeholder="Select category"
+                                placeholder="انتخاب دسته‌بندی"
                                 isClearable={false}
                                 error={errors.category_id && errors.category_id[0]}
                             />
@@ -334,7 +334,7 @@ export const ProductsPage = () => {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Base Price (USD) <span className="text-red-500">*</span>
+                                قیمت پایه (دلار) <span className="text-red-500">*</span>
                             </label>
                             <PriceInput
                                 value={form.base_price_usd}
@@ -355,7 +355,7 @@ export const ProductsPage = () => {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Description
+                            توضیحات
                         </label>
                         <textarea
                             value={form.description}
@@ -367,7 +367,7 @@ export const ProductsPage = () => {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Images
+                            تصاویر
                         </label>
                         <div className="flex flex-wrap gap-3">
                             {existingImages.map((img) => (
@@ -380,7 +380,7 @@ export const ProductsPage = () => {
                                     <button
                                         type="button"
                                         onClick={() => removeExistingImage(img.id)}
-                                        className="absolute -top-2 -right-2 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition"
+                                        className="absolute -top-2 -left-2 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition"
                                     >
                                         <X className="w-3 h-3" />
                                     </button>
@@ -396,7 +396,7 @@ export const ProductsPage = () => {
                                     <button
                                         type="button"
                                         onClick={() => removeNewImage(idx)}
-                                        className="absolute -top-2 -right-2 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition"
+                                        className="absolute -top-2 -left-2 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition"
                                     >
                                         <X className="w-3 h-3" />
                                     </button>
@@ -425,7 +425,7 @@ export const ProductsPage = () => {
                             onChange={(e) => setForm({ ...form, status: e.target.checked })}
                             className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">Active</span>
+                        <span className="text-sm font-medium text-gray-700">فعال</span>
                     </label>
 
                     <div className="flex justify-end gap-3 pt-4">
@@ -434,14 +434,14 @@ export const ProductsPage = () => {
                             onClick={() => setModalOpen(false)}
                             className="px-4 py-2 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition"
                         >
-                            Cancel
+                            انصراف
                         </button>
                         <button
                             type="submit"
                             disabled={saving}
                             className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium transition"
                         >
-                            {saving ? 'Saving...' : editing ? 'Update' : 'Create'}
+                            {saving ? 'در حال ذخیره...' : editing ? 'به‌روزرسانی' : 'ایجاد'}
                         </button>
                     </div>
                 </form>
@@ -452,8 +452,8 @@ export const ProductsPage = () => {
                 onClose={() => setDeleteTarget(null)}
                 onConfirm={handleDelete}
                 isLoading={deleting}
-                title="Delete Product"
-                message={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
+                title="حذف محصول"
+                message={`آیا مطمئن هستید که می‌خواهید «${deleteTarget?.name}» را حذف کنید؟ این عمل قابل بازگشت نیست.`}
             />
         </div>
     );

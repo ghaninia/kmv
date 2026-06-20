@@ -6,9 +6,9 @@ export const ConfirmDialog = ({
     isOpen,
     onClose,
     onConfirm,
-    title = 'Confirm',
-    message = 'Are you sure?',
-    confirmText = 'Delete',
+    title = 'تأیید',
+    message = 'آیا مطمئن هستید؟',
+    confirmText = 'حذف',
     isLoading = false,
 }) => {
     return (
@@ -26,7 +26,7 @@ export const ConfirmDialog = ({
                         onClick={onClose}
                         className="px-4 py-2 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition"
                     >
-                        Cancel
+                        انصراف
                     </button>
                     <button
                         type="button"
@@ -34,7 +34,7 @@ export const ConfirmDialog = ({
                         disabled={isLoading}
                         className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-medium transition"
                     >
-                        {isLoading ? 'Please wait...' : confirmText}
+                        {isLoading ? 'لطفاً صبر کنید...' : confirmText}
                     </button>
                 </div>
             </div>

@@ -14,7 +14,7 @@ export const SearchableSelect = ({
     value,
     onChange,
     options = [],
-    placeholder = 'Select...',
+    placeholder = 'انتخاب کنید...',
     isClearable = true,
     isDisabled = false,
     error,

@@ -34,37 +34,37 @@ export const Dashboard = () => {
     if (!stats) {
         return (
             <div className="text-center py-12">
-                <p className="text-gray-500">Failed to load dashboard</p>
+                <p className="text-gray-500">بارگذاری داشبورد ناموفق بود</p>
             </div>
         );
     }
 
     const cards = [
         {
-            title: 'Total Products',
+            title: 'کل محصولات',
             value: stats.total_products,
             active: stats.active_products,
             icon: Package,
             color: 'blue',
         },
         {
-            title: 'Total Categories',
+            title: 'کل دسته‌بندی‌ها',
             value: stats.total_categories,
             active: stats.active_categories,
             icon: Tag,
             color: 'green',
         },
         {
-            title: 'Total Catalogs',
+            title: 'کل کاتالوگ‌ها',
             value: stats.total_catalogs,
             active: stats.active_catalogs,
             icon: Boxes,
             color: 'purple',
         },
         {
-            title: 'USD to Toman',
+            title: 'دلار به تومان',
             value: stats.usd_rate_formatted,
-            subtitle: `Rate: ${(stats.usd_rate / 100).toLocaleString()}`,
+            subtitle: `نرخ: ${(stats.usd_rate / 100).toLocaleString()}`,
             icon: TrendingUp,
             color: 'orange',
         },
@@ -80,8 +80,8 @@ export const Dashboard = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                <p className="text-gray-500 mt-1">Welcome to the admin dashboard</p>
+                <h1 className="text-3xl font-bold text-gray-900">داشبورد</h1>
+                <p className="text-gray-500 mt-1">به پنل مدیریت خوش آمدید</p>
             </div>
 
             {/* Stats Grid */}
@@ -103,7 +103,7 @@ export const Dashboard = () => {
                                     </p>
                                     {card.active !== undefined && (
                                         <p className="text-sm text-gray-500 mt-1">
-                                            {card.active} active
+                                            {card.active} فعال
                                         </p>
                                     )}
                                     {card.subtitle && (
@@ -123,31 +123,31 @@ export const Dashboard = () => {
 
             {/* Recent Activity */}
             <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">دسترسی سریع</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <Link
                         to="/categories"
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
-                        <p className="font-medium text-gray-900">Manage Categories</p>
+                        <p className="font-medium text-gray-900">مدیریت دسته‌بندی‌ها</p>
                     </Link>
                     <Link
                         to="/products"
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
-                        <p className="font-medium text-gray-900">Manage Products</p>
+                        <p className="font-medium text-gray-900">مدیریت محصولات</p>
                     </Link>
                     <Link
                         to="/catalogs"
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
-                        <p className="font-medium text-gray-900">Manage Catalogs</p>
+                        <p className="font-medium text-gray-900">مدیریت کاتالوگ‌ها</p>
                     </Link>
                     <button
                         onClick={fetchStats}
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
-                        <p className="font-medium text-gray-900">Refresh Stats</p>
+                        <p className="font-medium text-gray-900">به‌روزرسانی آمار</p>
                     </button>
                 </div>
             </div>

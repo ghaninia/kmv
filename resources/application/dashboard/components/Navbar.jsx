@@ -24,7 +24,7 @@ export const Navbar = ({ onMenuClick }) => {
                         >
                             <Menu className="w-6 h-6" />
                         </button>
-                        <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
+                        <h1 className="text-xl font-semibold text-gray-900">پنل مدیریت</h1>
                     </div>
 
                     <div className="flex items-center gap-6">
@@ -32,20 +32,20 @@ export const Navbar = ({ onMenuClick }) => {
                         <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg">
                             <DollarSign className="w-5 h-5 text-green-600" />
                             <span className="text-sm font-medium text-gray-700">
-                                USD: {usdRateFormatted || 'Loading...'}
+                                دلار: {usdRateFormatted || 'در حال بارگذاری...'}
                             </span>
                         </div>
 
                         {/* User Menu */}
                         <div className="flex items-center gap-4">
-                            <div className="text-right">
+                            <div className="text-left">
                                 <p className="text-sm font-medium text-gray-900">{user?.name}</p>
                                 <p className="text-xs text-gray-500">{user?.email}</p>
                             </div>
                             <button
                                 onClick={handleLogout}
                                 className="p-2 rounded-lg hover:bg-red-50 text-red-600 transition"
-                                title="Logout"
+                                title="خروج"
                             >
                                 <LogOut className="w-5 h-5" />
                             </button>

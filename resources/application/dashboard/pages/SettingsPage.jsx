@@ -55,7 +55,7 @@ export const SettingsPage = () => {
 
         const tomanValue = parseInt(toman, 10);
         if (!toman || isNaN(tomanValue) || tomanValue < 0) {
-            setError('Please enter a valid USD rate.');
+            setError('لطفاً یک نرخ دلار معتبر وارد کنید.');
             return;
         }
 
@@ -72,9 +72,9 @@ export const SettingsPage = () => {
         } catch (err) {
             if (err.response?.status === 422) {
                 const errs = err.response.data.errors || {};
-                setError(errs.rate?.[0] || 'The entered value is invalid.');
+                setError(errs.rate?.[0] || 'مقدار واردشده نامعتبر است.');
             } else {
-                setError('Failed to save rate. Please try again.');
+                setError('ذخیره نرخ ناموفق بود. لطفاً دوباره تلاش کنید.');
             }
         } finally {
             setSaving(false);
@@ -84,8 +84,8 @@ export const SettingsPage = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-                <p className="text-gray-600">USD to Toman exchange rate settings</p>
+                <h1 className="text-2xl font-bold text-gray-900">تنظیمات</h1>
+                <p className="text-gray-600">تنظیمات نرخ تبدیل دلار به تومان</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -97,12 +97,12 @@ export const SettingsPage = () => {
                         </div>
                         <div>
                             <h2 className="text-lg font-semibold text-gray-900">
-                                USD to Toman Rate
+                                نرخ دلار به تومان
                             </h2>
                             <p className="text-sm text-gray-500">
                                 {isLoading
-                                    ? 'Loading...'
-                                    : `Current rate: ${currentFormatted ?? '-'} Toman`}
+                                    ? 'در حال بارگذاری...'
+                                    : `نرخ فعلی: ${currentFormatted ?? '-'} تومان`}
                             </p>
                         </div>
                     </div>
@@ -110,15 +110,15 @@ export const SettingsPage = () => {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Price per USD (Toman) *
+                                قیمت هر دلار (تومان) *
                             </label>
                             <PriceInput
                                 value={toman}
                                 onChange={setToman}
                                 allowDecimals={false}
-                                suffix="Toman"
+                                suffix="تومان"
                                 disabled={isLoading}
-                                placeholder="e.g. 850000"
+                                placeholder="مثلاً ۸۵۰۰۰۰"
                                 error={error}
                             />
                         </div>
@@ -130,12 +130,12 @@ export const SettingsPage = () => {
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-60 transition"
                             >
                                 <Save className="w-4 h-4" />
-                                {saving ? 'Saving...' : 'Save Rate'}
+                                {saving ? 'در حال ذخیره...' : 'ذخیره نرخ'}
                             </button>
                             {success && (
                                 <span className="inline-flex items-center gap-1 text-sm text-green-600">
                                     <Check className="w-4 h-4" />
-                                    Rate updated successfully
+                                    نرخ با موفقیت به‌روزرسانی شد
                                 </span>
                             )}
                         </div>
@@ -147,14 +147,14 @@ export const SettingsPage = () => {
                     <div className="flex items-center gap-2 mb-4">
                         <History className="w-5 h-5 text-gray-500" />
                         <h2 className="text-lg font-semibold text-gray-900">
-                            Rate History
+                            تاریخچه نرخ
                         </h2>
                     </div>
 
                     {historyLoading ? (
-                        <p className="text-sm text-gray-500">Loading...</p>
+                        <p className="text-sm text-gray-500">در حال بارگذاری...</p>
                     ) : history.length === 0 ? (
-                        <p className="text-sm text-gray-500">No history recorded yet.</p>
+                        <p className="text-sm text-gray-500">هنوز تاریخچه‌ای ثبت نشده است.</p>
                     ) : (
                         <ul className="space-y-2 max-h-80 overflow-y-auto">
                             {[...history].reverse().map((item, idx) => (
@@ -164,7 +164,7 @@ export const SettingsPage = () => {
                                 >
                                     <span className="text-gray-500">{item.date}</span>
                                     <span className="font-medium text-gray-900">
-                                        {item.rate_formatted} Toman
+                                        {item.rate_formatted} تومان
                                     </span>
                                 </li>
                             ))}
