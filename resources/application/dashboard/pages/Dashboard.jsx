@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Package, Tag, Boxes, TrendingUp } from 'lucide-react';
 import { dashboardAPI } from '../api';
 
@@ -124,24 +125,24 @@ export const Dashboard = () => {
             <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <a
-                        href="/categories"
+                    <Link
+                        to="/categories"
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
                         <p className="font-medium text-gray-900">Manage Categories</p>
-                    </a>
-                    <a
-                        href="/products"
+                    </Link>
+                    <Link
+                        to="/products"
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
                         <p className="font-medium text-gray-900">Manage Products</p>
-                    </a>
-                    <a
-                        href="/catalogs"
+                    </Link>
+                    <Link
+                        to="/catalogs"
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"
                     >
                         <p className="font-medium text-gray-900">Manage Catalogs</p>
-                    </a>
+                    </Link>
                     <button
                         onClick={fetchStats}
                         className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition text-center"

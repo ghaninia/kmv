@@ -19,10 +19,12 @@ return new class extends Migration
             $table->string('file_name');
             $table->string('mime_type')->nullable();
             $table->string('disk')->default('public');
+            $table->string('conversions_disk')->nullable();
             $table->unsignedBigInteger('size')->nullable();
 
             $table->json('manipulations')->nullable();
             $table->json('custom_properties')->nullable();
+            $table->json('generated_conversions')->nullable();
             $table->json('responsive_images')->nullable();
 
             $table->unsignedInteger('order_column')->nullable()->index();

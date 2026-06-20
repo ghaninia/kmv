@@ -28,7 +28,7 @@ class StoreProductRequest extends FormRequest
     {
         if (!$this->slug) {
             $this->merge([
-                'slug' => str($this->name)->slug(),
+                'slug' => (string) str($this->name)->slug(),
             ]);
         }
 

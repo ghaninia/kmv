@@ -6,6 +6,9 @@ import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { LoginPage } from './pages/LoginPage';
+import { CategoriesPage } from './pages/CategoriesPage';
+import { ProductsPage } from './pages/ProductsPage';
+import { CatalogsPage } from './pages/CatalogsPage';
 
 const Layout = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -81,7 +84,7 @@ const App = () => {
                     path="/categories"
                     element={
                         <ProtectedRoute>
-                            <div>Categories Page - Coming Soon</div>
+                            <CategoriesPage />
                         </ProtectedRoute>
                     }
                 />
@@ -89,7 +92,7 @@ const App = () => {
                     path="/products"
                     element={
                         <ProtectedRoute>
-                            <div>Products Page - Coming Soon</div>
+                            <ProductsPage />
                         </ProtectedRoute>
                     }
                 />
@@ -97,10 +100,11 @@ const App = () => {
                     path="/catalogs"
                     element={
                         <ProtectedRoute>
-                            <div>Catalogs Page - Coming Soon</div>
+                            <CatalogsPage />
                         </ProtectedRoute>
                     }
                 />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );
