@@ -33,7 +33,7 @@ export function SearchBar({
             </label>
             <Search
                 aria-hidden="true"
-                className="pointer-events-none absolute left-3.5 top-1/2 size-5 -translate-y-1/2 text-slate-400"
+                className="pointer-events-none absolute start-3.5 top-1/2 size-5 -translate-y-1/2 text-slate-400"
             />
             <input
                 id="catalog-search"
@@ -43,7 +43,7 @@ export function SearchBar({
                 placeholder={placeholder}
                 autoComplete="off"
                 className={clsx(
-                    'w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-11 pr-11 text-sm text-slate-900 shadow-sm',
+                    'w-full rounded-xl border border-slate-200 bg-white py-2.5 ps-11 pe-11 text-sm text-slate-900 shadow-sm',
                     'placeholder:text-slate-400',
                     'transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30',
                 )}
@@ -54,7 +54,7 @@ export function SearchBar({
                     onClick={() => onChange('')}
                     aria-label="Clear search"
                     className={clsx(
-                        'absolute right-2.5 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400',
+                        'absolute end-2.5 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400',
                         'transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40',
                     )}
                 >

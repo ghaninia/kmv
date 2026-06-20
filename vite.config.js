@@ -7,7 +7,7 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig({
     resolve: {
         alias: {
-            '@catalog': fileURLToPath(new URL('./resources/catalog', import.meta.url)),
+            '@catalog': fileURLToPath(new URL('./resources/application/catalog', import.meta.url)),
         },
     },
     plugins: [
@@ -15,7 +15,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/application/dashboard/app.jsx',
-                'resources/catalog/main.tsx',
+                'resources/application/catalog/main.tsx',
             ],
             refresh: true,
         }),

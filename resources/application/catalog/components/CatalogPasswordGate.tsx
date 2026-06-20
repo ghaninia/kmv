@@ -90,7 +90,7 @@ export function CatalogPasswordGate({
                                 aria-invalid={Boolean(error)}
                                 aria-describedby={error ? 'catalog-password-error' : undefined}
                                 className={clsx(
-                                    'w-full rounded-xl border bg-white px-4 py-3 pr-12 text-sm text-slate-900 shadow-sm transition',
+                                    'w-full rounded-xl border bg-white px-4 py-3 pe-12 text-sm text-slate-900 shadow-sm transition',
                                     'placeholder:text-slate-400 focus:outline-none focus:ring-2',
                                     error
                                         ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/30'
@@ -102,7 +102,7 @@ export function CatalogPasswordGate({
                                 type="button"
                                 onClick={() => setShowPassword((shown) => !shown)}
                                 aria-label={showPassword ? 'Hide password' : 'Show password'}
-                                className="absolute right-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                                className="absolute end-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
                             >
                                 {showPassword ? (
                                     <EyeOff aria-hidden="true" className="size-4" />

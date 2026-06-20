@@ -60,7 +60,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                 {product.stock !== undefined && (
                     <span
                         className={clsx(
-                            'absolute left-3 top-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur',
+                            'absolute start-3 top-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur',
                             inStock
                                 ? 'bg-emerald-50/90 text-emerald-700'
                                 : 'bg-rose-50/90 text-rose-700',

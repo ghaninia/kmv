@@ -19,8 +19,8 @@
         "allowJs": true,
         "baseUrl": ".",
         "paths": {
-            "@catalog/*": ["resources/catalog/*"]
+            "@catalog/*": ["resources/application/catalog/*"]
         }
     },
-    "include": ["resources/catalog"]
+    "include": ["resources/application/catalog"]
 }

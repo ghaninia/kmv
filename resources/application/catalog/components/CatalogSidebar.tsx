@@ -44,7 +44,7 @@ export function CatalogSidebar({
                                     onClick={() => onSelectCategory(group.category.id)}
                                     aria-current={isActive ? 'true' : undefined}
                                     className={clsx(
-                                        'group relative flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition',
+                                        'group relative flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-start text-sm transition',
                                         'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50',
                                         isActive
                                             ? 'bg-slate-900 text-white'
@@ -55,7 +55,7 @@ export function CatalogSidebar({
                                         <motion.span
                                             layoutId="active-category-indicator"
                                             aria-hidden="true"
-                                            className="absolute inset-y-1.5 left-0 w-1 rounded-full bg-indigo-400"
+                                            className="absolute inset-y-1.5 start-0 w-1 rounded-full bg-indigo-400"
                                             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                                         />
                                     )}
