@@ -45,6 +45,7 @@ type RawProduct = {
     name: string;
     description?: string | null;
     image?: string | null;
+    images?: (string | null)[] | null;
     sku?: string | null;
     stock?: number | null;
     price_usd: number;
@@ -74,11 +75,17 @@ type RawCatalog = {
 const FALLBACK_IMAGE = '/storage/placeholders/product.jpg';
 
 function mapProduct(raw: RawProduct): Product {
+    const gallery = (raw.images ?? [])
+        .filter((url): url is string => Boolean(url));
+    const primary = raw.image ?? gallery[0] ?? FALLBACK_IMAGE;
+    const images = gallery.length > 0 ? gallery : [primary];
+
     return {
         id: String(raw.id),
         name: raw.name,
         description: raw.description ?? undefined,
-        imageUrl: raw.image ?? FALLBACK_IMAGE,
+        imageUrl: primary,
+        images,
         sku: raw.sku ?? undefined,
         stock: raw.stock ?? undefined,
         priceUSD: raw.price_usd,

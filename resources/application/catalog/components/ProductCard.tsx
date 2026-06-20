@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ImageOff, PackageCheck, PackageX } from 'lucide-react';
+import { ArrowRight, ImageOff, Layers, PackageCheck, PackageX } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { Product } from '../types/catalog';
-import { formatPersianNumber, formatToman, formatUsd } from '../utils/currency';
+import { formatPersianNumber, formatToman } from '../utils/currency';
 
 type ProductCardProps = {
     product: Product;
@@ -20,13 +20,14 @@ const cardVariants = {
 /**
  * Premium product card.
  *
- * Features a zoom-on-hover image, soft elevation, dual-currency pricing
- * (Toman primary, USD secondary), optional SKU and stock badges, and a CTA. The
- * whole card lifts on hover; the image scales within a clipped frame.
+ * Features a zoom-on-hover image, soft elevation, Toman pricing, optional SKU
+ * and stock badges, a gallery indicator, and a CTA. The whole card lifts on
+ * hover; the image scales within a clipped frame.
  */
 export function ProductCard({ product, onViewDetails }: ProductCardProps) {
     const [imageFailed, setImageFailed] = useState(false);
     const inStock = product.stock === undefined || product.stock > 0;
+    const imageCount = product.images?.length ?? 0;
 
     return (
         <motion.article
@@ -34,14 +35,20 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
             whileHover={{ y: -6 }}
             transition={{ type: 'spring', stiffness: 320, damping: 24 }}
             className={clsx(
-                'group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white',
-                'shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-slate-200/70',
+                'group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white',
+                'shadow-sm ring-1 ring-transparent transition-all duration-300',
+                'hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/60 hover:ring-indigo-100',
                 'focus-within:ring-2 focus-within:ring-indigo-500/40',
             )}
             aria-label={product.name}
         >
             {/* Image frame with zoom-on-hover. */}
-            <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+            <button
+                type="button"
+                onClick={() => onViewDetails?.(product)}
+                className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-100 text-start focus:outline-none"
+                aria-label={`مشاهده جزئیات ${product.name}`}
+            >
                 {imageFailed ? (
                     <div className="flex h-full w-full items-center justify-center text-slate-300">
                         <ImageOff aria-hidden="true" className="size-10" />
@@ -55,6 +62,16 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                         onError={() => setImageFailed(true)}
                         className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     />
+                )}
+
+                {/* Subtle gradient for legibility of badges. */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                {imageCount > 1 && (
+                    <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
+                        <Layers aria-hidden="true" className="size-3.5" />
+                        {formatPersianNumber(imageCount)}
+                    </span>
                 )}
 
                 {product.stock !== undefined && (
@@ -76,7 +93,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                             : 'ناموجود'}
                     </span>
                 )}
-            </div>
+            </button>
 
             {/* Body. */}
             <div className="flex flex-1 flex-col p-5">
@@ -99,15 +116,13 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                 </div>
 
                 {/* Pricing. */}
-                <div className="mt-4">
+                <div className="mt-4 border-t border-slate-100 pt-4">
+                    <p className="text-[0.7rem] font-medium text-slate-400">قیمت</p>
                     <p
                         dir="rtl"
-                        className="text-lg font-bold tracking-tight text-slate-900"
+                        className="mt-0.5 text-lg font-bold tracking-tight text-slate-900"
                     >
                         {formatToman(product.priceToman)}
-                    </p>
-                    <p className="mt-0.5 text-xs font-medium text-slate-400">
-                        {formatUsd(product.priceUSD)}
                     </p>
                 </div>
 

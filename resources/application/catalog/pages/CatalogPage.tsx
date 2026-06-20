@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FileQuestion, PackageSearch, SearchX, TimerOff } from 'lucide-react';
@@ -10,6 +10,7 @@ import { CatalogHeader } from '../components/CatalogHeader';
 import { CatalogSidebar } from '../components/CatalogSidebar';
 import { CategorySection } from '../components/CategorySection';
 import { CatalogPasswordGate } from '../components/CatalogPasswordGate';
+import { ProductDetailModal } from '../components/ProductDetailModal';
 import { EmptyState } from '../components/EmptyState';
 import { LoadingState } from '../components/LoadingState';
 
@@ -35,15 +36,12 @@ export function CatalogPage() {
     );
     const { activeCategoryId, scrollToCategory } = useActiveCategory(categoryIds);
 
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
     const totalProducts = catalog?.products.length ?? 0;
 
     function handleViewProduct(product: Product) {
-        // Placeholder for a future product detail drawer/route. Kept as a no-op
-        // hook point so the CTA is wired without inventing unrequested UI.
-        if (import.meta.env.DEV) {
-            // eslint-disable-next-line no-console
-            console.debug('View product details:', product.id);
-        }
+        setSelectedProduct(product);
     }
 
     if (status === 'loading') {
@@ -200,6 +198,11 @@ export function CatalogPage() {
                     )}
                 </main>
             </div>
+
+            <ProductDetailModal
+                product={selectedProduct}
+                onClose={() => setSelectedProduct(null)}
+            />
         </div>
     );
 }

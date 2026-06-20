@@ -29,6 +29,8 @@ export type Product = {
     name: string;
     description?: string;
     imageUrl: string;
+    /** Full gallery of image URLs (includes the primary image). */
+    images: string[];
     sku?: string;
     stock?: number;
     priceUSD: number;

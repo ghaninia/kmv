@@ -75,6 +75,10 @@ class CatalogService
                 'price_usd' => $usdCents / 100,
                 'price_toman' => $tomanCents / 100,
                 'image' => $product->getFirstMedia('gallery')?->original_url,
+                'images' => $product->getMedia('gallery')
+                    ->map(fn ($media) => $media->original_url)
+                    ->values()
+                    ->all(),
             ];
         })->values();
 
