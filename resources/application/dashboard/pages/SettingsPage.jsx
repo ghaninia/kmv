@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DollarSign, Save, History, Check } from 'lucide-react';
 import { currencyAPI } from '../api';
 import { useAppStore } from '../store/appStore';
+import { PriceInput } from '../components/PriceInput';
 
 export const SettingsPage = () => {
     const setUSDRate = useAppStore((state) => state.setUSDRate);
@@ -111,19 +112,15 @@ export const SettingsPage = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Price per USD (Toman) *
                             </label>
-                            <input
-                                type="number"
-                                min="0"
-                                step="1"
+                            <PriceInput
                                 value={toman}
-                                onChange={(e) => setToman(e.target.value)}
+                                onChange={setToman}
+                                allowDecimals={false}
+                                suffix="Toman"
                                 disabled={isLoading}
                                 placeholder="e.g. 850000"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100"
+                                error={error}
                             />
-                            {error && (
-                                <p className="text-sm text-red-600 mt-1">{error}</p>
-                            )}
                         </div>
 
                         <div className="flex items-center gap-3">

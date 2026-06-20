@@ -4,6 +4,8 @@ import { productAPI, categoryAPI } from '../api';
 import { DataTable } from '../components/DataTable';
 import { Modal } from '../components/Modal';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { SlugInput } from '../components/SlugInput';
+import { PriceInput } from '../components/PriceInput';
 
 const emptyForm = {
     category_id: '',
@@ -339,33 +341,21 @@ export const ProductsPage = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Base Price (USD) <span className="text-red-500">*</span>
                             </label>
-                            <input
-                                type="number"
-                                step="0.01"
-                                min="0"
+                            <PriceInput
                                 value={form.base_price_usd}
-                                onChange={(e) => setForm({ ...form, base_price_usd: e.target.value })}
+                                onChange={(val) => setForm({ ...form, base_price_usd: val })}
+                                prefix="$"
                                 required
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                                error={errors.base_price_usd && errors.base_price_usd[0]}
                             />
-                            {errors.base_price_usd && (
-                                <p className="text-sm text-red-600 mt-1">{errors.base_price_usd[0]}</p>
-                            )}
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Slug
-                            </label>
-                            <input
-                                type="text"
-                                value={form.slug}
-                                onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                                placeholder="auto-generated if empty"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                            />
-                            {errors.slug && <p className="text-sm text-red-600 mt-1">{errors.slug[0]}</p>}
-                        </div>
+                        <SlugInput
+                            value={form.slug}
+                            onChange={(slug) => setForm((prev) => ({ ...prev, slug }))}
+                            source={form.name}
+                            error={errors.slug && errors.slug[0]}
+                        />
                     </div>
 
                     <div>

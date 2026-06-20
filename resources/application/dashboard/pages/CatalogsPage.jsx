@@ -14,6 +14,8 @@ import { catalogAPI, productAPI } from '../api';
 import { DataTable } from '../components/DataTable';
 import { Modal } from '../components/Modal';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { SlugInput } from '../components/SlugInput';
+import { PriceInput } from '../components/PriceInput';
 
 const emptyForm = { name: '', slug: '', description: '', status: true };
 
@@ -267,21 +269,12 @@ export const CatalogsPage = () => {
                             )}
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Slug
-                            </label>
-                            <input
-                                type="text"
-                                value={form.slug}
-                                onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                                placeholder="auto-generated if empty"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                            />
-                            {errors.slug && (
-                                <p className="text-sm text-red-600 mt-1">{errors.slug[0]}</p>
-                            )}
-                        </div>
+                        <SlugInput
+                            value={form.slug}
+                            onChange={(slug) => setForm((prev) => ({ ...prev, slug }))}
+                            source={form.name}
+                            error={errors.slug && errors.slug[0]}
+                        />
                     </div>
 
                     <div>
@@ -357,6 +350,25 @@ export const CatalogsPage = () => {
                 />
             )}
         </div>
+    );
+};
+
+const CatalogPriceField = ({ initialValue, onSave }) => {
+    const [value, setValue] = useState(String(initialValue ?? ''));
+
+    useEffect(() => {
+        setValue(String(initialValue ?? ''));
+    }, [initialValue]);
+
+    return (
+        <PriceInput
+            value={value}
+            onChange={setValue}
+            onBlur={() => onSave(value)}
+            prefix="$"
+            title="Custom price in this catalog"
+            inputClassName="!py-1 text-sm w-28"
+        />
     );
 };
 
@@ -565,17 +577,11 @@ const CatalogProductsModal = ({ catalog, onClose }) => {
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-1">
-                                            <span className="text-sm text-gray-500">$</span>
-                                            <input
-                                                type="number"
-                                                step="0.01"
-                                                min="0"
-                                                defaultValue={product.custom_price_usd}
-                                                onBlur={(e) =>
-                                                    handlePriceUpdate(product.id, e.target.value)
+                                            <CatalogPriceField
+                                                initialValue={product.custom_price_usd}
+                                                onSave={(val) =>
+                                                    handlePriceUpdate(product.id, val)
                                                 }
-                                                title="Custom price in this catalog"
-                                                className="w-24 px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm"
                                             />
                                         </div>
                                         <button
