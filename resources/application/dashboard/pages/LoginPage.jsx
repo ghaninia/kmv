@@ -10,8 +10,8 @@ export const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({
-        email: 'admin@example.com',
-        password: 'password',
+        email: '',
+        password: '',
     });
 
     const handleChange = (e) => {
@@ -111,15 +111,6 @@ export const LoginPage = () => {
                             {isLoading ? 'در حال ورود...' : 'ورود'}
                         </button>
                     </form>
-
-                    {/* Footer */}
-                    <p className="text-center text-sm text-gray-500">
-                        اطلاعات ورود نمونه:
-                        <br />
-                        ایمیل: admin@example.com
-                        <br />
-                        رمز عبور: password
-                    </p>
                 </div>
             </div>
         </div>
