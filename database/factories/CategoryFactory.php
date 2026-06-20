@@ -16,12 +16,28 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(2, true);
+        $name = $this->faker->unique()->randomElement([
+            'موبایل و تبلت',
+            'لپ‌تاپ و کامپیوتر',
+            'صوتی و تصویری',
+            'لوازم جانبی',
+            'کنسول و بازی',
+            'دوربین و عکاسی',
+            'لوازم خانگی',
+            'پوشاک و مد',
+            'کتاب و لوازم‌التحریر',
+            'ورزش و سفر',
+        ]);
 
         return [
             'name' => $name,
-            'slug' => str($name)->slug(),
-            'description' => $this->faker->sentence(10),
+            'slug' => 'category-'.$this->faker->unique()->numerify('######'),
+            'description' => $this->faker->randomElement([
+                'مجموعه‌ای متنوع از بهترین محصولات این دسته با قیمت مناسب.',
+                'جدیدترین و باکیفیت‌ترین کالاهای موجود در این دسته‌بندی.',
+                'گزیده‌ای از پرفروش‌ترین محصولات با ضمانت اصالت کالا.',
+                'انتخابی گسترده برای تمام سلیقه‌ها و بودجه‌ها.',
+            ]),
             'status' => true,
         ];
     }

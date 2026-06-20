@@ -16,12 +16,26 @@ class CatalogFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(2, true);
+        $name = $this->faker->unique()->randomElement([
+            'کاتالوگ فروش ویژه بهاره',
+            'کاتالوگ عمده‌فروشی',
+            'کاتالوگ محصولات دیجیتال',
+            'کاتالوگ تخفیف‌های فصلی',
+            'کاتالوگ لوازم خانگی',
+            'کاتالوگ همکاران فروش',
+            'کاتالوگ محصولات جدید',
+            'کاتالوگ فروشگاه مرکزی',
+        ]);
 
         return [
             'name' => $name,
-            'slug' => str($name)->slug(),
-            'description' => $this->faker->sentence(10),
+            'slug' => 'catalog-'.$this->faker->unique()->numerify('######'),
+            'description' => $this->faker->randomElement([
+                'فهرست کاملی از محصولات منتخب با قیمت‌های ویژه برای مشتریان.',
+                'کاتالوگ اختصاصی شامل بهترین محصولات با شرایط فروش مناسب.',
+                'مجموعه‌ای از کالاهای پرفروش با امکان سفارش آنلاین.',
+                'لیست محصولات به‌روز با قیمت‌گذاری رقابتی.',
+            ]),
             'status' => true,
         ];
     }
