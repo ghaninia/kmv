@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const DataTable = ({ columns, data, isLoading, onPageChange, pagination }) => {
