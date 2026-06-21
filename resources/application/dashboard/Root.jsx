@@ -49,17 +49,26 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
     const checkAuth = useAuthStore((state) => state.checkAuth);
     const isInitialized = useAuthStore((state) => state.isInitialized);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const fetchUSDRate = useAppStore((state) => state.fetchUSDRate);
 
     useEffect(() => {
         checkAuth();
+    }, []);
+
+    // Fetch USD rate only once authenticated (the endpoint requires auth),
+    // and refresh it every 5 minutes while authenticated.
+    useEffect(() => {
+        if (!isAuthenticated) {
+            return undefined;
+        }
+
         fetchUSDRate();
 
-        // Refresh USD rate every 5 minutes
         const interval = setInterval(fetchUSDRate, 5 * 60 * 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isAuthenticated]);
 
     if (!isInitialized) {
         return (
