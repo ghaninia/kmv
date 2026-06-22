@@ -719,8 +719,8 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
     return (
         <Modal isOpen onClose={onClose} title={`لینک‌های عمومی — ${catalog.name}`} size="2xl">
             <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row gap-3 p-4 bg-gray-50 rounded-lg items-end">
-                    <div className="flex-1">
+                <div className="flex flex-col sm:flex-row gap-3 p-4 bg-gray-50 rounded-lg items-stretch sm:items-end">
+                    <div className="w-full sm:flex-1">
                         <label className="block text-xs font-medium text-gray-600 mb-1">
                             رمز عبور (اختیاری)
                         </label>
@@ -743,7 +743,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex-1">
+                    <div className="w-full sm:flex-1">
                         <label className="block text-xs font-medium text-gray-600 mb-1">
                             تاریخ انقضا (اختیاری)
                         </label>
@@ -758,7 +758,7 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                     <button
                         onClick={handleCreate}
                         disabled={creating}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition"
+                        className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition"
                     >
                         <Plus className="w-4 h-4" />
                         ایجاد
@@ -776,13 +776,13 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                         {links.map((link) => (
                             <div
                                 key={link.id}
-                                className="flex items-center gap-3 p-3 border border-gray-100 rounded-lg hover:bg-gray-50"
+                                className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 border border-gray-100 rounded-lg hover:bg-gray-50"
                             >
                                 <div className="flex-1 min-w-0">
                                     <p className="font-mono text-sm text-gray-900 truncate">
                                         {link.public_url}
                                     </p>
-                                    <div className="flex items-center gap-2 mt-1">
+                                    <div className="flex flex-wrap items-center gap-2 mt-1">
                                         {link.is_password_protected && (
                                             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700">
                                                 محافظت‌شده
@@ -804,9 +804,9 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                                         )}
                                     </div>
                                     {link.password && (
-                                        <div className="flex items-center gap-2 mt-2">
+                                        <div className="flex flex-wrap items-center gap-2 mt-2">
                                             <span className="text-xs text-gray-500">رمز عبور:</span>
-                                            <code className="font-mono text-xs bg-gray-100 text-gray-800 px-2 py-0.5 rounded select-all">
+                                            <code className="font-mono text-xs bg-gray-100 text-gray-800 px-2 py-0.5 rounded select-all break-all">
                                                 {link.password}
                                             </code>
                                             <button
@@ -823,33 +823,35 @@ const CatalogLinksModal = ({ catalog, onClose }) => {
                                         </div>
                                     )}
                                 </div>
-                                <a
-                                    href={link.public_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
-                                    title="پیش‌نمایش"
-                                >
-                                    <ExternalLink className="w-4 h-4" />
-                                </a>
-                                <button
-                                    onClick={() => copyToClipboard(link.public_url, link.id)}
-                                    className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
-                                    title="کپی لینک"
-                                >
-                                    {copiedId === link.id ? (
-                                        <Check className="w-4 h-4 text-green-600" />
-                                    ) : (
-                                        <Copy className="w-4 h-4" />
-                                    )}
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(link.id)}
-                                    className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
-                                    title="حذف لینک"
-                                >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
+                                <div className="flex items-center gap-1 self-end sm:self-auto shrink-0 border-t sm:border-t-0 border-gray-100 pt-2 sm:pt-0">
+                                    <a
+                                        href={link.public_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
+                                        title="پیش‌نمایش"
+                                    >
+                                        <ExternalLink className="w-4 h-4" />
+                                    </a>
+                                    <button
+                                        onClick={() => copyToClipboard(link.public_url, link.id)}
+                                        className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-blue-600 transition"
+                                        title="کپی لینک"
+                                    >
+                                        {copiedId === link.id ? (
+                                            <Check className="w-4 h-4 text-green-600" />
+                                        ) : (
+                                            <Copy className="w-4 h-4" />
+                                        )}
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(link.id)}
+                                        className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-red-600 transition"
+                                        title="حذف لینک"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
