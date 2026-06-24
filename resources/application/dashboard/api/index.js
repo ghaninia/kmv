@@ -145,6 +145,11 @@ export const catalogAPI = {
         return response.data;
     },
 
+    clone: async (id) => {
+        const response = await axios.post(`/catalogs/${id}/clone`);
+        return response.data;
+    },
+
     attachProducts: async (id, products) => {
         const response = await axios.post(`/catalogs/${id}/attach-products`, {
             products,

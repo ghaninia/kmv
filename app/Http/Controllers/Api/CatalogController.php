@@ -132,6 +132,21 @@ class CatalogController extends Controller
     }
 
     /**
+     * Clone catalog with all of its products
+     */
+    public function clone(Catalog $catalog): JsonResponse
+    {
+        $newCatalog = $this->catalogService->cloneCatalog($catalog);
+        $newCatalog->loadCount('products');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Catalog cloned successfully',
+            'data' => new CatalogResource($newCatalog),
+        ], 201);
+    }
+
+    /**
      * Get catalog products
      */
     public function getProducts(Catalog $catalog, Request $request): JsonResponse

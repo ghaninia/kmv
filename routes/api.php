@@ -35,6 +35,7 @@ Route::prefix('api')->group(function () {
 
         // Catalogs
         Route::apiResource('catalogs', CatalogController::class);
+        Route::post('catalogs/{catalog}/clone', [CatalogController::class, 'clone']);
         Route::get('catalogs/{catalog}/products', [CatalogController::class, 'getProducts']);
         Route::get('catalogs/{catalog}/with-products', [CatalogController::class, 'showWithProducts']);
         Route::post('catalogs/{catalog}/attach-products', [CatalogController::class, 'attachProducts']);

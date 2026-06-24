@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Catalog;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CatalogService
 {
@@ -40,6 +42,68 @@ class CatalogService
         $catalog->products()->updateExistingPivot($product->id, [
             'custom_price_usd' => $price,
         ]);
+    }
+
+    /**
+     * Clone a catalog along with all of its attached products (and their
+     * custom prices). A unique name/slug is generated for the new catalog so
+     * the database unique constraints are respected.
+     */
+    public function cloneCatalog(Catalog $catalog): Catalog
+    {
+        return DB::transaction(function () use ($catalog) {
+            $newCatalog = Catalog::create([
+                'name' => $this->generateUniqueName($catalog->name),
+                'slug' => $this->generateUniqueSlug(),
+                'description' => $catalog->description,
+                'status' => $catalog->status,
+            ]);
+
+            $attachData = $catalog->products()
+                ->get()
+                ->mapWithKeys(fn (Product $product) => [
+                    $product->id => [
+                        'custom_price_usd' => $product->pivot->custom_price_usd,
+                    ],
+                ])
+                ->all();
+
+            if (!empty($attachData)) {
+                $newCatalog->products()->attach($attachData);
+            }
+
+            return $newCatalog;
+        });
+    }
+
+    /**
+     * Build a unique catalog name based on the source name by appending a
+     * "(کپی)" suffix, adding an incrementing counter when needed.
+     */
+    private function generateUniqueName(string $name): string
+    {
+        $base = $name . ' (کپی)';
+        $candidate = $base;
+        $counter = 2;
+
+        while (Catalog::where('name', $candidate)->exists()) {
+            $candidate = $base . ' ' . $counter;
+            $counter++;
+        }
+
+        return $candidate;
+    }
+
+    /**
+     * Generate a brand-new, unique catalog slug from scratch.
+     */
+    private function generateUniqueSlug(): string
+    {
+        do {
+            $candidate = strtolower(Str::random(10));
+        } while (Catalog::where('slug', $candidate)->exists());
+
+        return $candidate;
     }
 
     /**

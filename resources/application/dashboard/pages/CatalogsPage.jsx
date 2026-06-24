@@ -7,6 +7,7 @@ import {
     Boxes,
     Link2,
     Copy,
+    CopyPlus,
     Check,
     X,
     RefreshCw,
@@ -57,6 +58,9 @@ export const CatalogsPage = () => {
 
     const [deleteTarget, setDeleteTarget] = useState(null);
     const [deleting, setDeleting] = useState(false);
+
+    const [cloneTarget, setCloneTarget] = useState(null);
+    const [cloningId, setCloningId] = useState(null);
 
     const [productsCatalog, setProductsCatalog] = useState(null);
     const [linksCatalog, setLinksCatalog] = useState(null);
@@ -149,6 +153,20 @@ export const CatalogsPage = () => {
         }
     };
 
+    const handleClone = async (row) => {
+        setCloningId(row.id);
+        try {
+            await catalogAPI.clone(row.id);
+            setCloneTarget(null);
+            setPage(1);
+            fetchData(1, search);
+        } catch (error) {
+            alert(error.response?.data?.message || 'کپی کاتالوگ ناموفق بود');
+        } finally {
+            setCloningId(null);
+        }
+    };
+
     const columns = [
         { key: 'name', label: 'نام' },
         {
@@ -196,6 +214,18 @@ export const CatalogsPage = () => {
                         title="لینک‌های عمومی"
                     >
                         <Link2 className="w-4 h-4" />
+                    </button>
+                    <button
+                        onClick={() => setCloneTarget(row)}
+                        disabled={cloningId === row.id}
+                        className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-amber-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        title="کپی کاتالوگ"
+                    >
+                        {cloningId === row.id ? (
+                            <RefreshCw className="w-4 h-4 animate-spin" />
+                        ) : (
+                            <CopyPlus className="w-4 h-4" />
+                        )}
                     </button>
                     <button
                         onClick={() => openEdit(row)}
@@ -354,6 +384,17 @@ export const CatalogsPage = () => {
                 isLoading={deleting}
                 title="حذف کاتالوگ"
                 message={`آیا مطمئن هستید که می‌خواهید «${deleteTarget?.name}» را حذف کنید؟ این عمل قابل بازگشت نیست.`}
+            />
+
+            <ConfirmDialog
+                isOpen={!!cloneTarget}
+                onClose={() => setCloneTarget(null)}
+                onConfirm={() => handleClone(cloneTarget)}
+                isLoading={cloningId === cloneTarget?.id}
+                confirmText="کپی کاتالوگ"
+                variant="info"
+                title="کپی کاتالوگ"
+                message={`آیا می‌خواهید از «${cloneTarget?.name}» به همراه تمام محصولات و قیمت‌های آن یک کپی جدید بسازید؟`}
             />
 
             {productsCatalog && (
