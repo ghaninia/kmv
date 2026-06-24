@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/application/catalog/main.tsx": {
-    "file": "assets/main-CYsuc6JM.js",
+    "file": "assets/main-b37jgmQB.js",
     "name": "main",
     "src": "resources/application/catalog/main.tsx",
     "isEntry": true,
@@ -12,11 +12,11 @@
       "_index-mAGGn4AP.js"
     ],
     "css": [
-      "assets/main-mB-epjzo.css"
+      "assets/main-Cj2FfDki.css"
     ]
   },
   "resources/application/dashboard/app.jsx": {
-    "file": "assets/app-BOedPZ8U.js",
+    "file": "assets/app-D3OMdqCw.js",
     "name": "app",
     "src": "resources/application/dashboard/app.jsx",
     "isEntry": true,
@@ -24,7 +24,7 @@
       "_index-mAGGn4AP.js"
     ],
     "css": [
-      "assets/app-Jru1kpjd.css"
+      "assets/app-CC6WrWO1.css"
     ]
   }
 }
