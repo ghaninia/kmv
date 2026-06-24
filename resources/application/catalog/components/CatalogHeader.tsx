@@ -27,7 +27,7 @@ export function CatalogHeader({
     searchQuery,
     onSearchChange,
     resultCount,
-    logoUrl,
+    logoUrl = '/images/logo.png',
 }: CatalogHeaderProps) {
     return (
         <header
@@ -41,24 +41,16 @@ export function CatalogHeader({
                 aria-hidden="true"
                 className="h-1 w-full bg-gradient-to-l from-brand-500 via-lime-400 to-amber-400"
             />
-            <div className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:py-5">
-                {/* Brand / title block. */}
-                <div className="flex items-center gap-4">
-                    {logoUrl ? (
-                        <img
-                            src={logoUrl}
-                            alt=""
-                            className="size-12 shrink-0 rounded-2xl object-contain ring-1 ring-brand-200"
-                        />
-                    ) : (
-                        <span
-                            aria-hidden="true"
-                            className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-600/25 ring-1 ring-brand-700/20"
-                        >
-                            <Sprout className="size-6" />
-                        </span>
-                    )}
-                    <div className="min-w-0">
+            <div className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:gap-8 lg:py-5">
+                {/* Title block — pinned to the right, with its small brand mark. */}
+                <div className="flex items-center gap-4 lg:flex-1">
+                    <span
+                        aria-hidden="true"
+                        className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-600/25 ring-1 ring-brand-700/20"
+                    >
+                        <Sprout className="size-6" />
+                    </span>
+                    <div className="min-w-0 text-right">
                         <h1 className="truncate text-xl font-bold tracking-tight text-brand-950 sm:text-2xl">
                             {catalog.title}
                         </h1>
@@ -75,8 +67,26 @@ export function CatalogHeader({
                     </div>
                 </div>
 
+                {/* Brand logo — perfectly centered. */}
+                <div className="flex shrink-0 items-center justify-center">
+                    {logoUrl ? (
+                        <img
+                            src={logoUrl}
+                            alt={catalog.title}
+                            className="h-14 w-auto shrink-0 object-contain sm:h-16"
+                        />
+                    ) : (
+                        <span
+                            aria-hidden="true"
+                            className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-600/25 ring-1 ring-brand-700/20"
+                        >
+                            <Sprout className="size-6" />
+                        </span>
+                    )}
+                </div>
+
                 {/* Search + count. */}
-                <div className="flex items-center gap-3 lg:gap-4">
+                <div className="flex items-center gap-3 lg:flex-1 lg:justify-end lg:gap-4">
                     <SearchBar
                         value={searchQuery}
                         onChange={onSearchChange}
