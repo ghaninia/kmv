@@ -66,6 +66,10 @@ class ProductController extends Controller
             $this->productService->addImages($product, $request->file('images'));
         }
 
+        if ($request->boolean('add_to_all_catalogs')) {
+            $this->productService->attachToAllCatalogs($product);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Product created successfully',

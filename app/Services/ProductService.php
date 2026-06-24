@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Catalog;
 use App\Models\Product;
 use Illuminate\Http\UploadedFile;
 
@@ -17,6 +18,24 @@ class ProductService
                 $product->addMedia($image)
                     ->toMediaCollection('gallery');
             }
+        }
+    }
+
+    /**
+     * Attach the product to every catalog using its base price.
+     *
+     * Existing catalog memberships are preserved; only catalogs the product is
+     * not already part of receive it (with a null custom price so the base
+     * price is used).
+     */
+    public function attachToAllCatalogs(Product $product): void
+    {
+        $attachData = Catalog::pluck('id')
+            ->mapWithKeys(fn ($catalogId) => [$catalogId => ['custom_price_usd' => null]])
+            ->all();
+
+        if (!empty($attachData)) {
+            $product->catalogs()->syncWithoutDetaching($attachData);
         }
     }
 

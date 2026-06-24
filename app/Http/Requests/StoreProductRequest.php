@@ -20,6 +20,7 @@ class StoreProductRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'base_price_usd' => ['required', 'integer', 'min:0'],
             'status' => ['boolean'],
+            'add_to_all_catalogs' => ['boolean'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:5120'], // 5MB max
         ];
     }

@@ -15,6 +15,7 @@ const emptyForm = {
     description: '',
     base_price_usd: '',
     status: true,
+    add_to_all_catalogs: false,
 };
 
 export const ProductsPage = () => {
@@ -98,6 +99,7 @@ export const ProductsPage = () => {
             description: row.description || '',
             base_price_usd: row.base_price_usd ?? '',
             status: !!row.status,
+            add_to_all_catalogs: false,
         });
         setNewImages([]);
         setExistingImages(row.images || []);
@@ -136,6 +138,9 @@ export const ProductsPage = () => {
                 base_price_usd: Math.round(parseFloat(form.base_price_usd || 0) * 100),
                 status: form.status ? 1 : 0,
             };
+            if (!editing) {
+                payload.add_to_all_catalogs = form.add_to_all_catalogs ? 1 : 0;
+            }
             if (newImages.length > 0) {
                 payload.images = newImages;
             }
@@ -427,6 +432,27 @@ export const ProductsPage = () => {
                         />
                         <span className="text-sm font-medium text-gray-700">فعال</span>
                     </label>
+
+                    {!editing && (
+                        <label className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <input
+                                type="checkbox"
+                                checked={form.add_to_all_catalogs}
+                                onChange={(e) =>
+                                    setForm({ ...form, add_to_all_catalogs: e.target.checked })
+                                }
+                                className="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            />
+                            <span>
+                                <span className="block text-sm font-medium text-gray-700">
+                                    افزودن خودکار به همه کاتالوگ‌ها
+                                </span>
+                                <span className="block text-xs text-gray-500">
+                                    این محصول با قیمت پایه به تمام کاتالوگ‌های موجود اضافه می‌شود
+                                </span>
+                            </span>
+                        </label>
+                    )}
 
                     <div className="flex justify-end gap-3 pt-4">
                         <button
