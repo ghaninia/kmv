@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { Catalog, CatalogStatus } from '../types/catalog';
 import { CatalogError, fetchCatalog } from '../utils/api';
-import { clearStoredPassword, getStoredPassword, storePassword } from '../utils/storage';
+import { clearStoredPassword, resolveInitialPassword, storePassword, stripPasswordFromUrl } from '../utils/storage';
 
 type UseCatalogResult = {
     catalog: Catalog | null;
@@ -20,9 +20,9 @@ type UseCatalogResult = {
  * Load a catalog by slug and manage its lifecycle: loading, ready, password
  * gating, and the various error states.
  *
- * On mount it attempts an unauthenticated fetch. If the catalog is protected we
- * first try any password cached in session storage; otherwise we surface the
- * password gate. Successful password submissions are cached for the session.
+ * On mount it checks the URL and browser storage for a previously verified
+ * password, then fetches the catalog automatically when one is available.
+ * Successful submissions are persisted for later visits to the same link.
  */
 export function useCatalog(slug: string | undefined): UseCatalogResult {
     const [catalog, setCatalog] = useState<Catalog | null>(null);
@@ -41,11 +41,17 @@ export function useCatalog(slug: string | undefined): UseCatalogResult {
             setStatus('loading');
             setPasswordError(null);
 
-            const cachedPassword = getStoredPassword(slug);
+            const initialPassword = resolveInitialPassword(slug);
 
             try {
-                const data = await fetchCatalog(slug, cachedPassword ?? undefined);
+                const data = await fetchCatalog(slug, initialPassword ?? undefined);
                 if (signal.aborted) return;
+
+                if (initialPassword) {
+                    storePassword(slug, initialPassword);
+                    stripPasswordFromUrl();
+                }
+
                 setCatalog(data);
                 setStatus('ready');
             } catch (error) {
@@ -56,6 +62,7 @@ export function useCatalog(slug: string | undefined): UseCatalogResult {
                     // fall back to the password gate.
                     if (error.kind === 'invalid-password') {
                         clearStoredPassword(slug);
+                        stripPasswordFromUrl();
                         setStatus('password-required');
                         return;
                     }
@@ -86,6 +93,7 @@ export function useCatalog(slug: string | undefined): UseCatalogResult {
             try {
                 const data = await fetchCatalog(slug, password);
                 storePassword(slug, password);
+                stripPasswordFromUrl();
                 setCatalog(data);
                 setStatus('ready');
             } catch (error) {
