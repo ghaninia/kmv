@@ -1,30 +1,30 @@
 {
-  "_index-BfBfckRt.js": {
-    "file": "assets/index-BfBfckRt.js",
+  "_index-DEGtPF0s.js": {
+    "file": "assets/index-DEGtPF0s.js",
     "name": "index"
   },
   "resources/application/catalog/main.tsx": {
-    "file": "assets/main-C3LDFx3j.js",
+    "file": "assets/main-Dz_d-C5O.js",
     "name": "main",
     "src": "resources/application/catalog/main.tsx",
     "isEntry": true,
     "imports": [
-      "_index-BfBfckRt.js"
+      "_index-DEGtPF0s.js"
     ],
     "css": [
-      "assets/main-BbBcXaUH.css"
+      "assets/main-CyIUa4Bv.css"
     ]
   },
   "resources/application/dashboard/app.jsx": {
-    "file": "assets/app-DMzWc2pr.js",
+    "file": "assets/app-B9lNcAcw.js",
     "name": "app",
     "src": "resources/application/dashboard/app.jsx",
     "isEntry": true,
     "imports": [
-      "_index-BfBfckRt.js"
+      "_index-DEGtPF0s.js"
     ],
     "css": [
-      "assets/app-cyGomHhm.css"
+      "assets/app-d-5h2IZb.css"
     ]
   }
 }
