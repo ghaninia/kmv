@@ -29,7 +29,7 @@ export function ProductDetailModal({ product, onClose, onAddToCart }: ProductDet
     const images = product?.images ?? [];
     const hasGallery = images.length > 1;
     const isAvailable = product?.isAvailable !== false;
-    const unavailableMessage = 'محصول موجود نیست ! تماس بگیرد';
+    const unavailableMessage = 'در انتظار شارژ مجدد';
 
     useEffect(() => {
         setActiveIndex(0);

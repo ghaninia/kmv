@@ -36,7 +36,7 @@ export function ProductCard({
     const [justAdded, setJustAdded] = useState(false);
     const imageCount = product.images?.length ?? 0;
     const isAvailable = product.isAvailable !== false;
-    const unavailableMessage = 'محصول موجود نیست ! تماس بگیرد';
+    const unavailableMessage = 'در انتظار شارژ مجدد';
     const inCart = cartQuantity > 0;
 
     function handleAddToCart() {
