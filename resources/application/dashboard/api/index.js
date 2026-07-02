@@ -205,6 +205,11 @@ export const orderAPI = {
         const response = await axios.patch(`/orders/${id}/status`, { status });
         return response.data.data;
     },
+
+    delete: async (id) => {
+        const response = await axios.delete(`/orders/${id}`);
+        return response.data;
+    },
 };
 
 export const currencyAPI = {

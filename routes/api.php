@@ -56,6 +56,7 @@ Route::prefix('api')->group(function () {
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/orders/{order}', [OrderController::class, 'show']);
         Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus']);
+        Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
         Route::get('/orders/{order}/invoice', [OrderController::class, 'invoice']);
     });
 });

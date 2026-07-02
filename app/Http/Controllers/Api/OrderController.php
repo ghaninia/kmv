@@ -68,6 +68,16 @@ class OrderController extends Controller
         ]);
     }
 
+    public function destroy(Order $order): JsonResponse
+    {
+        $order->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'پیش‌فاکتور حذف شد',
+        ]);
+    }
+
     public function invoice(Order $order): View
     {
         $order->load(['items', 'catalog']);

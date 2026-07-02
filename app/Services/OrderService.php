@@ -111,7 +111,7 @@ class OrderService
 
         do {
             $number = $prefix . '-' . str_pad((string) random_int(1, 9999), 4, '0', STR_PAD_LEFT);
-        } while (Order::where('order_number', $number)->exists());
+        } while (Order::withTrashed()->where('order_number', $number)->exists());
 
         return $number;
     }

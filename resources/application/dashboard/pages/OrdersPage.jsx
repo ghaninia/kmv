@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Eye, Printer, Search } from 'lucide-react';
+import { Eye, Printer, Search, Trash2 } from 'lucide-react';
 import { orderAPI } from '../api';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 import { DataTable } from '../components/DataTable';
 import { Modal } from '../components/Modal';
+import { SearchableSelect } from '../components/SearchableSelect';
 
 const statusOptions = [
     { value: '', label: 'همه وضعیت‌ها' },
@@ -10,6 +12,8 @@ const statusOptions = [
     { value: 'confirmed', label: 'تایید شده' },
     { value: 'cancelled', label: 'لغو شده' },
 ];
+
+const statusFilterOptions = statusOptions.filter((option) => option.value !== '');
 
 const statusBadgeClass = {
     pending: 'bg-amber-50 text-amber-700',
@@ -29,6 +33,9 @@ export const OrdersPage = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [detailLoading, setDetailLoading] = useState(false);
     const [statusUpdating, setStatusUpdating] = useState(false);
+
+    const [deleteTarget, setDeleteTarget] = useState(null);
+    const [deleting, setDeleting] = useState(false);
 
     const fetchData = async (currentPage = page, currentSearch = search, currentStatus = statusFilter) => {
         try {
@@ -90,6 +97,26 @@ export const OrdersPage = () => {
 
     const handlePrint = (orderId) => {
         window.open(`/api/orders/${orderId}/invoice`, '_blank');
+    };
+
+    const handleDelete = async () => {
+        if (!deleteTarget) return;
+        setDeleting(true);
+        try {
+            await orderAPI.delete(deleteTarget.id);
+            setDeleteTarget(null);
+            if (detailOpen && selectedOrder?.id === deleteTarget.id) {
+                setDetailOpen(false);
+                setSelectedOrder(null);
+            }
+            const nextPage = data.length === 1 && page > 1 ? page - 1 : page;
+            setPage(nextPage);
+            fetchData(nextPage, search, statusFilter);
+        } catch (error) {
+            alert(error.response?.data?.message || 'حذف پیش‌فاکتور ناموفق بود');
+        } finally {
+            setDeleting(false);
+        }
     };
 
     const formatToman = (value) =>
@@ -155,6 +182,13 @@ export const OrdersPage = () => {
                     >
                         <Printer className="w-4 h-4" />
                     </button>
+                    <button
+                        onClick={() => setDeleteTarget(row)}
+                        className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-red-600 transition"
+                        title="حذف"
+                    >
+                        <Trash2 className="w-4 h-4" />
+                    </button>
                 </div>
             ),
         },
@@ -179,17 +213,14 @@ export const OrdersPage = () => {
                             className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
                     </form>
-                    <select
-                        value={statusFilter}
-                        onChange={(e) => handleStatusFilter(e.target.value)}
-                        className="w-full sm:w-48 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                    >
-                        {statusOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="w-full sm:w-56">
+                        <SearchableSelect
+                            value={statusFilter}
+                            onChange={handleStatusFilter}
+                            options={statusOptions}
+                            placeholder="همه وضعیت‌ها"
+                        />
+                    </div>
                 </div>
                 <div className="p-2">
                     <DataTable
@@ -272,20 +303,16 @@ export const OrdersPage = () => {
                                 </p>
                             </div>
                             <div className="flex flex-wrap items-center gap-3">
-                                <select
-                                    value={selectedOrder.status}
-                                    onChange={(e) => handleStatusChange(e.target.value)}
-                                    disabled={statusUpdating}
-                                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                                >
-                                    {statusOptions
-                                        .filter((option) => option.value)
-                                        .map((option) => (
-                                            <option key={option.value} value={option.value}>
-                                                {option.label}
-                                            </option>
-                                        ))}
-                                </select>
+                                <div className="w-44">
+                                    <SearchableSelect
+                                        value={selectedOrder.status}
+                                        onChange={handleStatusChange}
+                                        options={statusFilterOptions}
+                                        isClearable={false}
+                                        isDisabled={statusUpdating}
+                                        placeholder="وضعیت"
+                                    />
+                                </div>
                                 <button
                                     type="button"
                                     onClick={() => handlePrint(selectedOrder.id)}
@@ -294,11 +321,28 @@ export const OrdersPage = () => {
                                     <Printer className="w-4 h-4" />
                                     چاپ پیش‌فاکتور
                                 </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setDeleteTarget(selectedOrder)}
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 font-medium transition"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                    حذف
+                                </button>
                             </div>
                         </div>
                     </div>
                 )}
             </Modal>
+
+            <ConfirmDialog
+                isOpen={!!deleteTarget}
+                onClose={() => setDeleteTarget(null)}
+                onConfirm={handleDelete}
+                isLoading={deleting}
+                title="حذف پیش‌فاکتور"
+                message={`آیا مطمئن هستید که می‌خواهید پیش‌فاکتور «${deleteTarget?.order_number}» را حذف کنید؟ این عمل قابل بازگشت نیست.`}
+            />
         </div>
     );
 };

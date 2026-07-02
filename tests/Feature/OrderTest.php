@@ -122,4 +122,27 @@ class OrderTest extends TestCase
             ->assertSee($order->order_number)
             ->assertSee($order->customer_name);
     }
+
+    public function test_admin_can_soft_delete_order(): void
+    {
+        $order = Order::factory()->create([
+            'catalog_id' => $this->catalog->id,
+            'catalog_link_id' => $this->link->id,
+        ]);
+
+        $response = $this->actingAs($this->user)->deleteJson("/api/orders/{$order->id}");
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+            ]);
+
+        $this->assertSoftDeleted('orders', [
+            'id' => $order->id,
+        ]);
+
+        $this->actingAs($this->user)
+            ->getJson("/api/orders/{$order->id}")
+            ->assertStatus(404);
+    }
 }
