@@ -4,37 +4,37 @@ import {
     ChevronLeft,
     ChevronRight,
     ImageOff,
+    Minus,
     PackageX,
+    Plus,
+    ShoppingCart,
     X,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { Product } from '../types/catalog';
 import { formatPersianNumber, formatToman } from '../utils/currency';
+import { hasProductCover } from '../utils/productImage';
 
 type ProductDetailModalProps = {
     product: Product | null;
     onClose: () => void;
+    onAddToCart?: (product: Product, quantity: number) => void;
 };
 
-/**
- * Product detail modal with an image gallery slider.
- *
- * Shows the full product information (name, SKU, stock, description, Toman
- * price) alongside a swipeable/clickable image carousel with thumbnail strip.
- * Closes on backdrop click or the Escape key. Toman-only pricing — the USD
- * value is intentionally hidden from the public storefront.
- */
-export function ProductDetailModal({ product, onClose }: ProductDetailModalProps) {
+export function ProductDetailModal({ product, onClose, onAddToCart }: ProductDetailModalProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
+    const [quantity, setQuantity] = useState(1);
 
     const images = product?.images ?? [];
     const hasGallery = images.length > 1;
+    const isAvailable = product?.isAvailable !== false;
+    const unavailableMessage = 'محصول موجود نیست ! تماس بگیرد';
 
-    // Reset the carousel whenever a new product is opened.
     useEffect(() => {
         setActiveIndex(0);
         setFailedImages({});
+        setQuantity(1);
     }, [product?.id]);
 
     const goPrev = useCallback(() => {
@@ -45,7 +45,6 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
         setActiveIndex((i) => (i + 1) % images.length);
     }, [images.length]);
 
-    // Keyboard: Escape to close, arrows to navigate (RTL-aware).
     useEffect(() => {
         if (!product) return;
 
@@ -60,7 +59,6 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
         return () => document.removeEventListener('keydown', onKey);
     }, [product, hasGallery, goPrev, goNext, onClose]);
 
-    // Lock body scroll while the modal is open.
     useEffect(() => {
         if (!product) return;
         const original = document.body.style.overflow;
@@ -69,8 +67,6 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
             document.body.style.overflow = original;
         };
     }, [product]);
-
-    const unavailableMessage = 'محصول موجود نیست ! تماس بگیرد';
 
     return (
         <AnimatePresence>
@@ -84,7 +80,6 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                     aria-modal="true"
                     aria-label={product.name}
                 >
-                    {/* Backdrop */}
                     <div
                         className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
                         onClick={onClose}
@@ -97,7 +92,6 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                         exit={{ opacity: 0, scale: 0.96, y: 16 }}
                         transition={{ type: 'spring', stiffness: 280, damping: 26 }}
                     >
-                        {/* Close button */}
                         <button
                             type="button"
                             onClick={onClose}
@@ -109,7 +103,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
 
                         {/* Gallery */}
                         <div className="flex w-full shrink-0 flex-col bg-brand-50/50 lg:w-1/2">
-                            <div className="relative aspect-square overflow-hidden bg-brand-50">
+                            <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-brand-50 to-emerald-50/50">
                                 <AnimatePresence mode="wait" initial={false}>
                                     <motion.div
                                         key={activeIndex}
@@ -119,8 +113,9 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0.25 }}
                                     >
-                                        {failedImages[activeIndex] ? (
-                                            <div className="flex h-full w-full items-center justify-center text-slate-300">
+                                        {!hasProductCover(images[activeIndex]) ||
+                                        failedImages[activeIndex] ? (
+                                            <div className="flex h-full w-full items-center justify-center text-brand-200">
                                                 <ImageOff
                                                     aria-hidden="true"
                                                     className="size-12"
@@ -188,7 +183,6 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                 )}
                             </div>
 
-                            {/* Thumbnail strip */}
                             {hasGallery && (
                                 <div className="flex gap-2 overflow-x-auto p-3">
                                     {images.map((src, index) => (
@@ -202,11 +196,9 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                                     ? 'border-brand-500'
                                                     : 'border-transparent opacity-70 hover:opacity-100',
                                             )}
-                                            aria-label={`تصویر ${formatPersianNumber(
-                                                index + 1,
-                                            )}`}
+                                            aria-label={`تصویر ${formatPersianNumber(index + 1)}`}
                                         >
-                                            {failedImages[index] ? (
+                                            {!hasProductCover(src) || failedImages[index] ? (
                                                 <span className="flex h-full w-full items-center justify-center bg-brand-50 text-brand-200">
                                                     <ImageOff className="size-5" />
                                                 </span>
@@ -273,6 +265,47 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                     {formatToman(product.priceToman)}
                                 </p>
                             </div>
+
+                            {isAvailable && onAddToCart && (
+                                <div className="mt-4 flex items-center gap-3">
+                                    <div className="inline-flex items-center gap-1 rounded-xl border border-brand-200 bg-white p-1">
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setQuantity((value) => Math.max(1, value - 1))
+                                            }
+                                            className="inline-flex size-8 items-center justify-center rounded-lg text-brand-700"
+                                            aria-label="کاهش تعداد"
+                                        >
+                                            <Minus className="size-4" />
+                                        </button>
+                                        <span className="min-w-8 text-center text-sm font-semibold">
+                                            {formatPersianNumber(quantity)}
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setQuantity((value) => Math.min(999, value + 1))
+                                            }
+                                            className="inline-flex size-8 items-center justify-center rounded-lg text-brand-700"
+                                            aria-label="افزایش تعداد"
+                                        >
+                                            <Plus className="size-4" />
+                                        </button>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            onAddToCart(product, quantity);
+                                            onClose();
+                                        }}
+                                        className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
+                                    >
+                                        <ShoppingCart className="size-4" />
+                                        افزودن به سبد
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 </motion.div>

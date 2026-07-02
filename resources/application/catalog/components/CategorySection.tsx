@@ -7,6 +7,8 @@ import { ProductCard } from './ProductCard';
 type CategorySectionProps = {
     group: CategoryGroup;
     onViewProduct?: (product: Product) => void;
+    onAddToCart?: (product: Product) => void;
+    cartQuantities?: Record<string, number>;
 };
 
 // Stagger the cards within a section so they cascade in as it reveals.
@@ -24,7 +26,12 @@ const gridVariants = {
  * The section animates into view as it scrolls into the viewport, and registers
  * the `data-category-id`/`id` attributes consumed by the scroll-spy hook.
  */
-export function CategorySection({ group, onViewProduct }: CategorySectionProps) {
+export function CategorySection({
+    group,
+    onViewProduct,
+    onAddToCart,
+    cartQuantities = {},
+}: CategorySectionProps) {
     const { category, products } = group;
     const headingId = `${categorySectionId(category.id)}-heading`;
 
@@ -70,6 +77,8 @@ export function CategorySection({ group, onViewProduct }: CategorySectionProps) 
                         key={product.id}
                         product={product}
                         onViewDetails={onViewProduct}
+                        onAddToCart={onAddToCart}
+                        cartQuantity={cartQuantities[product.id] ?? 0}
                     />
                 ))}
             </motion.div>

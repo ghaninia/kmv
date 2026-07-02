@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CatalogController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CurrencyController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\CatalogPublicController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('api')->group(function () {
     // Public catalog endpoint
     Route::get('/catalog/{shortCode}', [CatalogPublicController::class, 'show'])->name('catalog.public');
+    Route::post('/catalog/{shortCode}/orders', [CatalogPublicController::class, 'storeOrder'])->name('catalog.orders.store');
 
     // Authentication routes (public)
     Route::post('/auth/login', [AuthController::class, 'login']);
@@ -49,5 +51,11 @@ Route::prefix('api')->group(function () {
         Route::get('/currency/rate', [CurrencyController::class, 'getRate']);
         Route::post('/currency/rate', [CurrencyController::class, 'updateRate']);
         Route::get('/currency/history', [CurrencyController::class, 'history']);
+
+        // Orders / pre-invoices
+        Route::get('/orders', [OrderController::class, 'index']);
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
+        Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus']);
+        Route::get('/orders/{order}/invoice', [OrderController::class, 'invoice']);
     });
 });

@@ -188,6 +188,25 @@ export const catalogAPI = {
     },
 };
 
+export const orderAPI = {
+    getList: async (page = 1, search = '', status = null, perPage = 15) => {
+        const response = await axios.get('/orders', {
+            params: { page, search, status, per_page: perPage },
+        });
+        return response.data;
+    },
+
+    getById: async (id) => {
+        const response = await axios.get(`/orders/${id}`);
+        return response.data.data;
+    },
+
+    updateStatus: async (id, status) => {
+        const response = await axios.patch(`/orders/${id}/status`, { status });
+        return response.data.data;
+    },
+};
+
 export const currencyAPI = {
     getRate: async () => {
         const response = await axios.get('/currency/rate');

@@ -5,6 +5,7 @@ import {
     Package,
     Tag,
     Boxes,
+    FileText,
     Settings,
     X,
 } from 'lucide-react';
@@ -15,6 +16,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
         { icon: Tag, label: 'دسته‌بندی‌ها', href: '/categories' },
         { icon: Package, label: 'محصولات', href: '/products' },
         { icon: Boxes, label: 'کاتالوگ‌ها', href: '/catalogs' },
+        { icon: FileText, label: 'پیش‌فاکتورها', href: '/orders' },
         { icon: Settings, label: 'تنظیمات', href: '/settings' },
     ];
 

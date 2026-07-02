@@ -36,6 +36,11 @@ class Catalog extends Model
         return $this->hasMany(CatalogLink::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', true);

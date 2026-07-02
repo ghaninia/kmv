@@ -9,6 +9,7 @@ import { LoginPage } from './pages/LoginPage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { ProductsPage } from './pages/ProductsPage';
 import { CatalogsPage } from './pages/CatalogsPage';
+import { OrdersPage } from './pages/OrdersPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 const Layout = ({ children }) => {
@@ -111,6 +112,14 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <CatalogsPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/orders"
+                    element={
+                        <ProtectedRoute>
+                            <OrdersPage />
                         </ProtectedRoute>
                     }
                 />

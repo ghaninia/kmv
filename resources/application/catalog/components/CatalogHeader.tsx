@@ -1,7 +1,8 @@
-import { Sprout, Wheat } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ShoppingCart } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { Catalog } from '../types/catalog';
-import { formatPersianNumber } from '../utils/currency';
+import { formatBadgeCount, formatPersianNumber } from '../utils/currency';
 import { SearchBar } from './SearchBar';
 
 type CatalogHeaderProps = {
@@ -10,16 +11,14 @@ type CatalogHeaderProps = {
     searchQuery: string;
     onSearchChange: (value: string) => void;
     resultCount: number;
+    cartCount?: number;
+    cartTo?: string;
     /** Optional company/brand logo URL. */
     logoUrl?: string;
 };
 
 /**
- * Sticky catalog header.
- *
- * Shows the catalog title and description (with an optional company logo), a
- * total product count, and the global search field. Stays pinned to the top of
- * the viewport while the content scrolls beneath it.
+ * Sticky catalog header — minimal single-bar layout with search and cart.
  */
 export function CatalogHeader({
     catalog,
@@ -27,82 +26,85 @@ export function CatalogHeader({
     searchQuery,
     onSearchChange,
     resultCount,
+    cartCount = 0,
+    cartTo,
     logoUrl = '/images/logo.png',
 }: CatalogHeaderProps) {
+    const subtitle =
+        catalog.description ??
+        `${formatPersianNumber(totalProducts)} محصول در کاتالوگ`;
+
     return (
         <header
             className={clsx(
-                'sticky top-0 z-30 border-b border-brand-100 bg-white/85 backdrop-blur-md',
-                'supports-[backdrop-filter]:bg-white/70',
+                'sticky top-0 z-30 border-b border-brand-100/70 bg-white/90 backdrop-blur-xl',
+                'supports-[backdrop-filter]:bg-white/75',
             )}
         >
-            {/* Thin harvest gradient accent line. */}
-            <div
-                aria-hidden="true"
-                className="h-1 w-full bg-gradient-to-l from-brand-500 via-lime-400 to-amber-400"
-            />
-            <div className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:gap-8 lg:py-5">
-                {/* Title block — pinned to the right, with its small brand mark. */}
-                <div className="flex items-center gap-4 lg:flex-1">
-                    <span
-                        aria-hidden="true"
-                        className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-600/25 ring-1 ring-brand-700/20"
-                    >
-                        <Sprout className="size-6" />
-                    </span>
-                    <div className="min-w-0 text-right">
-                        <h1 className="truncate text-xl font-bold tracking-tight text-brand-950 sm:text-2xl">
-                            {catalog.title}
-                        </h1>
-                        {catalog.description ? (
-                            <p className="mt-0.5 line-clamp-1 max-w-xl text-sm text-slate-500">
-                                {catalog.description}
-                            </p>
-                        ) : (
-                            <p className="mt-0.5 flex items-center gap-1.5 text-sm font-medium text-brand-600">
-                                <Wheat aria-hidden="true" className="size-4" />
-                                کاتالوگ محصولات و نهاده‌های کشاورزی
-                            </p>
-                        )}
+            <div className="mx-auto max-w-screen-2xl px-4 py-3 sm:px-6">
+                <div className="flex items-center gap-3 sm:gap-4">
+                    {/* Brand */}
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                        {logoUrl ? (
+                            <img
+                                src={logoUrl}
+                                alt=""
+                                className="hidden h-9 w-auto shrink-0 object-contain sm:block"
+                            />
+                        ) : null}
+                        <div className="min-w-0">
+                            <h1 className="truncate text-base font-bold tracking-tight text-brand-950 sm:text-lg">
+                                {catalog.title}
+                            </h1>
+                            <p className="truncate text-xs text-slate-400">{subtitle}</p>
+                        </div>
                     </div>
-                </div>
 
-                {/* Brand logo — perfectly centered. */}
-                <div className="flex shrink-0 items-center justify-center">
-                    {logoUrl ? (
-                        <img
-                            src={logoUrl}
-                            alt={catalog.title}
-                            className="h-14 w-auto shrink-0 object-contain sm:h-16"
-                        />
-                    ) : (
-                        <span
-                            aria-hidden="true"
-                            className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-600/25 ring-1 ring-brand-700/20"
-                        >
-                            <Sprout className="size-6" />
-                        </span>
-                    )}
-                </div>
-
-                {/* Search + count. */}
-                <div className="flex items-center gap-3 lg:flex-1 lg:justify-end lg:gap-4">
+                    {/* Desktop search */}
                     <SearchBar
                         value={searchQuery}
                         onChange={onSearchChange}
                         resultCount={resultCount}
-                        className="w-full lg:w-80"
+                        className="hidden w-56 lg:block lg:w-72"
                     />
-                    <div
-                        className="hidden shrink-0 items-center gap-2 rounded-xl bg-brand-50 px-3.5 py-2.5 text-sm font-medium text-brand-700 ring-1 ring-brand-200 sm:flex"
-                        aria-label={`${totalProducts} محصول در کاتالوگ`}
-                    >
-                        <Wheat aria-hidden="true" className="size-4 text-brand-500" />
-                        <span className="tabular-nums text-brand-900">
-                            {formatPersianNumber(totalProducts)}
-                        </span>
-                        <span className="text-brand-500">محصول</span>
-                    </div>
+
+                    {/* Cart */}
+                    {cartTo && (
+                        <Link
+                            to={cartTo}
+                            className={clsx(
+                                'relative inline-flex size-10 shrink-0 items-center justify-center rounded-xl',
+                                'border border-brand-100 bg-white text-brand-700 shadow-sm',
+                                'transition hover:border-brand-200 hover:bg-brand-50',
+                                'focus:outline-none focus:ring-2 focus:ring-brand-500/30',
+                            )}
+                            aria-label={
+                                cartCount > 0
+                                    ? `سبد خرید، ${formatPersianNumber(cartCount)} قلم`
+                                    : 'سبد خرید'
+                            }
+                        >
+                            <ShoppingCart className="size-[18px]" strokeWidth={2} />
+                            {cartCount > 0 && (
+                                <span
+                                    aria-hidden="true"
+                                    className="absolute -top-1.5 -start-1.5 grid size-5 place-items-center rounded-full bg-brand-700 text-[10px] font-bold leading-none text-white ring-2 ring-white"
+                                >
+                                    {formatBadgeCount(cartCount)}
+                                </span>
+                            )}
+                        </Link>
+                    )}
+                </div>
+
+                {/* Mobile / tablet search */}
+                <div className="mt-3 lg:hidden">
+                    <SearchBar
+                        value={searchQuery}
+                        onChange={onSearchChange}
+                        resultCount={resultCount}
+                        className="w-full"
+                    />
                 </div>
             </div>
         </header>

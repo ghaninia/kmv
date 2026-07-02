@@ -13,6 +13,7 @@ import { CatalogPasswordGate } from '../components/CatalogPasswordGate';
 import { ProductDetailModal } from '../components/ProductDetailModal';
 import { EmptyState } from '../components/EmptyState';
 import { LoadingState } from '../components/LoadingState';
+import { useCart } from '../hooks/useCart';
 
 /**
  * Top-level catalog route.
@@ -37,11 +38,23 @@ export function CatalogPage() {
     const { activeCategoryId, scrollToCategory } = useActiveCategory(categoryIds);
 
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const cart = useCart(slug);
+
+    const cartQuantities = useMemo(() => {
+        return cart.items.reduce<Record<string, number>>((acc, item) => {
+            acc[item.productId] = item.quantity;
+            return acc;
+        }, {});
+    }, [cart.items]);
 
     const totalProducts = catalog?.products.length ?? 0;
 
     function handleViewProduct(product: Product) {
         setSelectedProduct(product);
+    }
+
+    function handleAddToCart(product: Product, quantity = 1) {
+        cart.addItem(product, quantity);
     }
 
     if (status === 'loading') {
@@ -124,6 +137,8 @@ export function CatalogPage() {
                 searchQuery={query}
                 onSearchChange={setQuery}
                 resultCount={resultCount}
+                cartCount={cart.totals.count}
+                cartTo={slug ? `/${slug}/cart` : undefined}
             />
 
             <div className="mx-auto grid max-w-screen-2xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-8">
@@ -190,6 +205,8 @@ export function CatalogPage() {
                                         <CategorySection
                                             group={group}
                                             onViewProduct={handleViewProduct}
+                                            onAddToCart={(product) => handleAddToCart(product)}
+                                            cartQuantities={cartQuantities}
                                         />
                                     </motion.div>
                                 ))}
@@ -202,6 +219,7 @@ export function CatalogPage() {
             <ProductDetailModal
                 product={selectedProduct}
                 onClose={() => setSelectedProduct(null)}
+                onAddToCart={handleAddToCart}
             />
         </div>
     );

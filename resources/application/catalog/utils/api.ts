@@ -119,13 +119,6 @@ function mapCatalog(raw: RawCatalog): Catalog {
     };
 }
 
-/**
- * Fetch a catalog by its short slug.
- *
- * @param slug     The catalog short code from the URL.
- * @param password Optional password for protected catalogs.
- * @throws {CatalogError} for password, not-found, expired and network failures.
- */
 export async function fetchCatalog(slug: string, password?: string): Promise<Catalog> {
     try {
         const response = await client.get<{ success: boolean; data: RawCatalog }>(
@@ -167,4 +160,65 @@ function normalizeError(error: unknown, passwordAttempted: boolean): CatalogErro
     }
 
     return new CatalogError('network', 'Something went wrong while loading the catalog.');
+}
+
+export type SubmitOrderPayload = {
+    customerName: string;
+    customerPhone?: string;
+    customerNote?: string;
+    password?: string;
+    items: Array<{ productId: string; quantity: number }>;
+};
+
+export type SubmittedOrder = {
+    orderNumber: string;
+    customerName: string;
+    subtotalToman: number;
+};
+
+type RawOrder = {
+    order_number: string;
+    customer_name: string;
+    subtotal_toman: number;
+};
+
+export async function submitCatalogOrder(
+    slug: string,
+    payload: SubmitOrderPayload,
+): Promise<SubmittedOrder> {
+    try {
+        const response = await client.post<{ success: boolean; data: RawOrder }>(
+            `/catalog/${encodeURIComponent(slug)}/orders`,
+            {
+                customer_name: payload.customerName,
+                customer_phone: payload.customerPhone || null,
+                customer_note: payload.customerNote || null,
+                password: payload.password || null,
+                items: payload.items.map((item) => ({
+                    product_id: Number(item.productId),
+                    quantity: item.quantity,
+                })),
+            },
+        );
+
+        return {
+            orderNumber: response.data.data.order_number,
+            customerName: response.data.data.customer_name,
+            subtotalToman: response.data.data.subtotal_toman,
+        };
+    } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 422) {
+            const payload = error.response.data as { message?: string; errors?: Record<string, string[]> };
+            const firstError = payload.errors
+                ? Object.values(payload.errors)[0]?.[0]
+                : undefined;
+            throw new Error(firstError || payload.message || 'ثبت سفارش ناموفق بود.');
+        }
+
+        if (error instanceof AxiosError && error.response?.status === 403) {
+            throw new Error('دسترسی به کاتالوگ مجاز نیست. رمز را بررسی کنید.');
+        }
+
+        throw new Error('ثبت سفارش ناموفق بود. دوباره تلاش کنید.');
+    }
 }

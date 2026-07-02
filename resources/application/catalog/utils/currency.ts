@@ -50,3 +50,12 @@ export function formatUsd(priceUSD: number): string {
 export function formatPersianNumber(value: number): string {
     return TOMAN_FORMATTER.format(value);
 }
+
+/** Compact Persian digits for small badges (no grouping separators). */
+export function formatBadgeCount(value: number): string {
+    if (value > 99) {
+        return '۹۹+';
+    }
+
+    return new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(value);
+}
