@@ -1,30 +1,30 @@
 {
-  "_index-CydhIThX.js": {
-    "file": "assets/index-CydhIThX.js",
+  "_index-Ba9U6q_e.js": {
+    "file": "assets/index-Ba9U6q_e.js",
     "name": "index"
   },
   "resources/application/catalog/main.tsx": {
-    "file": "assets/main-BhvCg03K.js",
+    "file": "assets/main-CA5sw8fl.js",
     "name": "main",
     "src": "resources/application/catalog/main.tsx",
     "isEntry": true,
     "imports": [
-      "_index-CydhIThX.js"
+      "_index-Ba9U6q_e.js"
     ],
     "css": [
-      "assets/main-Bgnw4TuV.css"
+      "assets/main-SHyNMLFG.css"
     ]
   },
   "resources/application/dashboard/app.jsx": {
-    "file": "assets/app-CHaIn9kv.js",
+    "file": "assets/app-Ddqaosrt.js",
     "name": "app",
     "src": "resources/application/dashboard/app.jsx",
     "isEntry": true,
     "imports": [
-      "_index-CydhIThX.js"
+      "_index-Ba9U6q_e.js"
     ],
     "css": [
-      "assets/app-D26Ey4zU.css"
+      "assets/app-B8oPPC24.css"
     ]
   }
 }
