@@ -7,6 +7,7 @@ import { LoadingState } from '../components/LoadingState';
 import { OrderListSkeleton } from '../components/OrderListSkeleton';
 import { OrdersShell } from '../components/OrdersShell';
 import { PreInvoiceListCard } from '../components/PreInvoiceListCard';
+import { useCart } from '../hooks/useCart';
 import { useCatalog } from '../hooks/useCatalog';
 import { fetchCatalogOrderHistory } from '../utils/api';
 import type { CatalogOrder } from '../types/order';
@@ -17,6 +18,7 @@ import { getStoredPassword } from '../utils/storage';
 export function OrdersPage() {
     const { slug } = useParams<{ slug: string }>();
     const access = useCatalog(slug);
+    const cart = useCart(slug);
     const catalogPath = slug ? `/${slug}` : '/';
 
     const [orders, setOrders] = useState<CatalogOrder[]>([]);
@@ -107,11 +109,14 @@ export function OrdersPage() {
 
     return (
         <OrdersShell
+            slug={slug ?? ''}
             title="سفارش‌های من"
             subtitle="پیش‌فاکتورهای ثبت‌شده از این لینک"
             catalogTitle={access.catalog?.title}
             backTo={catalogPath}
             backLabel="بازگشت به کاتالوگ"
+            cartCount={cart.totals.count}
+            ordersCount={orders.length}
         >
             {isLoadingOrders ? (
                 <OrderListSkeleton />

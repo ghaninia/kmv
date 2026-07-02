@@ -13,6 +13,7 @@ import { clsx } from 'clsx';
 import { CatalogPasswordGate } from '../components/CatalogPasswordGate';
 import { EmptyState } from '../components/EmptyState';
 import { LoadingState } from '../components/LoadingState';
+import { OrdersShell } from '../components/OrdersShell';
 import { useCart } from '../hooks/useCart';
 import { useCatalog } from '../hooks/useCatalog';
 import { CartLineRow } from '../components/CartLineRow';
@@ -143,37 +144,28 @@ export function CartPage() {
     }
 
     return (
-        <div className="flex min-h-dvh flex-col bg-[#f8fcf9]">
-            <header className="sticky top-0 z-20 border-b border-brand-100 bg-white/95 backdrop-blur-xl">
-                <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3 sm:px-6">
-                    <Link
-                        to={catalogPath}
-                        className="inline-flex size-10 items-center justify-center rounded-xl border border-brand-100 text-brand-700 transition hover:bg-brand-50"
-                        aria-label="بازگشت به کاتالوگ"
+        <OrdersShell
+            slug={slug ?? ''}
+            title="سبد خرید"
+            subtitle={`${formatPersianNumber(cart.items.length)} قلم · ${formatPersianNumber(cart.totals.count)} عدد`}
+            catalogTitle={access.catalog?.title}
+            backTo={catalogPath}
+            backLabel="بازگشت به کاتالوگ"
+            cartCount={cart.totals.count}
+            className="flex flex-col"
+            headerAction={
+                !cart.isEmpty ? (
+                    <button
+                        type="button"
+                        onClick={cart.clearCart}
+                        className="inline-flex items-center gap-1 rounded-xl border border-rose-100 bg-rose-50 px-2.5 py-1.5 text-xs font-semibold text-rose-600 transition hover:bg-rose-100 hover:text-rose-700"
                     >
-                        <ArrowRight className="size-5" />
-                    </Link>
-                    <div className="min-w-0 flex-1">
-                        <h1 className="text-lg font-black text-brand-950">سبد خرید شما</h1>
-                        <p className="text-xs text-slate-400">
-                            {formatPersianNumber(cart.items.length)} قلم ·{' '}
-                            {formatPersianNumber(cart.totals.count)} عدد
-                        </p>
-                    </div>
-                    {cart.items.length > 0 && (
-                        <button
-                            type="button"
-                            onClick={cart.clearCart}
-                            className="inline-flex items-center gap-1 text-xs font-semibold text-rose-600 transition hover:text-rose-700"
-                        >
-                            <Trash2 className="size-3.5" />
-                            پاک کردن
-                        </button>
-                    )}
-                </div>
-            </header>
-
-            <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 py-6 sm:px-6">
+                        <Trash2 className="size-3.5" />
+                        پاک کردن
+                    </button>
+                ) : undefined
+            }
+        >
                 {cart.isEmpty ? (
                     <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
                         <div className="flex size-20 items-center justify-center rounded-full bg-brand-50 text-brand-400">
@@ -278,7 +270,6 @@ export function CartPage() {
                         </form>
                     </>
                 )}
-            </main>
-        </div>
+        </OrdersShell>
     );
 }

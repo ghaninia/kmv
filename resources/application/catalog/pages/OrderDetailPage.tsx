@@ -16,6 +16,7 @@ import { OrderDetailItems } from '../components/OrderDetailItems';
 import { OrderListSkeleton } from '../components/OrderListSkeleton';
 import { OrderStatusBadge } from '../components/OrderStatusBadge';
 import { OrdersShell } from '../components/OrdersShell';
+import { useCart } from '../hooks/useCart';
 import { useCatalog } from '../hooks/useCatalog';
 import { fetchCatalogOrder } from '../utils/api';
 import type { CatalogOrder } from '../types/order';
@@ -26,6 +27,7 @@ import { getStoredPassword } from '../utils/storage';
 export function OrderDetailPage() {
     const { slug, orderId } = useParams<{ slug: string; orderId: string }>();
     const access = useCatalog(slug);
+    const cart = useCart(slug);
     const catalogPath = slug ? `/${slug}` : '/';
     const ordersPath = slug ? `/${slug}/orders` : '/';
 
@@ -111,11 +113,21 @@ export function OrderDetailPage() {
 
     return (
         <OrdersShell
+            slug={slug ?? ''}
             title={order?.orderNumber ?? 'پیش‌فاکتور'}
             subtitle="جزئیات و اقلام سفارش"
             catalogTitle={access.catalog?.title}
             backTo={ordersPath}
             backLabel="بازگشت به لیست سفارش‌ها"
+            cartCount={cart.totals.count}
+            breadcrumb={
+                order
+                    ? [
+                          { label: 'سفارش‌ها', to: ordersPath },
+                          { label: order.orderNumber },
+                      ]
+                    : [{ label: 'سفارش‌ها', to: ordersPath }, { label: 'جزئیات' }]
+            }
             footer={
                 order ? (
                     <>
