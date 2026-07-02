@@ -98,11 +98,11 @@ export function useCatalog(slug: string | undefined): UseCatalogResult {
                 setStatus('ready');
             } catch (error) {
                 if (error instanceof CatalogError && error.kind === 'invalid-password') {
-                    setPasswordError('Incorrect password. Please try again.');
+                    setPasswordError('رمز عبور نادرست است. دوباره تلاش کنید.');
                 } else if (error instanceof CatalogError) {
                     setPasswordError(error.message);
                 } else {
-                    setPasswordError('Something went wrong. Please try again.');
+                    setPasswordError('مشکلی پیش آمد. دوباره تلاش کنید.');
                 }
             } finally {
                 setIsVerifying(false);

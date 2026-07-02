@@ -10,7 +10,11 @@ import {
     User,
 } from 'lucide-react';
 import { clsx } from 'clsx';
+import { CatalogPasswordGate } from '../components/CatalogPasswordGate';
+import { EmptyState } from '../components/EmptyState';
+import { LoadingState } from '../components/LoadingState';
 import { useCart } from '../hooks/useCart';
+import { useCatalog } from '../hooks/useCatalog';
 import { CartLineRow } from '../components/CartLineRow';
 import { submitCatalogOrder } from '../utils/api';
 import { formatPersianNumber, formatToman } from '../utils/currency';
@@ -18,6 +22,7 @@ import { getStoredPassword } from '../utils/storage';
 
 export function CartPage() {
     const { slug } = useParams<{ slug: string }>();
+    const access = useCatalog(slug);
     const cart = useCart(slug);
 
     const [customerName, setCustomerName] = useState('');
@@ -57,6 +62,52 @@ export function CartPage() {
         } finally {
             setIsSubmitting(false);
         }
+    }
+
+    if (access.status === 'loading') {
+        return <LoadingState />;
+    }
+
+    if (access.status === 'password-required') {
+        return (
+            <CatalogPasswordGate
+                catalogTitle={access.catalog?.title}
+                onSubmit={access.submitPassword}
+                isVerifying={access.isVerifying}
+                error={access.passwordError}
+                description="برای مشاهده سبد خرید، ابتدا باید رمز عبور این کاتالوگ را وارد کنید."
+                submitLabel="ورود و مشاهده سبد خرید"
+                backTo={catalogPath}
+            />
+        );
+    }
+
+    if (access.status === 'not-found' || access.status === 'expired' || access.status === 'error') {
+        return (
+            <div className="flex min-h-dvh items-center justify-center bg-[#f8fcf9] px-4 py-12">
+                <div className="w-full max-w-lg">
+                    <EmptyState
+                        title={
+                            access.status === 'not-found'
+                                ? 'کاتالوگ پیدا نشد'
+                                : access.status === 'expired'
+                                  ? 'این لینک منقضی شده است'
+                                  : 'مشکلی پیش آمد'
+                        }
+                        description="در حال حاضر امکان دسترسی به سبد خرید وجود ندارد."
+                        action={
+                            <Link
+                                to={catalogPath}
+                                className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-800"
+                            >
+                                بازگشت به کاتالوگ
+                                <ArrowRight className="size-4" />
+                            </Link>
+                        }
+                    />
+                </div>
+            </div>
+        );
     }
 
     if (success) {

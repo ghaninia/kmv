@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Loader2, Lock, ShieldAlert } from 'lucide-react';
 import { clsx } from 'clsx';
@@ -8,6 +9,10 @@ type CatalogPasswordGateProps = {
     onSubmit: (password: string) => void;
     isVerifying: boolean;
     error: string | null;
+    description?: string;
+    submitLabel?: string;
+    backTo?: string;
+    backLabel?: string;
 };
 
 /**
@@ -24,6 +29,10 @@ export function CatalogPasswordGate({
     onSubmit,
     isVerifying,
     error,
+    description,
+    submitLabel = 'باز کردن کاتالوگ',
+    backTo,
+    backLabel = 'بازگشت به کاتالوگ',
 }: CatalogPasswordGateProps) {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -59,16 +68,18 @@ export function CatalogPasswordGate({
                             کاتالوگ محافظت‌شده
                         </h1>
                         <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                            {catalogTitle ? (
-                                <>
-                                    <span className="font-medium text-slate-700">
-                                        {catalogTitle}
-                                    </span>{' '}
-                                    با رمز عبور محافظت شده است. برای ادامه رمز عبور را وارد کنید.
-                                </>
-                            ) : (
-                                'این کاتالوگ با رمز عبور محافظت شده است. برای ادامه رمز عبور را وارد کنید.'
-                            )}
+                            {description ??
+                                (catalogTitle ? (
+                                    <>
+                                        <span className="font-medium text-slate-700">
+                                            {catalogTitle}
+                                        </span>{' '}
+                                        با رمز عبور محافظت شده است. برای ادامه رمز عبور را وارد
+                                        کنید.
+                                    </>
+                                ) : (
+                                    'این کاتالوگ با رمز عبور محافظت شده است. برای ادامه رمز عبور را وارد کنید.'
+                                ))}
                         </p>
                     </div>
 
@@ -140,9 +151,18 @@ export function CatalogPasswordGate({
                                     در حال بررسی…
                                 </>
                             ) : (
-                                'باز کردن کاتالوگ'
+                                submitLabel
                             )}
                         </button>
+
+                        {backTo && (
+                            <Link
+                                to={backTo}
+                                className="mt-4 block text-center text-sm font-medium text-brand-700 transition hover:text-brand-800"
+                            >
+                                {backLabel}
+                            </Link>
+                        )}
                     </form>
                 </div>
             </motion.div>
