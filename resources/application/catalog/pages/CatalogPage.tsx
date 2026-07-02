@@ -139,12 +139,14 @@ export function CatalogPage() {
                 resultCount={resultCount}
                 cartCount={cart.totals.count}
                 cartTo={slug ? `/${slug}/cart` : undefined}
+                categoryGroups={groups}
+                activeCategoryId={activeCategoryId}
+                onSelectCategory={scrollToCategory}
             />
 
             <div className="mx-auto grid max-w-screen-2xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-8">
-                {/* Sidebar — hidden when there are no categories to show. */}
                 {groups.length > 0 && (
-                    <aside className="lg:py-0">
+                    <aside className="hidden lg:block lg:py-0">
                         <CatalogSidebar
                             groups={groups}
                             activeCategoryId={activeCategoryId}
