@@ -20,6 +20,7 @@ class StoreProductRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'base_price_usd' => ['required', 'integer', 'min:0'],
             'status' => ['boolean'],
+            'is_available' => ['boolean'],
             'add_to_all_catalogs' => ['boolean'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:5120'], // 5MB max
         ];
@@ -35,6 +36,10 @@ class StoreProductRequest extends FormRequest
 
         if ($this->status === null) {
             $this->merge(['status' => true]);
+        }
+
+        if ($this->is_available === null) {
+            $this->merge(['is_available' => true]);
         }
     }
 }

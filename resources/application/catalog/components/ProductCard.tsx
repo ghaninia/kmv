@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ImageOff, Layers, PackageCheck, PackageX } from 'lucide-react';
+import { ArrowRight, ImageOff, Layers, PackageX } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { Product } from '../types/catalog';
 import { formatPersianNumber, formatToman } from '../utils/currency';
@@ -26,8 +26,8 @@ const cardVariants = {
  */
 export function ProductCard({ product, onViewDetails }: ProductCardProps) {
     const [imageFailed, setImageFailed] = useState(false);
-    const inStock = product.stock === undefined || product.stock > 0;
     const imageCount = product.images?.length ?? 0;
+    const unavailableMessage = 'محصول موجود نیست ! تماس بگیرد';
 
     return (
         <motion.article
@@ -74,23 +74,10 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                     </span>
                 )}
 
-                {product.stock !== undefined && (
-                    <span
-                        className={clsx(
-                            'absolute start-3 top-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur',
-                            inStock
-                                ? 'bg-brand-50/90 text-brand-700'
-                                : 'bg-rose-50/90 text-rose-700',
-                        )}
-                    >
-                        {inStock ? (
-                            <PackageCheck aria-hidden="true" className="size-3.5" />
-                        ) : (
-                            <PackageX aria-hidden="true" className="size-3.5" />
-                        )}
-                        {inStock
-                            ? `${formatPersianNumber(product.stock)} عدد موجود`
-                            : 'ناموجود'}
+                {product.isAvailable === false && (
+                    <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-rose-50/95 px-2.5 py-1 text-xs font-medium text-rose-700 backdrop-blur">
+                        <PackageX aria-hidden="true" className="size-3.5" />
+                        {unavailableMessage}
                     </span>
                 )}
             </button>

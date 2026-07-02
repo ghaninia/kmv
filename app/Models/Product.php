@@ -20,11 +20,13 @@ class Product extends Model implements HasMedia
         'description',
         'base_price_usd',
         'status',
+        'is_available',
     ];
 
     protected $casts = [
         'base_price_usd' => 'integer',
         'status' => 'boolean',
+        'is_available' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

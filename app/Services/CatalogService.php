@@ -134,6 +134,7 @@ class CatalogService
                 'description' => $product->description,
                 'sku' => null,
                 'stock' => null,
+                'is_available' => $product->is_available,
                 'category_id' => $product->category_id,
                 'category_name' => $category?->name,
                 'price_usd' => $usdCents / 100,

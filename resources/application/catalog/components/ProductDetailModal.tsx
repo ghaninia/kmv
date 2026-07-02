@@ -4,7 +4,6 @@ import {
     ChevronLeft,
     ChevronRight,
     ImageOff,
-    PackageCheck,
     PackageX,
     X,
 } from 'lucide-react';
@@ -71,9 +70,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
         };
     }, [product]);
 
-    const inStock = product
-        ? product.stock === undefined || product.stock > 0
-        : false;
+    const unavailableMessage = 'محصول موجود نیست ! تماس بگیرد';
 
     return (
         <AnimatePresence>
@@ -250,23 +247,10 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                                 </p>
                             )}
 
-                            {product.stock !== undefined && (
-                                <span
-                                    className={clsx(
-                                        'mt-3 inline-flex w-fit items-center gap-1 rounded-full px-3 py-1 text-xs font-medium',
-                                        inStock
-                                            ? 'bg-brand-50 text-brand-700'
-                                            : 'bg-rose-50 text-rose-700',
-                                    )}
-                                >
-                                    {inStock ? (
-                                        <PackageCheck className="size-3.5" />
-                                    ) : (
-                                        <PackageX className="size-3.5" />
-                                    )}
-                                    {inStock
-                                        ? `${formatPersianNumber(product.stock)} عدد موجود`
-                                        : 'ناموجود'}
+                            {product.isAvailable === false && (
+                                <span className="mt-3 inline-flex w-fit items-center gap-1 rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700">
+                                    <PackageX className="size-3.5" />
+                                    {unavailableMessage}
                                 </span>
                             )}
 

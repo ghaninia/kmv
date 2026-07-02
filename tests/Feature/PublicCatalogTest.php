@@ -54,6 +54,17 @@ class PublicCatalogTest extends TestCase
             ]);
     }
 
+    public function test_public_catalog_includes_product_availability(): void
+    {
+        $product = $this->catalog->products()->first();
+        $product->update(['is_available' => false]);
+
+        $response = $this->getJson("/api/catalog/{$this->link->short_code}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.products.0.is_available', false);
+    }
+
     public function test_public_cannot_access_invalid_short_code(): void
     {
         $response = $this->getJson('/api/catalog/invalid123');

@@ -33,6 +33,7 @@ export type Product = {
     images: string[];
     sku?: string;
     stock?: number;
+    isAvailable?: boolean;
     priceUSD: number;
     /** Pre-computed Toman price supplied by the API. */
     priceToman: number;

@@ -48,7 +48,15 @@ class ProductFactory extends Factory
             ]),
             'base_price_usd' => $this->faker->numberBetween(1000, 100000), // in cents
             'status' => true,
+            'is_available' => true,
         ];
+    }
+
+    public function unavailable(): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_available' => false,
+        ]);
     }
 
     public function inactive(): self

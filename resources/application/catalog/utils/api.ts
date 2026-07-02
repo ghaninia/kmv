@@ -48,6 +48,7 @@ type RawProduct = {
     images?: (string | null)[] | null;
     sku?: string | null;
     stock?: number | null;
+    is_available?: boolean | null;
     price_usd: number;
     price_toman: number;
     category_id?: number | string | null;
@@ -88,6 +89,7 @@ function mapProduct(raw: RawProduct): Product {
         images,
         sku: raw.sku ?? undefined,
         stock: raw.stock ?? undefined,
+        isAvailable: raw.is_available ?? true,
         priceUSD: raw.price_usd,
         priceToman: raw.price_toman,
         categoryId: raw.category_id != null ? String(raw.category_id) : 'uncategorized',

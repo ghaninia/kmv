@@ -15,6 +15,7 @@ const emptyForm = {
     description: '',
     base_price_usd: '',
     status: true,
+    is_available: true,
     add_to_all_catalogs: false,
 };
 
@@ -99,6 +100,7 @@ export const ProductsPage = () => {
             description: row.description || '',
             base_price_usd: row.base_price_usd ?? '',
             status: !!row.status,
+            is_available: row.is_available !== false,
             add_to_all_catalogs: false,
         });
         setNewImages([]);
@@ -137,6 +139,7 @@ export const ProductsPage = () => {
                 description: form.description || '',
                 base_price_usd: Math.round(parseFloat(form.base_price_usd || 0) * 100),
                 status: form.status ? 1 : 0,
+                is_available: form.is_available ? 1 : 0,
             };
             if (!editing) {
                 payload.add_to_all_catalogs = form.add_to_all_catalogs ? 1 : 0;
@@ -207,6 +210,19 @@ export const ProductsPage = () => {
             render: (value) => (
                 <span dir="ltr" className="inline-block font-medium text-gray-900">
                     ${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                </span>
+            ),
+        },
+        {
+            key: 'is_available',
+            label: 'موجودی',
+            render: (value) => (
+                <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        value ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+                    }`}
+                >
+                    {value ? 'موجود' : 'ناموجود'}
                 </span>
             ),
         },
@@ -423,15 +439,29 @@ export const ProductsPage = () => {
                         )}
                     </div>
 
-                    <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                            type="checkbox"
-                            checked={form.status}
-                            onChange={(e) => setForm({ ...form, status: e.target.checked })}
-                            className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                        />
-                        <span className="text-sm font-medium text-gray-700">فعال</span>
-                    </label>
+                    <div className="flex flex-wrap gap-4">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={form.status}
+                                onChange={(e) => setForm({ ...form, status: e.target.checked })}
+                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            />
+                            <span className="text-sm font-medium text-gray-700">فعال</span>
+                        </label>
+
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={form.is_available}
+                                onChange={(e) =>
+                                    setForm({ ...form, is_available: e.target.checked })
+                                }
+                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            />
+                            <span className="text-sm font-medium text-gray-700">موجود</span>
+                        </label>
+                    </div>
 
                     {!editing && (
                         <label className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">

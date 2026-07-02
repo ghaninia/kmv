@@ -35,7 +35,7 @@ class ProductTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'name', 'slug', 'description', 'base_price_usd', 'status'],
+                    '*' => ['id', 'name', 'slug', 'description', 'base_price_usd', 'status', 'is_available'],
                 ],
                 'pagination',
             ]);
@@ -62,6 +62,31 @@ class ProductTest extends TestCase
             'name' => 'Laptop',
             'slug' => 'laptop',
             'category_id' => $this->category->id,
+            'is_available' => true,
+        ]);
+    }
+
+    public function test_user_can_mark_product_as_unavailable(): void
+    {
+        $product = Product::factory()->for($this->category)->create([
+            'is_available' => true,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->putJson("/api/products/{$product->id}", [
+                'category_id' => $this->category->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'base_price_usd' => $product->base_price_usd,
+                'status' => true,
+                'is_available' => false,
+            ]);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'is_available' => false,
         ]);
     }
 
