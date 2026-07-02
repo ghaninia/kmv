@@ -125,8 +125,14 @@ export function CartPage() {
                         </span>
                     </p>
                     <Link
+                        to={slug ? `/${slug}/orders` : catalogPath}
+                        className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl border border-brand-200 px-6 py-3 text-sm font-bold text-brand-700 transition hover:bg-brand-50"
+                    >
+                        مشاهده سفارش‌های من
+                    </Link>
+                    <Link
                         to={catalogPath}
-                        className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-800"
+                        className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-800"
                     >
                         بازگشت به کاتالوگ
                         <ArrowRight className="size-4" />

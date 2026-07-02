@@ -59,6 +59,7 @@ class OrderTest extends TestCase
             ])
             ->assertJsonStructure([
                 'data' => [
+                    'id',
                     'order_number',
                     'customer_name',
                     'subtotal_toman',
@@ -144,5 +145,76 @@ class OrderTest extends TestCase
         $this->actingAs($this->user)
             ->getJson("/api/orders/{$order->id}")
             ->assertStatus(404);
+    }
+
+    public function test_public_can_fetch_order_history_for_catalog_link(): void
+    {
+        $this->postJson("/api/catalog/{$this->link->short_code}/orders", [
+            'customer_name' => 'علی رضایی',
+            'items' => [
+                ['product_id' => $this->product->id, 'quantity' => 1],
+            ],
+        ])->assertStatus(201);
+
+        $response = $this->postJson("/api/catalog/{$this->link->short_code}/order-history");
+
+        $response->assertStatus(200)
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.customer_name', 'علی رضایی');
+    }
+
+    public function test_public_can_fetch_order_detail_for_catalog_link(): void
+    {
+        $submit = $this->postJson("/api/catalog/{$this->link->short_code}/orders", [
+            'customer_name' => 'سارا احمدی',
+            'items' => [
+                ['product_id' => $this->product->id, 'quantity' => 3],
+            ],
+        ])->assertStatus(201);
+
+        $orderId = $submit->json('data.id');
+
+        $response = $this->postJson("/api/catalog/{$this->link->short_code}/order-detail", [
+            'order_id' => $orderId,
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.customer_name', 'سارا احمدی')
+            ->assertJsonStructure([
+                'data' => [
+                    'order_number',
+                    'items',
+                ],
+            ]);
+    }
+
+    public function test_order_history_is_scoped_to_catalog_link(): void
+    {
+        $otherLink = CatalogLink::factory()->for($this->catalog)->create();
+
+        $this->postJson("/api/catalog/{$this->link->short_code}/orders", [
+            'customer_name' => 'علی رضایی',
+            'items' => [
+                ['product_id' => $this->product->id, 'quantity' => 1],
+            ],
+        ])->assertStatus(201);
+
+        $this->postJson("/api/catalog/{$otherLink->short_code}/order-history")
+            ->assertStatus(200)
+            ->assertJsonCount(0, 'data');
+    }
+
+    public function test_password_protected_link_requires_password_for_order_history(): void
+    {
+        $this->link->update([
+            'password_hash' => hash('sha256', 'secret-link'),
+        ]);
+
+        $this->postJson("/api/catalog/{$this->link->short_code}/order-history")
+            ->assertStatus(403);
+
+        $this->postJson("/api/catalog/{$this->link->short_code}/order-history", [
+            'password' => 'secret-link',
+        ])->assertStatus(200);
     }
 }

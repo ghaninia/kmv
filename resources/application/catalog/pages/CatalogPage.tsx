@@ -139,6 +139,7 @@ export function CatalogPage() {
                 resultCount={resultCount}
                 cartCount={cart.totals.count}
                 cartTo={slug ? `/${slug}/cart` : undefined}
+                ordersTo={slug ? `/${slug}/orders` : undefined}
                 categoryGroups={groups}
                 activeCategoryId={activeCategoryId}
                 onSelectCategory={scrollToCategory}

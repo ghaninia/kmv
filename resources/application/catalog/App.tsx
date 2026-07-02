@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { FileQuestion } from 'lucide-react';
 import { CatalogPage } from './pages/CatalogPage';
 import { CartPage } from './pages/CartPage';
+import { OrderDetailPage } from './pages/OrderDetailPage';
+import { OrdersPage } from './pages/OrdersPage';
 import { EmptyState } from './components/EmptyState';
 
 /**
@@ -14,6 +16,8 @@ export function App() {
     return (
         <Routes>
             <Route path="/:slug/cart" element={<CartPage />} />
+            <Route path="/:slug/orders" element={<OrdersPage />} />
+            <Route path="/:slug/orders/:orderId" element={<OrderDetailPage />} />
             <Route path="/:slug" element={<CatalogPage />} />
             <Route path="/" element={<Navigate to="/missing" replace />} />
             <Route

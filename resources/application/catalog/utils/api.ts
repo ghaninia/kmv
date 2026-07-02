@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import type { Catalog, Category, Product } from '../types/catalog';
+import type { CatalogOrder, CatalogOrderItem } from '../types/order';
 
 /**
  * Thin API client for the public catalog endpoint.
@@ -171,16 +172,72 @@ export type SubmitOrderPayload = {
 };
 
 export type SubmittedOrder = {
+    id: string;
     orderNumber: string;
     customerName: string;
     subtotalToman: number;
+    createdAt?: string;
+};
+
+type RawOrderItem = {
+    id: number | string;
+    product_id?: number | string | null;
+    product_name: string;
+    quantity: number;
+    unit_price_toman: number;
+    line_total_toman: number;
 };
 
 type RawOrder = {
+    id: number | string;
     order_number: string;
     customer_name: string;
+    customer_phone?: string | null;
+    customer_note?: string | null;
+    status: string;
+    status_label?: string;
     subtotal_toman: number;
+    items?: RawOrderItem[];
+    items_count?: number;
+    created_at?: string;
 };
+
+function mapOrderItem(raw: RawOrderItem): CatalogOrderItem {
+    return {
+        id: String(raw.id),
+        productId: raw.product_id != null ? String(raw.product_id) : null,
+        productName: raw.product_name,
+        quantity: raw.quantity,
+        unitPriceToman: raw.unit_price_toman,
+        lineTotalToman: raw.line_total_toman,
+    };
+}
+
+function mapOrder(raw: RawOrder): CatalogOrder {
+    return {
+        id: String(raw.id),
+        orderNumber: raw.order_number,
+        customerName: raw.customer_name,
+        customerPhone: raw.customer_phone ?? undefined,
+        customerNote: raw.customer_note ?? undefined,
+        status: raw.status,
+        statusLabel: raw.status_label ?? raw.status,
+        subtotalToman: raw.subtotal_toman,
+        items: raw.items?.map(mapOrderItem),
+        itemsCount: raw.items_count,
+        createdAt: raw.created_at,
+    };
+}
+
+function mapSubmittedOrder(raw: RawOrder): SubmittedOrder {
+    return {
+        id: String(raw.id),
+        orderNumber: raw.order_number,
+        customerName: raw.customer_name,
+        subtotalToman: raw.subtotal_toman,
+        createdAt: raw.created_at,
+    };
+}
 
 export async function submitCatalogOrder(
     slug: string,
@@ -201,11 +258,7 @@ export async function submitCatalogOrder(
             },
         );
 
-        return {
-            orderNumber: response.data.data.order_number,
-            customerName: response.data.data.customer_name,
-            subtotalToman: response.data.data.subtotal_toman,
-        };
+        return mapSubmittedOrder(response.data.data);
     } catch (error) {
         if (error instanceof AxiosError && error.response?.status === 422) {
             const payload = error.response.data as { message?: string; errors?: Record<string, string[]> };
@@ -220,5 +273,55 @@ export async function submitCatalogOrder(
         }
 
         throw new Error('ثبت سفارش ناموفق بود. دوباره تلاش کنید.');
+    }
+}
+
+export async function fetchCatalogOrderHistory(
+    slug: string,
+    password?: string,
+): Promise<CatalogOrder[]> {
+    try {
+        const response = await client.post<{ success: boolean; data: RawOrder[] }>(
+            `/catalog/${encodeURIComponent(slug)}/order-history`,
+            {
+                password: password ?? null,
+            },
+        );
+
+        return (response.data.data ?? []).map(mapOrder);
+    } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 403) {
+            throw new Error('دسترسی به کاتالوگ مجاز نیست. رمز را بررسی کنید.');
+        }
+
+        throw new Error('بارگذاری سفارش‌ها ناموفق بود.');
+    }
+}
+
+export async function fetchCatalogOrder(
+    slug: string,
+    orderId: string,
+    password?: string,
+): Promise<CatalogOrder> {
+    try {
+        const response = await client.post<{ success: boolean; data: RawOrder }>(
+            `/catalog/${encodeURIComponent(slug)}/order-detail`,
+            {
+                order_id: Number(orderId),
+                password: password ?? null,
+            },
+        );
+
+        return mapOrder(response.data.data);
+    } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 404) {
+            throw new Error('سفارش پیدا نشد.');
+        }
+
+        if (error instanceof AxiosError && error.response?.status === 403) {
+            throw new Error('دسترسی به کاتالوگ مجاز نیست. رمز را بررسی کنید.');
+        }
+
+        throw new Error('بارگذاری جزئیات سفارش ناموفق بود.');
     }
 }

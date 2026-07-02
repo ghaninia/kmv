@@ -14,6 +14,8 @@ Route::prefix('api')->group(function () {
     // Public catalog endpoint
     Route::get('/catalog/{shortCode}', [CatalogPublicController::class, 'show'])->name('catalog.public');
     Route::post('/catalog/{shortCode}/orders', [CatalogPublicController::class, 'storeOrder'])->name('catalog.orders.store');
+    Route::post('/catalog/{shortCode}/order-history', [CatalogPublicController::class, 'orderHistory'])->name('catalog.orders.history');
+    Route::post('/catalog/{shortCode}/order-detail', [CatalogPublicController::class, 'showOrder'])->name('catalog.orders.show');
 
     // Authentication routes (public)
     Route::post('/auth/login', [AuthController::class, 'login']);

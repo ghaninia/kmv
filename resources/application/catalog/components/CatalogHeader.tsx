@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Leaf, Menu, ShoppingCart, X } from 'lucide-react';
+import { Leaf, Menu, ClipboardList, ShoppingCart, X } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { Catalog, CategoryGroup } from '../types/catalog';
 import { formatBadgeCount, formatPersianNumber } from '../utils/currency';
@@ -17,6 +17,8 @@ type CatalogHeaderProps = {
     resultCount: number;
     cartCount?: number;
     cartTo?: string;
+    ordersCount?: number;
+    ordersTo?: string;
     /** Optional company/brand logo URL. */
     logoUrl?: string;
     categoryGroups?: CategoryGroup[];
@@ -36,6 +38,8 @@ export function CatalogHeader({
     resultCount,
     cartCount = 0,
     cartTo,
+    ordersCount = 0,
+    ordersTo,
     logoUrl = '/images/logo.png',
     categoryGroups = [],
     activeCategoryId = null,
@@ -119,32 +123,61 @@ export function CatalogHeader({
                     />
 
                     {/* Cart */}
-                    {cartTo && (
-                        <Link
-                            to={cartTo}
-                            className={clsx(
-                                'relative inline-flex size-10 shrink-0 items-center justify-center rounded-xl',
-                                'border border-brand-100 bg-white text-brand-700 shadow-sm',
-                                'transition hover:border-brand-200 hover:bg-brand-50',
-                                'focus:outline-none focus:ring-2 focus:ring-brand-500/30',
-                            )}
-                            aria-label={
-                                cartCount > 0
-                                    ? `سبد خرید، ${formatPersianNumber(cartCount)} قلم`
-                                    : 'سبد خرید'
-                            }
-                        >
-                            <ShoppingCart className="size-[18px]" strokeWidth={2} />
-                            {cartCount > 0 && (
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute -top-1.5 -start-1.5 grid size-5 place-items-center rounded-full bg-brand-700 text-[10px] font-bold leading-none text-white ring-2 ring-white"
-                                >
-                                    {formatBadgeCount(cartCount)}
-                                </span>
-                            )}
-                        </Link>
-                    )}
+                    <div className="flex shrink-0 items-center gap-2">
+                        {ordersTo && (
+                            <Link
+                                to={ordersTo}
+                                className={clsx(
+                                    'relative inline-flex size-10 shrink-0 items-center justify-center rounded-xl',
+                                    'border border-brand-100 bg-white text-brand-700 shadow-sm',
+                                    'transition hover:border-brand-200 hover:bg-brand-50',
+                                    'focus:outline-none focus:ring-2 focus:ring-brand-500/30',
+                                )}
+                                aria-label={
+                                    ordersCount > 0
+                                        ? `سفارش‌های من، ${formatPersianNumber(ordersCount)} سفارش`
+                                        : 'سفارش‌های من'
+                                }
+                            >
+                                <ClipboardList className="size-[18px]" strokeWidth={2} />
+                                {ordersCount > 0 && (
+                                    <span
+                                        aria-hidden="true"
+                                        className="absolute -top-1.5 -start-1.5 grid size-5 place-items-center rounded-full bg-brand-700 text-[10px] font-bold leading-none text-white ring-2 ring-white"
+                                    >
+                                        {formatBadgeCount(ordersCount)}
+                                    </span>
+                                )}
+                            </Link>
+                        )}
+
+                        {cartTo && (
+                            <Link
+                                to={cartTo}
+                                className={clsx(
+                                    'relative inline-flex size-10 shrink-0 items-center justify-center rounded-xl',
+                                    'border border-brand-100 bg-white text-brand-700 shadow-sm',
+                                    'transition hover:border-brand-200 hover:bg-brand-50',
+                                    'focus:outline-none focus:ring-2 focus:ring-brand-500/30',
+                                )}
+                                aria-label={
+                                    cartCount > 0
+                                        ? `سبد خرید، ${formatPersianNumber(cartCount)} قلم`
+                                        : 'سبد خرید'
+                                }
+                            >
+                                <ShoppingCart className="size-[18px]" strokeWidth={2} />
+                                {cartCount > 0 && (
+                                    <span
+                                        aria-hidden="true"
+                                        className="absolute -top-1.5 -start-1.5 grid size-5 place-items-center rounded-full bg-brand-700 text-[10px] font-bold leading-none text-white ring-2 ring-white"
+                                    >
+                                        {formatBadgeCount(cartCount)}
+                                    </span>
+                                )}
+                            </Link>
+                        )}
+                    </div>
                 </div>
 
                 {/* Mobile / tablet search */}
