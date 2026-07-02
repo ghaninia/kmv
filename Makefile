@@ -22,6 +22,7 @@ setup: build up init
 	@echo "Setup complete! React will install dependencies and start on port 5173"
 
 init:
+	docker-compose exec -T app composer install --no-interaction
 	docker-compose exec -T app php artisan key:generate || true
 	docker-compose exec -T app php artisan storage:link || true
 	docker-compose exec -T app php artisan migrate --force || true
