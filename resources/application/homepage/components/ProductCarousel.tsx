@@ -1,73 +1,70 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { featuredProducts } from '../data/homeData';
 
 const ITEM_WIDTH = 167;
-const AUTO_MS = 4000;
-const SPEED_MS = 1000;
-const VISIBLE_COUNT = 5;
-
-const loopProducts = [...featuredProducts, ...featuredProducts, ...featuredProducts];
-const START_INDEX = featuredProducts.length;
+const AUTO_INTERVAL_MS = 4000;
+const TRANSITION_MS = 1000;
+const LOOP_COPIES = 4;
 
 export function ProductCarousel() {
-    const [index, setIndex] = useState(START_INDEX);
-    const [animate, setAnimate] = useState(true);
-    const trackRef = useRef<HTMLDivElement>(null);
+    const [offset, setOffset] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(true);
+    const [isPaused, setIsPaused] = useState(false);
 
-    const goTo = useCallback((nextIndex: number, withAnimation = true) => {
-        setAnimate(withAnimation);
-        setIndex(nextIndex);
+    const loopItems = useMemo(
+        () => Array.from({ length: LOOP_COPIES }, () => featuredProducts).flat(),
+        [],
+    );
+
+    const cycleLength = featuredProducts.length;
+
+    const goNext = useCallback(() => {
+        setIsAnimating(true);
+        setOffset((current) => current + 1);
     }, []);
 
     const goPrev = useCallback(() => {
-        goTo(index - 1);
-    }, [goTo, index]);
-
-    const goNext = useCallback(() => {
-        goTo(index + 1);
-    }, [goTo, index]);
+        setIsAnimating(true);
+        setOffset((current) => (current <= 0 ? cycleLength - 1 : current - 1));
+    }, [cycleLength]);
 
     useEffect(() => {
-        const timer = window.setInterval(goNext, AUTO_MS);
+        if (isPaused) {
+            return undefined;
+        }
+
+        const timer = window.setInterval(goNext, AUTO_INTERVAL_MS);
         return () => window.clearInterval(timer);
-    }, [goNext]);
+    }, [goNext, isPaused]);
 
-    useEffect(() => {
-        const track = trackRef.current;
-        if (!track) {
+    const handleTransitionEnd = () => {
+        if (offset < cycleLength) {
             return;
         }
 
-        const handleTransitionEnd = (event: TransitionEvent) => {
-            if (event.propertyName !== 'transform') {
-                return;
-            }
+        setIsAnimating(false);
+        setOffset((current) => current % cycleLength);
 
-            if (index >= featuredProducts.length * 2) {
-                goTo(index - featuredProducts.length, false);
-                return;
-            }
-
-            if (index < featuredProducts.length) {
-                goTo(index + featuredProducts.length, false);
-            }
-        };
-
-        track.addEventListener('transitionend', handleTransitionEnd);
-        return () => track.removeEventListener('transitionend', handleTransitionEnd);
-    }, [goTo, index]);
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => setIsAnimating(true));
+        });
+    };
 
     return (
         <div className="cm-new-shop">
-            <div className="cm-container cm-new-shop-inner">
+            <div
+                className="cm-container cm-new-shop-inner"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+            >
                 <div className="cm-crsl-slider">
                     <div
-                        ref={trackRef}
-                        className={`cm-crsl-track${animate ? ' cm-crsl-track--animate' : ''}`}
-                        style={{ transform: `translate3d(${index * ITEM_WIDTH}px, 0, 0)` }}
+                        className={`cm-crsl-track${isAnimating ? ' is-animating' : ''}`}
+                        style={{ transform: `translate3d(-${offset * ITEM_WIDTH}px, 0, 0)` }}
+                        onTransitionEnd={handleTransitionEnd}
                     >
-                        {loopProducts.map((product, productIndex) => (
-                            <div key={`${product.id}-${productIndex}`} className="cm-crsl-item">
+                        {loopItems.map((product, index) => (
+                            <div key={`${product.id}-${index}`} className="cm-crsl-item">
                                 <div className="cm-crsl-images">
                                     <a href={product.href}>
                                         <img src={product.image} alt={product.name} width={98} height={98} />

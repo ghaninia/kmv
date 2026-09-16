@@ -1,18 +1,8 @@
-import { useEffect, useState } from 'react';
-import { headerSlides, navItems } from '../data/homeData';
+import { navItems } from '../data/homeData';
+import { HeaderSlider } from './HeaderSlider';
 import { ProductCarousel } from './ProductCarousel';
 
 export function HeaderSection() {
-    const [activeSlide, setActiveSlide] = useState(0);
-
-    useEffect(() => {
-        const timer = window.setInterval(() => {
-            setActiveSlide((current) => (current + 1) % headerSlides.length);
-        }, 5000);
-
-        return () => window.clearInterval(timer);
-    }, []);
-
     return (
         <div className="cm-header-bg">
             <div className="cm-container">
@@ -32,18 +22,7 @@ export function HeaderSection() {
                 </div>
 
                 <div className="cm-header-hero">
-                    <div className="cm-slider-wrap">
-                        <div className="cm-slidedown" aria-live="polite">
-                            {headerSlides.map((src, index) => (
-                                <div
-                                    key={src}
-                                    className={`cm-slidedown-slide${index === activeSlide ? ' active' : ''}`}
-                                >
-                                    <img src={src} alt={`اسلاید ${index + 1}`} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <HeaderSlider />
 
                     <div className="cm-news-lister-body">
                         <div className="cm-news-lister">
