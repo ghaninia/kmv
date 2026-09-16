@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
 // Public catalog storefront (React SPA). All /catalog/* paths resolve to the
 // same view; client-side routing handles the :slug segment.
 Route::get('/catalog/{any?}', function () {

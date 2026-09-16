@@ -16,6 +16,7 @@ export default defineConfig({
             input: [
                 'resources/application/dashboard/app.jsx',
                 'resources/application/catalog/main.tsx',
+                'resources/application/homepage/main.tsx',
             ],
             refresh: true,
         }),
