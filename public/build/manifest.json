@@ -1,51 +1,57 @@
 {
-  "_client-D7-zHRQz.js": {
-    "file": "assets/client-D7-zHRQz.js",
-    "name": "client"
+  "_index-BDNn4-kg.js": {
+    "file": "assets/index-BDNn4-kg.js",
+    "name": "index"
   },
-  "_index-CjgUoWBD.js": {
-    "file": "assets/index-CjgUoWBD.js",
+  "_index-Bi-9y4L0.js": {
+    "file": "assets/index-Bi-9y4L0.js",
     "name": "index",
     "imports": [
-      "_client-D7-zHRQz.js"
+      "_index-BDNn4-kg.js"
     ]
   },
+  "_productImage-Cgw_3tQ9.js": {
+    "file": "assets/productImage-Cgw_3tQ9.js",
+    "name": "productImage"
+  },
   "resources/application/catalog/main.tsx": {
-    "file": "assets/main-K0BjQwM5.js",
+    "file": "assets/main-C-jsSZ20.js",
     "name": "main",
     "src": "resources/application/catalog/main.tsx",
     "isEntry": true,
     "imports": [
-      "_client-D7-zHRQz.js",
-      "_index-CjgUoWBD.js"
+      "_index-BDNn4-kg.js",
+      "_index-Bi-9y4L0.js",
+      "_productImage-Cgw_3tQ9.js"
     ],
     "css": [
-      "assets/main-DafPUmuR.css"
+      "assets/main-BORz3jGb.css"
     ]
   },
   "resources/application/dashboard/app.jsx": {
-    "file": "assets/app-D6k1AQD6.js",
+    "file": "assets/app-DgXCPXNq.js",
     "name": "app",
     "src": "resources/application/dashboard/app.jsx",
     "isEntry": true,
     "imports": [
-      "_client-D7-zHRQz.js",
-      "_index-CjgUoWBD.js"
+      "_index-BDNn4-kg.js",
+      "_index-Bi-9y4L0.js"
     ],
     "css": [
-      "assets/app-B817xyq9.css"
+      "assets/app-DsMWc0TV.css"
     ]
   },
   "resources/application/homepage/main.tsx": {
-    "file": "assets/main-55Ar-ITC.js",
+    "file": "assets/main-DQJjdvHz.js",
     "name": "main",
     "src": "resources/application/homepage/main.tsx",
     "isEntry": true,
     "imports": [
-      "_client-D7-zHRQz.js"
+      "_index-BDNn4-kg.js",
+      "_productImage-Cgw_3tQ9.js"
     ],
     "css": [
-      "assets/main-C0DFnbyo.css"
+      "assets/main-ukCMC9U6.css"
     ]
   }
 }

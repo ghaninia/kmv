@@ -1,72 +1,142 @@
 export const navItems = [
-    { label: 'صفحه اصلی', href: '/', active: true },
-    { label: 'محصولات', href: '/catalog' },
+    { label: 'صفحه اصلی', href: '/' },
+    { label: 'محصولات', href: '/products' },
+    { label: 'دسته‌بندی‌ها', href: '/categories' },
     { label: 'پرسش و پاسخ', href: '/faq' },
     { label: 'درباره ما', href: '/about' },
     { label: 'تماس با ما', href: '/contact' },
 ];
 
-export const headerSlides = [
-    '/homepage/images/header1.png',
-    '/homepage/images/header2.png',
-    '/homepage/images/header3.png',
-    '/homepage/images/header4.png',
-    '/homepage/images/header5.png',
-    '/homepage/images/header6.png',
-];
+export type HeroSlide = {
+    title: string;
+    subtitle: string;
+    text: string;
+    image: string;
+    highlights: string[];
+    primaryCta: { label: string; href: string };
+    secondaryCta: { label: string; href: string };
+};
 
-export const featuredProducts = [
+export const heroSlides: HeroSlide[] = [
     {
-        id: 'aps_145',
-        name: 'aps_145 ایتالیایی',
-        model: 'aps_145',
-        image: '/homepage/images/aps_145.jpg',
-        href: '#',
+        title: 'کارا ماشین وصال',
+        subtitle: 'صنایع کشاورزی',
+        text:
+            'بیش از یک دهه در تأمین تجهیزات و قطعات کشاورزی؛ از سمپاش و پمپ تا فیلتر، اتصالات و قطعات یدکی با استاندارد بین‌المللی و پشتیبانی فنی در کنار شما.',
+        image: 'img/hero/hero-slide-1.jpg',
+        highlights: [
+            'محصولات اصل ایتالیایی و اروپایی',
+            'مشاوره تخصصی قبل و بعد از خرید',
+            'ارسال به سراسر کشور',
+        ],
+        primaryCta: { label: 'مشاهده محصولات', href: '/products' },
+        secondaryCta: { label: 'دسته‌بندی‌ها', href: '/categories' },
     },
     {
-        id: 'aps_101_121',
-        name: 'aps_101_121 ایتالیایی',
-        model: 'aps_101_121',
-        image: '/homepage/images/aps_101_121.jpg',
-        href: '#',
+        title: 'همراه مطمئن مزارع ایران',
+        subtitle: 'تجهیزات باکیفیت',
+        text:
+            'تنوع گسترده در پمپ، مخزن سمپاش، توربین، نازل، شیر و اتصالات؛ انتخابی دقیق برای ماشین‌آلات شما با تضمین اصالت و خدمات پس از فروش.',
+        image: 'img/hero/hero-slide-2.jpg',
+        highlights: [
+            'قطعات یدکی و مصرفی با موجودی مناسب',
+            'همکاری با برندهای معتبر جهانی',
+            'پاسخگویی سریع واحد فروش و فنی',
+        ],
+        primaryCta: { label: 'جستجو در محصولات', href: '/products' },
+        secondaryCta: { label: 'درباره ما', href: '/about' },
     },
     {
-        id: 'aps_96',
-        name: 'aps_96 ایتالیایی',
-        model: 'aps_96',
-        image: '/homepage/images/aps_96.jpg',
-        href: '#',
+        title: 'کیفیت، اعتماد، همراهی',
+        subtitle: 'خدمات و پشتیبانی',
+        text:
+            'تیم کارا ماشین وصال در انتخاب تجهیزات مناسب مزرعه، تأمین قطعات فوری و رفع نیازهای فنی همراه شماست — با شفافیت در قیمت و تعهد به رضایت مشتری.',
+        image: 'img/hero/hero-slide-3.jpg',
+        highlights: [
+            'پرسش‌های متداول و راهنمای خرید',
+            'تماس مستقیم با کارشناسان فروش',
+            'پشتیبانی فنی در طول عمر محصول',
+        ],
+        primaryCta: { label: 'تماس با ما', href: '/contact' },
+        secondaryCta: { label: 'پرسش و پاسخ', href: '/faq' },
     },
-];
-
-export const productCategories = [
-    { className: 'cm-products1', label: 'انواع درب وسایر اتصالات مخزن', href: '#' },
-    { className: 'cm-products2', label: 'انواع فیلتر و صافی', href: '#' },
-    { className: 'cm-products3', label: 'انواع اتصالات پلاستیکی', href: '#' },
-    { className: 'cm-products4', label: 'انواع نازل و قطعات مربوطـه', href: '#' },
-    { className: 'cm-products5', label: 'توربین سمپاش و قطعات مربوطـه', href: '#' },
-    { className: 'cm-products6', label: 'شیر و شلنگ و بسط اتصالات فلزی', href: '#' },
-    { className: 'cm-products7', label: 'لوازم پمپ و جانبی', href: '#' },
-    { className: 'cm-products9', label: 'مخزن سمپاش', href: '#' },
-    { className: 'cm-products10', label: 'انواع پمپ و گیربکس و مقسم', href: '#' },
-    { className: 'cm-products11', label: 'تیغه های خاک ورزی', href: '#' },
-    { className: 'cm-products12', label: 'پره ای دیسک', href: '#' },
-    { className: 'cm-products13', label: 'رینگ ولاستیک وتوپی واکسل', href: '#' },
-    { className: 'cm-products14', label: 'مالبند و...', href: '#' },
-    { className: 'cm-products15', label: 'مدلهای مختلف جک هیدرولیکی', href: '#' },
-    { className: 'cm-products16', label: 'توری ونایلون بسته بندی علوفه', href: '#' },
-    { className: 'cm-products8 cm-products-more', label: '...', href: '#' },
-];
-
-export const footerQuickLinks = [
-    { className: 'cm-gprs', label: 'موقيعت شركت روي نقشه', href: 'https://www.caramachine.com/map' },
-    { className: 'cm-video', label: 'ويديو هاي شركت در آپارات', href: 'https://www.aparat.com' },
-    { className: 'cm-faq', label: 'پرسش و پاسخ های متداول', href: 'https://www.caramachine.com/FAQ' },
 ];
 
 export const contactInfo = {
     address: 'تهران , پونک , کوچه ای کربلایی احمد , پلاک 7',
-    phone: '٤٤٦٢٥٢٩٥',
+    phone: '۰۲۱-۴۴۶۲۵۲۹۵',
+    phoneTel: '02144625295',
     fax: '٤٤٦١٢٤٠٣',
-    contactHref: 'https://www.caramachine.com/contactUs',
+    email: 'info@caramachine.com',
+    instagram: 'https://www.instagram.com/es.plasticgroup/',
+    contactHref: '/contact',
+};
+
+export const faqItems = [
+    {
+        question: 'چگونه می‌توانم محصول مورد نظر خود را سفارش دهم؟',
+        answer: 'از بخش محصولات، دسته‌بندی یا جزئیات هر محصول را مشاهده کنید و برای ثبت سفارش با واحد فروش از طریق تماس با ما یا فرم تماس ارتباط بگیرید.',
+    },
+    {
+        question: 'آیا محصولات شما اصل و با گارانتی هستند؟',
+        answer: 'بله، کارا ماشین وصال تأمین‌کننده تجهیزات و قطعات کشاورزی با کیفیت و استاندارد بین‌المللی است و محصولات با ضمانت اصالت ارائه می‌شوند.',
+    },
+    {
+        question: 'زمان تحویل سفارش چقدر است؟',
+        answer: 'زمان تحویل بسته به نوع محصول و موجودی انبار متغیر است. پس از ثبت سفارش، کارشناسان ما زمان تحویل را اعلام می‌کنند.',
+    },
+    {
+        question: 'آیا امکان ارسال به شهرستان وجود دارد؟',
+        answer: 'بله، ارسال به سراسر کشور از طریق باربری و پست انجام می‌شود.',
+    },
+    {
+        question: 'چگونه از قیمت محصولات مطلع شوم؟',
+        answer: 'برای اطلاع از قیمت محصولات با واحد فروش از طریق تماس با ما یا فرم تماس ارتباط بگیرید.',
+    },
+    {
+        question: 'آیا مشاوره فنی قبل از خرید ارائه می‌شود؟',
+        answer: 'بله، تیم فنی ما آماده مشاوره در انتخاب مناسب‌ترین تجهیزات برای نیاز مزرعه و ماشین‌آلات شماست.',
+    },
+];
+
+export const aboutContent = {
+    title: 'درباره کارا ماشین وصال',
+    intro: 'کارا ماشین وصال با بیش از یک دهه تجربه، یکی از پیشروان تأمین تجهیزات و قطعات کشاورزی در ایران است. ما با تکیه بر کیفیت، صداقت و پشتیبانی فنی، همراه مطمئن مزارع و کشاورزان سراسر کشور هستیم.',
+    mission: 'مأموریت ما ارائه محصولات باکیفیت ایتالیایی و اروپایی، همراه با خدمات پس از فروش و مشاوره تخصصی برای افزایش بهره‌وری مزارع است.',
+    companyStory: {
+        tagline: 'واردات و توزیع قطعات استاندارد و نوین',
+        history:
+            'شرکت کارا ماشین وصال از سال ۱۳۸۳ فعالیت خود را در زمینه تأمین و توزیع قطعات مورد نیاز خط تولید کارخانجات سمپاش‌سازی و خاکورزی آغاز کرد. با توجه به تجربه چندین‌ساله متخصصین شرکت در بخش مکانیزاسیون (انتخاب و به‌کارگیری ماشین مناسب در مزرعه)، سیاست کاری شرکت در چند محور تعریف گردید:',
+        policyAxes: [
+            'واردات قطعاتی که تولید داخل با کمیت و کیفیت لازم را نداشته باشد',
+            'ایجاد هایپرمارکت لازم برای تولید سمپاش',
+            'قرار گرفتن در کنار کشاورزان زحمتکش در موضوع گارانتی و وارانتی',
+            'تأمین و توزیع تیغه‌های خاک‌ورزی برون استیل',
+            'تأمین نیازهای تخصصی و سفارشی تولیدکنندگان گرامی',
+        ],
+    },
+    values: [
+        {
+            title: 'رضایت شما، اولویت ماست',
+            text: 'هر سفارش برای ما یک تعهد است. از لحظه ثبت درخواست تا تحویل، تیم ما پیگیر رضایت شماست تا تجربه‌ای مطمئن، شفاف و بدون دغدغه داشته باشید.',
+        },
+        {
+            title: 'پاسخگویی سریع، همیشه در دسترس',
+            text: 'سوالی دارید یا به قطعه‌ای فوری نیاز دارید؟ کارشناسان ما آماده‌اند تا در کوتاه‌ترین زمان راهنمایی کنند و بهترین راه‌حل را پیشنهاد دهند.',
+        },
+        {
+            title: 'کیفیت اصل؛ اعتماد پایدار',
+            text: 'محصولات باکیفیت و استاندارد، پایه اعتماد مشتریان ما هستند. شما با خیال راحت انتخاب می‌کنید و ما کیفیت را تضمین می‌کنیم.',
+        },
+        {
+            title: 'همراهی کامل، حتی بعد از خرید',
+            text: 'خرید پایان راه نیست؛ شروع یک همراهی است. مشاوره فنی، تأمین قطعات و پشتیبانی پس از فروش، برای آرامش خاطر شما در مزرعه و کارگاه.',
+        },
+    ],
+    stats: [
+        { label: 'سال تجربه', value: '۱۰+' },
+        { label: 'دسته محصول', value: '۵۰+' },
+        { label: 'مشتری فعال', value: '۱۰۰۰+' },
+        { label: 'پشتیبانی', value: '۷ روز هفته' },
+    ],
 };

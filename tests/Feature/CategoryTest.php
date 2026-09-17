@@ -30,7 +30,7 @@ class CategoryTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'name', 'slug', 'description', 'status', 'product_count'],
+                    '*' => ['id', 'name', 'slug', 'description', 'status', 'product_count', 'image'],
                 ],
                 'pagination',
             ]);
@@ -110,7 +110,26 @@ class CategoryTest extends TestCase
                 'message' => 'Category deleted successfully',
             ]);
 
-        $this->assertSoftDeleted('categories', ['id' => $category->id]);
+        $this->assertDatabaseMissing('categories', ['id' => $category->id]);
+    }
+
+    public function test_user_can_create_category_with_cover_image(): void
+    {
+        $file = \Illuminate\Http\UploadedFile::fake()->create('category.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->user)
+            ->post('/api/categories', [
+                'name' => 'با تصویر',
+                'description' => 'توضیح',
+                'status' => 1,
+                'image' => $file,
+            ]);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('data.cover_media.id', fn ($id) => $id > 0);
+
+        $category = Category::where('name', 'با تصویر')->first();
+        $this->assertTrue($category->hasMedia('cover'));
     }
 
     public function test_user_can_search_categories(): void

@@ -8,9 +8,21 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\CatalogPublicController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomepageProductController;
+use App\Http\Controllers\PublicCategoryController;
+use App\Http\Controllers\PublicProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
+    Route::get('/homepage/products', [HomepageProductController::class, 'index'])->name('homepage.products');
+
+    Route::get('/public/categories', [PublicCategoryController::class, 'index'])->name('public.categories');
+    Route::get('/public/categories/{slug}', [PublicCategoryController::class, 'show'])->name('public.categories.show');
+    Route::get('/public/products', [PublicProductController::class, 'index'])->name('public.products');
+    Route::get('/public/products/{slug}', [PublicProductController::class, 'show'])->name('public.products.show');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
     // Public catalog endpoint
     Route::get('/catalog/{shortCode}', [CatalogPublicController::class, 'show'])->name('catalog.public');
     Route::post('/catalog/{shortCode}/orders', [CatalogPublicController::class, 'storeOrder'])->name('catalog.orders.store');
@@ -31,6 +43,7 @@ Route::prefix('api')->group(function () {
 
         // Categories
         Route::apiResource('categories', CategoryController::class);
+        Route::post('categories/{category}/delete-image', [CategoryController::class, 'deleteImage']);
 
         // Products
         Route::apiResource('products', ProductController::class);

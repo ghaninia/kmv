@@ -5,10 +5,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev \
     libsqlite3-dev \
     sqlite3 \
+    default-mysql-client \
     zip \
     unzip \
     git \
-    && docker-php-ext-install pdo pdo_sqlite zip exif \
+    && docker-php-ext-install pdo pdo_sqlite pdo_mysql zip exif \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

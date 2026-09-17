@@ -31,6 +31,8 @@ export default defineConfig({
         },
         watch: {
             ignored: ['**/storage/framework/views/**'],
+            usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
+            interval: 300,
         },
     },
 });

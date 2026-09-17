@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\ProductPlaceholder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,8 +47,8 @@ class Product extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('gallery')
-            ->useFallbackUrl('storage/placeholders/product.jpg')
-            ->useFallbackPath(public_path('storage/placeholders/product.jpg'));
+            ->useFallbackUrl(ProductPlaceholder::url())
+            ->useFallbackPath(public_path(ProductPlaceholder::PUBLIC_PATH));
     }
 
     public function scopeActive($query)

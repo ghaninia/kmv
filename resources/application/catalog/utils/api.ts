@@ -74,7 +74,7 @@ type RawCatalog = {
     products?: RawProduct[];
 };
 
-const FALLBACK_IMAGE = '/storage/placeholders/product.jpg';
+const FALLBACK_IMAGE = '/images/product-not-found.svg';
 
 function mapProduct(raw: RawProduct): Product {
     const gallery = (raw.images ?? [])

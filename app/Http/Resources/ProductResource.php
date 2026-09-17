@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Support\ProductPlaceholder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +26,7 @@ class ProductResource extends JsonResource
             'base_price_usd' => $this->base_price_usd / 100,
             'status' => $this->status,
             'is_available' => $this->is_available,
-            'image' => $images->first()['url'] ?? null,
+            'image' => $images->first()['url'] ?? ProductPlaceholder::url(),
             'images' => $images->values(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
