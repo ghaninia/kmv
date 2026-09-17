@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Support\ProductPlaceholder;
 use App\Http\Requests\AttachProductsToCatalogRequest;
 use App\Http\Requests\CreateCatalogLinkRequest;
 use App\Http\Requests\StoreCatalogRequest;
@@ -172,7 +173,7 @@ class CatalogController extends Controller
                 'custom_price_usd' => $customPrice / 100,
                 'price_usd' => $customPrice / 100,
                 'status' => $product->status,
-                'image' => $product->getFirstMedia('gallery')?->original_url,
+                'image' => $product->getFirstMedia('gallery')?->original_url ?? ProductPlaceholder::url(),
             ];
         });
 

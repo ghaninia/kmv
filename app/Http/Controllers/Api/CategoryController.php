@@ -7,11 +7,15 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct(
+        protected CategoryService $categoryService
+    ) {}
     /**
      * Get all categories
      */
@@ -50,10 +54,14 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->validated());
 
+        if ($request->hasFile('image')) {
+            $this->categoryService->setCoverImage($category, $request->file('image'));
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Category created successfully',
-            'data' => new CategoryResource($category),
+            'data' => new CategoryResource($category->fresh()),
         ], 201);
     }
 
@@ -76,10 +84,25 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
+        if ($request->hasFile('image')) {
+            $this->categoryService->setCoverImage($category, $request->file('image'));
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Category updated successfully',
-            'data' => new CategoryResource($category),
+            'data' => new CategoryResource($category->fresh()),
+        ]);
+    }
+
+    public function deleteImage(Category $category): JsonResponse
+    {
+        $this->categoryService->deleteCoverImage($category);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category image deleted successfully',
+            'data' => new CategoryResource($category->fresh()),
         ]);
     }
 
@@ -96,6 +119,7 @@ class CategoryController extends Controller
             ], 422);
         }
 
+        $this->categoryService->clearMedia($category);
         $category->delete();
 
         return response()->json([

@@ -164,6 +164,11 @@
         radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
 }
 
+img[src*='product-not-found'] {
+    object-fit: contain;
+    background-color: #fafafa;
+}
+
 /* Respect users who prefer reduced motion: disable smooth scrolling and
    any long-running animations the browser can control. */
 @media (prefers-reduced-motion: reduce) {

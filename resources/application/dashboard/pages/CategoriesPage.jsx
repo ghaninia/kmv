@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Search } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, X, ImageIcon } from 'lucide-react';
 import { categoryAPI } from '../api';
 import { DataTable } from '../components/DataTable';
 import { Modal } from '../components/Modal';
@@ -18,6 +18,8 @@ export const CategoriesPage = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [editing, setEditing] = useState(null);
     const [form, setForm] = useState(emptyForm);
+    const [newImage, setNewImage] = useState(null);
+    const [existingCover, setExistingCover] = useState(null);
     const [errors, setErrors] = useState({});
     const [saving, setSaving] = useState(false);
 
@@ -51,6 +53,8 @@ export const CategoriesPage = () => {
     const openCreate = () => {
         setEditing(null);
         setForm(emptyForm);
+        setNewImage(null);
+        setExistingCover(null);
         setErrors({});
         setModalOpen(true);
     };
@@ -63,8 +67,35 @@ export const CategoriesPage = () => {
             description: row.description || '',
             status: !!row.status,
         });
+        setNewImage(null);
+        setExistingCover(row.cover_media || null);
         setErrors({});
         setModalOpen(true);
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setNewImage(file);
+        }
+        e.target.value = '';
+    };
+
+    const removeNewImage = () => {
+        setNewImage(null);
+    };
+
+    const removeExistingCover = async () => {
+        if (!editing) {
+            setExistingCover(null);
+            return;
+        }
+        try {
+            await categoryAPI.deleteImage(editing.id);
+            setExistingCover(null);
+        } catch (error) {
+            alert(error.response?.data?.message || 'حذف تصویر ناموفق بود');
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -74,10 +105,13 @@ export const CategoriesPage = () => {
         try {
             const payload = {
                 name: form.name,
-                slug: form.slug || undefined,
-                description: form.description || undefined,
-                status: form.status,
+                slug: form.slug || '',
+                description: form.description || '',
+                status: form.status ? 1 : 0,
             };
+            if (newImage) {
+                payload.image = newImage;
+            }
             if (editing) {
                 await categoryAPI.update(editing.id, payload);
             } else {
@@ -113,6 +147,22 @@ export const CategoriesPage = () => {
     };
 
     const columns = [
+        {
+            key: 'image',
+            label: 'تصویر',
+            render: (value, row) =>
+                row.cover_media?.url ? (
+                    <img
+                        src={row.cover_media.url}
+                        alt=""
+                        className="w-10 h-10 rounded object-cover border border-gray-200"
+                    />
+                ) : (
+                    <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-gray-400">
+                        <ImageIcon className="w-5 h-5" />
+                    </div>
+                ),
+        },
         { key: 'name', label: 'نام' },
         {
             key: 'slug',
@@ -243,6 +293,66 @@ export const CategoriesPage = () => {
                             rows={3}
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                         />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            تصویر دسته‌بندی
+                        </label>
+                        <div className="flex flex-wrap gap-3">
+                            {existingCover && !newImage && (
+                                <div className="relative w-24 h-24 group">
+                                    <img
+                                        src={existingCover.url}
+                                        alt=""
+                                        className="w-24 h-24 rounded object-cover border border-gray-200"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={removeExistingCover}
+                                        className="absolute -top-2 -left-2 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                </div>
+                            )}
+                            {newImage && (
+                                <div className="relative w-24 h-24 group">
+                                    <img
+                                        src={URL.createObjectURL(newImage)}
+                                        alt=""
+                                        className="w-24 h-24 rounded object-cover border border-gray-200"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={removeNewImage}
+                                        className="absolute -top-2 -left-2 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                </div>
+                            )}
+                            {!newImage && (
+                                <label
+                                    className="w-24 h-24 rounded border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition text-center px-1"
+                                    title={existingCover ? 'تغییر تصویر' : 'افزودن تصویر'}
+                                >
+                                    <Plus className="w-6 h-6 text-gray-400" />
+                                    <span className="text-[10px] text-gray-500 mt-1">
+                                        {existingCover ? 'تغییر' : 'افزودن'}
+                                    </span>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        className="hidden"
+                                    />
+                                </label>
+                            )}
+                        </div>
+                        {errors.image && (
+                            <p className="text-sm text-red-600 mt-1">{errors.image[0]}</p>
+                        )}
                     </div>
 
                     <label className="flex items-center gap-2 cursor-pointer">

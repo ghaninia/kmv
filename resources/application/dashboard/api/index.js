@@ -21,12 +21,39 @@ export const categoryAPI = {
     },
 
     create: async (data) => {
-        const response = await axios.post('/categories', data);
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+            if (key === 'image' && data[key] instanceof File) {
+                formData.append('image', data[key]);
+            } else if (key !== 'image' && data[key] !== undefined && data[key] !== null) {
+                formData.append(key, data[key]);
+            }
+        });
+
+        const response = await axios.post('/categories', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
         return response.data;
     },
 
     update: async (id, data) => {
-        const response = await axios.put(`/categories/${id}`, data);
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+            if (key === 'image' && data[key] instanceof File) {
+                formData.append('image', data[key]);
+            } else if (key !== 'image' && data[key] !== undefined && data[key] !== null) {
+                formData.append(key, data[key]);
+            }
+        });
+
+        const response = await axios.post(`/categories/${id}?_method=PUT`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        return response.data;
+    },
+
+    deleteImage: async (id) => {
+        const response = await axios.post(`/categories/${id}/delete-image`);
         return response.data;
     },
 

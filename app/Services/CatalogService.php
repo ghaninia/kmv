@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\ProductPlaceholder;
 use App\Models\Catalog;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
@@ -139,11 +140,11 @@ class CatalogService
                 'category_name' => $category?->name,
                 'price_usd' => $usdCents / 100,
                 'price_toman' => $tomanCents / 100,
-                'image' => $product->getFirstMedia('gallery')?->original_url,
+                'image' => $product->getFirstMedia('gallery')?->original_url ?? ProductPlaceholder::url(),
                 'images' => $product->getMedia('gallery')
                     ->map(fn ($media) => $media->original_url)
                     ->values()
-                    ->all(),
+                    ->all() ?: [ProductPlaceholder::url()],
             ];
         })->values();
 

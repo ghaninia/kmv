@@ -16,6 +16,7 @@ export default defineConfig({
             input: [
                 'resources/application/dashboard/app.jsx',
                 'resources/application/catalog/main.tsx',
+                'resources/application/homepage/main.tsx',
             ],
             refresh: true,
         }),
@@ -30,6 +31,8 @@ export default defineConfig({
         },
         watch: {
             ignored: ['**/storage/framework/views/**'],
+            usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
+            interval: 300,
         },
     },
 });
