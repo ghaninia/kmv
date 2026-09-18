@@ -7,6 +7,7 @@ import { ContactPage } from './pages/ContactPage';
 import { FaqPage } from './pages/FaqPage';
 import { HomePage } from './pages/HomePage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { ProductsPage } from './pages/ProductsPage';
 
 export function App() {
@@ -22,6 +23,7 @@ export function App() {
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/faq" element={<FaqPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

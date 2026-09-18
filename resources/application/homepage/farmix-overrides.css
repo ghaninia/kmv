@@ -4187,6 +4187,39 @@ body.farmix-body .cm-shop-page {
     }
 }
 
+/* Not found (404) */
+.farmix-theme .farmix-not-found-block {
+    max-width: 28rem;
+    margin-inline: auto;
+    padding: 8px 0 24px;
+}
+
+.farmix-theme .farmix-not-found-img {
+    display: block;
+    width: min(280px, 72vw);
+    height: auto;
+    margin: 0 auto 20px;
+    object-fit: contain;
+}
+
+.farmix-theme .farmix-not-found-lead {
+    margin: 0 0 24px;
+    color: #4a5c50;
+    font-size: 0.92rem;
+    line-height: 1.85;
+}
+
+.farmix-theme .farmix-not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.farmix-theme .farmix-not-found-page .farmix-not-found-block {
+    max-width: 32rem;
+}
+
 .mfp-farmix-product.mfp-wrap .mfp-container {
     padding-left: max(8px, env(safe-area-inset-left, 0px));
     padding-right: max(8px, env(safe-area-inset-right, 0px));
