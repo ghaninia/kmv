@@ -79,7 +79,6 @@ export function ProductsPage() {
                         search={search}
                         onSearchSubmit={(value) => updateParams({ search: value, page: '1' })}
                         onCategoryChange={(slug) => updateParams({ category: slug, page: '1' })}
-                        onClearFilters={() => updateParams({ search: '', category: '', page: '1' })}
                     />
 
                     {!isLoading && meta.total > 0 ? (
@@ -100,13 +99,6 @@ export function ProductsPage() {
                         <div className="farmix-products-empty farmix-storefront-empty">
                             <i className="far fa-box-open farmix-storefront-empty-icon" aria-hidden="true" />
                             <p>محصولی با این فیلتر پیدا نشد.</p>
-                            <button
-                                type="button"
-                                className="vs-btn style2"
-                                onClick={() => updateParams({ search: '', category: '', page: '1' })}
-                            >
-                                پاک کردن فیلترها
-                            </button>
                         </div>
                     ) : (
                         <div className="farmix-products-grid row g-4 farmix-storefront-grid">
