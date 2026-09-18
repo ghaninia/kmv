@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SITE_LOGO, SITE_LOGO_ALT } from '../constants/siteLogo';
 import { contactInfo, navItems } from '../data/homeData';
 import { farmixAsset } from './assets';
 
@@ -36,8 +37,8 @@ export function FarmixFooter() {
                             <div className="widget footer-widget farmix-footer-about">
                                 <div className="vs-widget-about">
                                     <div className="footer-logo">
-                                        <Link to="/">
-                                            <img src={farmixAsset('img/logo-2.png')} alt="کارا ماشین وصال" />
+                                        <Link className="farmix-site-logo" to="/">
+                                            <img src={SITE_LOGO} alt={SITE_LOGO_ALT} width={220} height={52} />
                                         </Link>
                                     </div>
                                     <p className="footer-text">

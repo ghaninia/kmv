@@ -8,7 +8,6 @@ type FarmixProductsFilterBarProps = {
     search: string;
     onSearchSubmit: (value: string) => void;
     onCategoryChange: (slug: string) => void;
-    onClearFilters: () => void;
 };
 
 export function FarmixProductsFilterBar({
@@ -17,7 +16,6 @@ export function FarmixProductsFilterBar({
     search,
     onSearchSubmit,
     onCategoryChange,
-    onClearFilters,
 }: FarmixProductsFilterBarProps) {
     const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,27 +23,31 @@ export function FarmixProductsFilterBar({
         onSearchSubmit(String(formData.get('search') || ''));
     };
 
-    const hasActiveFilters = Boolean(search.trim() || activeSlug);
-
     return (
         <div className="farmix-products-top-filters" role="search" aria-label="فیلتر محصولات">
             <form className="farmix-products-filter-bar__search" onSubmit={handleSearchSubmit}>
-                <i className="far fa-search" aria-hidden="true" />
+                <span className="farmix-products-filter-bar__search-icon" aria-hidden="true">
+                    <i className="far fa-search" />
+                </span>
                 <input
-                    className="form-control"
+                    className="farmix-products-filter-bar__input form-control"
                     type="search"
                     name="search"
-                    placeholder="جستجو در محصولات..."
+                    placeholder="نام محصول را جستجو کنید..."
                     defaultValue={search}
                     aria-label="جستجو در محصولات"
+                    autoComplete="off"
                 />
                 <button type="submit" className="farmix-products-filter-bar__submit" aria-label="جستجو">
-                    جستجو
+                    <span className="farmix-products-filter-bar__submit-label">جستجو</span>
+                    <i className="far fa-arrow-left farmix-products-filter-bar__submit-icon" aria-hidden="true" />
                 </button>
             </form>
 
             <div className="farmix-products-filter-bar__category">
-                <i className="far fa-folder-open" aria-hidden="true" />
+                <span className="farmix-products-filter-bar__category-icon" aria-hidden="true">
+                    <i className="far fa-folder-open" />
+                </span>
                 <select
                     className="form-control farmix-products-select"
                     value={activeSlug}
@@ -61,12 +63,6 @@ export function FarmixProductsFilterBar({
                     ))}
                 </select>
             </div>
-
-            {hasActiveFilters ? (
-                <button type="button" className="farmix-products-filter-bar__clear" onClick={onClearFilters}>
-                    پاک کردن فیلتر
-                </button>
-            ) : null}
         </div>
     );
 }
