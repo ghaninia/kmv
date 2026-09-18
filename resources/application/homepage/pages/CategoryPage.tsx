@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { fetchCategory } from '../api/storefront';
 import { Pagination } from '../components/Pagination';
+import { NotFoundIllustration } from '../components/NotFoundIllustration';
 import { FarmixPageHero } from '../farmix/FarmixPageHero';
 import { FarmixProductCard } from '../farmix/FarmixProductCard';
 import { FarmixStorefrontSearch } from '../farmix/FarmixStorefrontSearch';
@@ -73,8 +74,11 @@ export function CategoryPage() {
                     align="center"
                 />
                 <section className="farmix-storefront-page space">
-                    <div className="container text-center">
-                        <Link to="/categories" className="vs-btn">بازگشت به دسته‌بندی‌ها</Link>
+                    <div className="container">
+                        <div className="farmix-not-found-block text-center">
+                            <NotFoundIllustration />
+                            <Link to="/categories" className="vs-btn">بازگشت به دسته‌بندی‌ها</Link>
+                        </div>
                     </div>
                 </section>
             </>

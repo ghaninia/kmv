@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { fetchProduct } from '../api/storefront';
 import { ProductCard } from '../components/ProductCard';
 import { ProductImageGallery } from '../components/ProductImageGallery';
+import { NotFoundIllustration } from '../components/NotFoundIllustration';
 import { FarmixPageHero } from '../farmix/FarmixPageHero';
 import { farmixAsset } from '../farmix/assets';
 import type { PublicProduct } from '../types/storefront';
@@ -65,8 +66,11 @@ export function ProductDetailPage() {
                     align="center"
                 />
                 <section className="product-details space farmix-product-detail farmix-storefront-page">
-                    <div className="container text-center">
-                        <Link to="/products" className="vs-btn">بازگشت به محصولات</Link>
+                    <div className="container">
+                        <div className="farmix-not-found-block text-center">
+                            <NotFoundIllustration />
+                            <Link to="/products" className="vs-btn">بازگشت به محصولات</Link>
+                        </div>
                     </div>
                 </section>
             </>
