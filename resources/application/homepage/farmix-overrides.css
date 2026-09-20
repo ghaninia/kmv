@@ -3728,7 +3728,19 @@ body.farmix-body .cm-shop-page {
 }
 
 .farmix-theme .farmix-products-carousel-wrap .slick-arrow::before {
-    display: none;
+    display: none !important;
+    content: none !important;
+}
+
+.farmix-theme .farmix-products-carousel-wrap .slick-arrow i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    font-size: 1rem;
+    line-height: 1;
+    pointer-events: none;
 }
 
 .farmix-theme .farmix-products-carousel-wrap .slick-arrow:hover {
