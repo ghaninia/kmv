@@ -5,7 +5,8 @@ import { ProductCard } from '../components/ProductCard';
 import { ProductImageGallery } from '../components/ProductImageGallery';
 import { NotFoundIllustration } from '../components/NotFoundIllustration';
 import { FarmixPageHero } from '../farmix/FarmixPageHero';
-import { farmixAsset } from '../farmix/assets';
+import { FarmixProductBackgroundShapes } from '../farmix/FarmixProductBackgroundShapes';
+import { FarmixProductDetailInfo } from '../farmix/FarmixProductDetailInfo';
 import type { PublicProduct } from '../types/storefront';
 
 export function ProductDetailPage() {
@@ -81,7 +82,7 @@ export function ProductDetailPage() {
         ? product.category.name
         : product.is_available
           ? 'مشاهده جزئیات و درخواست مشاوره'
-          : 'این محصول در حال حاضر موجود نیست';
+          : 'این محصول در حال حاضر نیاز به استعلام موجودی دارد';
 
     return (
         <>
@@ -103,79 +104,29 @@ export function ProductDetailPage() {
                         ) : null}
                     </div>
 
-                    <div className="farmix-product-detail-panel">
-                        <div className="row g-4 g-xl-5 farmix-product-detail-row">
-                            <div className="col-lg-6">
-                                <ProductImageGallery
-                                    images={product.images}
-                                    fallbackUrl={product.image}
-                                    alt={product.name}
-                                />
-                            </div>
+                    <div className="farmix-product-detail-layout">
+                        <div className="farmix-product-detail-panel farmix-product-detail-panel--gallery">
+                            <ProductImageGallery
+                                images={product.images}
+                                fallbackUrl={product.image}
+                                alt={product.name}
+                            />
+                        </div>
 
-                            <div className="col-lg-6">
-                                <div className="product-about farmix-product-about">
-                                    <div className="farmix-product-detail-kicker">
-                                        <img
-                                            src={farmixAsset('img/icon/title-logo.png')}
-                                            alt=""
-                                            className="farmix-product-detail-kicker-icon"
-                                        />
-                                        <span>جزئیات محصول</span>
-                                    </div>
-
-                                    <h1 className="product-title farmix-product-detail-name">{product.name}</h1>
-
-                                    {product.category && (
-                                        <Link
-                                            to={`/categories/${product.category.slug}`}
-                                            className="farmix-product-detail-category"
-                                        >
-                                            {product.category.name}
-                                        </Link>
-                                    )}
-
-                                    {!product.is_available && (
-                                        <p className="farmix-product-unavailable">موجود نیست</p>
-                                    )}
-
-                                    {product.description ? (
-                                        <div className="farmix-product-detail-description">
-                                            <h2 className="farmix-product-detail-description-title">توضیحات</h2>
-                                            <p>{product.description}</p>
-                                        </div>
-                                    ) : (
-                                        <p className="farmix-product-detail-lead">
-                                            برای اطلاع از قیمت، موجودی و مشاوره فنی با واحد فروش تماس بگیرید.
-                                        </p>
-                                    )}
-
-                                    <div className="actions farmix-product-detail-actions">
-                                        <Link to="/contact" className="vs-btn">
-                                            <i className="far fa-envelope" aria-hidden="true" />
-                                            درخواست خرید / مشاوره
-                                        </Link>
-                                        <Link to="/products" className="vs-btn style2 farmix-product-detail-secondary">
-                                            محصولات بیشتر
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="farmix-product-detail-panel farmix-product-detail-panel--info">
+                            <FarmixProductDetailInfo product={product} />
                         </div>
                     </div>
 
                     {related.length > 0 && (
                         <section className="farmix-related-products">
-                            <div className="title-area text-center">
-                                <div className="title-img">
-                                    <img src={farmixAsset('img/icon/title-logo.png')} alt="" />
-                                </div>
+                            <div className="title-area text-center farmix-related-products-head">
                                 <span className="sec-subtitle">محصولات مرتبط</span>
                                 <h2 className="sec-title">پیشنهاد برای شما</h2>
                             </div>
-                            <div className="row g-4 farmix-storefront-grid">
+                            <div className="row g-4 farmix-storefront-grid farmix-products-grid">
                                 {related.map((item) => (
-                                    <div key={item.id} className="col-xl-3 col-lg-4 col-md-6 d-flex">
+                                    <div key={item.id} className="col-6 col-md-6 col-lg-4 col-xl-3 d-flex">
                                         <ProductCard product={item} />
                                     </div>
                                 ))}
@@ -183,6 +134,7 @@ export function ProductDetailPage() {
                         </section>
                     )}
                 </div>
+                <FarmixProductBackgroundShapes />
             </section>
         </>
     );

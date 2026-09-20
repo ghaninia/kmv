@@ -1,0 +1,1 @@
+const o="/images/not-found.png";function t(n){if(!n?.trim())return!0;const r=n.trim().toLowerCase();return r.includes("product-not-found")||r.includes("not-found.png")}function e(n){return!t(n)}function u(n){return t(n)?o:n.trim()}export{o as P,e as h,t as i,u as r};

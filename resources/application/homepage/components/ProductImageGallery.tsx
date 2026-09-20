@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { openProductLightbox } from '../farmix/openProductLightbox';
-import { PRODUCT_PLACEHOLDER, resolveProductImage } from '../constants/productPlaceholder';
+import {
+    PRODUCT_PLACEHOLDER,
+    isPlaceholderImage,
+    resolveProductImage,
+} from '../constants/productPlaceholder';
 import { formatPersianNumber } from '../utils/format';
 
 type GalleryImage = {
@@ -64,7 +68,7 @@ export function ProductImageGallery({ images, fallbackUrl, alt }: ProductImageGa
                         alt={alt}
                         onError={(event) => {
                             const target = event.currentTarget;
-                            if (!target.src.includes('product-not-found.svg')) {
+                            if (!isPlaceholderImage(target.src)) {
                                 target.src = PRODUCT_PLACEHOLDER;
                             }
                         }}

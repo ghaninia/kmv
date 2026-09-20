@@ -19,7 +19,11 @@ class HomepageProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'category_name' => $this->category?->name,
+            'category_slug' => $this->category?->slug,
             'slug' => $this->slug,
+            'description' => $this->description ? trim($this->description) : null,
+            'is_available' => $this->is_available,
+            'images_count' => $this->getMedia('gallery')->count(),
             'image' => $image ?: ProductPlaceholder::url(),
             'href' => '/products/'.$this->slug,
         ];

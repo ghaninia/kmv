@@ -20,7 +20,7 @@ class PublicProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => $this->description ? trim($this->description) : null,
             'category' => $this->category ? [
                 'id' => $this->category->id,
                 'name' => $this->category->name,

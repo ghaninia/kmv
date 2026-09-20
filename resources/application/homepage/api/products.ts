@@ -2,7 +2,11 @@ export type HomepageProduct = {
     id: number;
     name: string;
     category_name: string | null;
+    category_slug: string | null;
     slug: string;
+    description: string | null;
+    is_available: boolean;
+    images_count: number;
     image: string;
     href: string;
 };

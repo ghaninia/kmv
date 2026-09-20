@@ -50,7 +50,6 @@ class PublicProductController extends Controller
     {
         $product = Product::query()
             ->active()
-            ->where('is_available', true)
             ->where('slug', $slug)
             ->with(['category', 'media'])
             ->first();

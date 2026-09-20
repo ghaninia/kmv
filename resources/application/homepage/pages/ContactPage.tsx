@@ -1,4 +1,5 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { contactInfo } from '../data/homeData';
 import { submitContact } from '../api/storefront';
 import { FarmixPageHero } from '../farmix/FarmixPageHero';
@@ -32,8 +33,25 @@ const contactChannels = [
 ] as const;
 
 export function ContactPage() {
+    const [searchParams] = useSearchParams();
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
+
+    const prefilledSubject = useMemo(() => {
+        const subject = searchParams.get('subject')?.trim();
+        if (subject) {
+            return subject;
+        }
+        const product = searchParams.get('product')?.trim();
+        return product ? `درخواست خرید: ${product}` : '';
+    }, [searchParams]);
+
+    const prefilledMessage = useMemo(() => {
+        const product = searchParams.get('product')?.trim();
+        return product
+            ? `سلام، در مورد محصول «${product}» قیمت، موجودی و زمان ارسال را لطفاً اعلام کنید.`
+            : '';
+    }, [searchParams]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -183,6 +201,7 @@ export function ContactPage() {
                                                         type="text"
                                                         name="subject"
                                                         placeholder="سفارش، مشاوره فنی، ..."
+                                                        defaultValue={prefilledSubject}
                                                     />
                                                 </span>
                                             </label>
@@ -197,6 +216,7 @@ export function ContactPage() {
                                                         name="message"
                                                         rows={5}
                                                         placeholder="متن پیام خود را اینجا بنویسید..."
+                                                        defaultValue={prefilledMessage}
                                                         required
                                                     />
                                                 </span>
