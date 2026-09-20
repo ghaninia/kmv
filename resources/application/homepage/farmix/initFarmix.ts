@@ -42,11 +42,19 @@ export async function initFarmix(): Promise<void> {
         }
 
         const slidesToShow = Number(readData($el, 'slide-show') ?? 1);
+        const useArrows = Boolean(readData($el, 'arrows'));
         $el.slick({
             dots: Boolean(readData($el, 'dots')),
             fade: Boolean(readData($el, 'fade')),
-            arrows: Boolean(readData($el, 'arrows')),
+            arrows: useArrows,
+            prevArrow:
+                '<button type="button" class="slick-prev" aria-label="اسلاید قبلی"><i class="far fa-chevron-left" aria-hidden="true"></i></button>',
+            nextArrow:
+                '<button type="button" class="slick-next" aria-label="اسلاید بعدی"><i class="far fa-chevron-right" aria-hidden="true"></i></button>',
             autoplay: readData($el, 'autoplay') === true,
+            adaptiveHeight: false,
+            infinite: true,
+            slidesToScroll: 1,
             slidesToShow,
             centerMode: Boolean(readData($el, 'center-mode')),
             asNavFor: (readData($el, 'asnavfor') as string) || undefined,

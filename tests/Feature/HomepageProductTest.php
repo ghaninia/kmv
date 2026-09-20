@@ -43,7 +43,18 @@ class HomepageProductTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'name', 'category_name', 'slug', 'image', 'href'],
+                    '*' => [
+                        'id',
+                        'name',
+                        'category_name',
+                        'category_slug',
+                        'slug',
+                        'description',
+                        'is_available',
+                        'images_count',
+                        'image',
+                        'href',
+                    ],
                 ],
             ])
             ->assertJsonPath('data.0.name', 'پمپ سمپاش')

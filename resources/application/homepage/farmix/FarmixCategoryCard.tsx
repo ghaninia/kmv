@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
-import { hasProductCover } from '../../catalog/utils/productImage';
-import { PRODUCT_PLACEHOLDER } from '../constants/productPlaceholder';
+import { hasProductCover, resolveProductImage } from '../../catalog/utils/productImage';
 import type { PublicCategory } from '../types/storefront';
+import { getCategoryIconClass } from '../utils/categoryIcon';
 import { formatPersianNumber } from '../utils/format';
-
-function categoryImageSrc(category: PublicCategory): string {
-    return hasProductCover(category.image) ? category.image : PRODUCT_PLACEHOLDER;
-}
 
 type FarmixCategoryCardProps = {
     category: PublicCategory;
@@ -18,24 +14,48 @@ export function FarmixCategoryCard({ category, mosaicSlot }: FarmixCategoryCardP
     const slotMod = mosaicSlot === undefined ? undefined : mosaicSlot % 6;
     const slotClass =
         slotMod === undefined ? '' : ` farmix-category-card--slot-${slotMod}`;
-    const imageSrc = categoryImageSrc(category);
-    const isPlaceholder = !hasProductCover(category.image);
+    const hasCover = hasProductCover(category.image);
+    const imageSrc = resolveProductImage(category.image);
+    const iconClass = getCategoryIconClass(category.slug, category.name);
 
     return (
-        <div className={`categorie-style2 farmix-category-card${slotClass}`}>
-            <div
-                className={`categorie-img${isPlaceholder ? ' categorie-img--placeholder' : ''}`}
-            >
-                <img src={imageSrc} alt={category.name} loading="lazy" />
-            </div>
-            <div className="categorie-content">
-                <h3 className="categorie-title h5">
-                    <Link to={category.href}>{category.name}</Link>
-                </h3>
-                <p className="categorie-text">
+        <article className={`farmix-category-card h-100${slotClass}`}>
+            <Link to={category.href} className="farmix-category-card__link">
+                <div
+                    className={`farmix-category-card__visual${
+                        !hasCover ? ' farmix-category-card__visual--placeholder' : ''
+                    }`}
+                >
+                    <span className="farmix-category-card__icon-badge" aria-hidden="true">
+                        <i className={iconClass} />
+                    </span>
+                    {hasCover ? (
+                        <img
+                            src={imageSrc}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            onError={(event) => {
+                                const target = event.currentTarget;
+                                target.style.visibility = 'hidden';
+                            }}
+                        />
+                    ) : (
+                        <span className="farmix-category-card__icon-hero" aria-hidden="true">
+                            <i className={iconClass} />
+                        </span>
+                    )}
+                </div>
+                <h3 className="farmix-category-card__title">{category.name}</h3>
+                <p className="farmix-category-card__meta">
+                    <i className="far fa-box-open" aria-hidden="true" />
                     {formatPersianNumber(category.products_count)} محصول
                 </p>
-            </div>
-        </div>
+                <span className="farmix-category-card__cta">
+                    مشاهده دسته
+                    <i className="far fa-arrow-left" aria-hidden="true" />
+                </span>
+            </Link>
+        </article>
     );
 }

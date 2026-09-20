@@ -164,7 +164,7 @@
         radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
 }
 
-img[src*='product-not-found'] {
+img[src*='not-found'] {
     object-fit: contain;
     background-color: #fafafa;
 }

@@ -1640,7 +1640,7 @@ ul {
     margin-top: 16px;
 }
 
-img[src*='product-not-found'] {
+img[src*='not-found'] {
     object-fit: contain;
     background-color: #fafafa;
 }

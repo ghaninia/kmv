@@ -5,6 +5,7 @@ import type { HomepageProduct } from '../api/products';
 import { HOMEPAGE_PRODUCTS_LIMIT } from '../constants/storefrontPagination';
 import { farmixAsset } from './assets';
 import { FarmixProductBackgroundShapes } from './FarmixProductBackgroundShapes';
+import { initFarmix } from './initFarmix';
 import { FarmixProductCard } from './FarmixProductCard';
 
 export function FarmixProducts() {
@@ -15,6 +16,18 @@ export function FarmixProducts() {
             .then(setProducts)
             .catch(() => setProducts([]));
     }, []);
+
+    useEffect(() => {
+        if (products.length === 0) {
+            return;
+        }
+
+        const timer = window.setTimeout(() => {
+            initFarmix().catch(() => undefined);
+        }, 80);
+
+        return () => window.clearTimeout(timer);
+    }, [products]);
 
     if (products.length === 0) {
         return null;
@@ -30,26 +43,28 @@ export function FarmixProducts() {
                     <span className="sec-subtitle">محصولات</span>
                     <h2 className="sec-title">محصولات منتخب</h2>
                 </div>
-                <div
-                    className="row vs-carousel z-index-common farmix-products-carousel"
-                    data-slide-show="4"
-                    data-lg-slide-show="3"
-                    data-md-slide-show="2"
-                    data-autoplay="true"
-                    data-arrows="false"
-                    data-dots="true"
-                    data-center-mode="false"
-                >
-                    {products.map((product) => (
-                        <div key={product.id} className="col-lg-3">
-                            <FarmixProductCard
-                                name={product.name}
-                                href={product.href}
-                                image={product.image}
-                                categoryLabel={product.category_name}
-                            />
-                        </div>
-                    ))}
+                <div className="farmix-products-carousel-wrap">
+                    <div
+                        className="vs-carousel z-index-common farmix-products-carousel"
+                        data-slide-show="4"
+                        data-lg-slide-show="3"
+                        data-md-slide-show="2"
+                        data-autoplay="true"
+                        data-arrows="true"
+                        data-dots="true"
+                        data-center-mode="false"
+                    >
+                        {products.map((product) => (
+                            <div key={product.id} className="farmix-products-carousel__slide">
+                                <FarmixProductCard
+                                    name={product.name}
+                                    href={product.href}
+                                    image={product.image}
+                                    categoryLabel={product.category_name}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className="text-center mt-40">
                     <Link to="/products" className="vs-btn">همه محصولات</Link>

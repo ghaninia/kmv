@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Support\ProductPlaceholder;
+use App\Support\StorefrontMedia;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +18,7 @@ class PublicCategoryResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'products_count' => $this->products_count ?? $this->available_products_count ?? 0,
-            'image' => $cover?->getUrl() ?? ProductPlaceholder::url(),
+            'image' => StorefrontMedia::url($cover),
             'href' => '/categories/'.$this->slug,
         ];
     }
