@@ -45,7 +45,7 @@ export function FarmixProducts() {
                 </div>
                 <div className="farmix-products-carousel-wrap">
                     <div
-                        className="row vs-carousel z-index-common farmix-products-carousel"
+                        className="vs-carousel z-index-common farmix-products-carousel"
                         data-slide-show="4"
                         data-lg-slide-show="3"
                         data-md-slide-show="2"
@@ -55,7 +55,7 @@ export function FarmixProducts() {
                         data-center-mode="false"
                     >
                         {products.map((product) => (
-                            <div key={product.id} className="col-lg-3">
+                            <div key={product.id} className="farmix-products-carousel__slide">
                                 <FarmixProductCard
                                     name={product.name}
                                     href={product.href}

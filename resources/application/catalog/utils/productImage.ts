@@ -16,10 +16,38 @@ export function hasProductCover(imageUrl?: string | null): boolean {
     return !isPlaceholderImage(imageUrl);
 }
 
+function toSameOriginPath(imageUrl: string): string {
+    const trimmed = imageUrl.trim();
+    if (trimmed.startsWith('/') || trimmed.startsWith('data:')) {
+        return trimmed;
+    }
+
+    try {
+        const path = new URL(trimmed, window.location.origin).pathname;
+        if (path) {
+            return path;
+        }
+    } catch {
+        // keep original
+    }
+
+    return trimmed;
+}
+
 export function resolveProductImage(imageUrl?: string | null): string {
     if (isPlaceholderImage(imageUrl)) {
         return PRODUCT_PLACEHOLDER;
     }
 
-    return imageUrl!.trim();
+    const trimmed = imageUrl!.trim();
+    if (typeof window !== 'undefined') {
+        return toSameOriginPath(trimmed);
+    }
+
+    try {
+        const path = new URL(trimmed).pathname;
+        return path || trimmed;
+    } catch {
+        return trimmed;
+    }
 }

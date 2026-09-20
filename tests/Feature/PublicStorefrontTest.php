@@ -5,11 +5,40 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PublicStorefrontTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_public_category_cover_image_uses_same_origin_path(): void
+    {
+        Storage::fake('public');
+
+        $category = Category::factory()->create([
+            'name' => 'با کاور',
+            'slug' => 'with-cover',
+            'status' => true,
+        ]);
+
+        $category
+            ->addMedia(UploadedFile::fake()->image('cover.jpg'))
+            ->toMediaCollection('cover');
+
+        Product::factory()->for($category)->create([
+            'status' => true,
+            'is_available' => true,
+        ]);
+
+        $response = $this->getJson('/api/public/categories');
+
+        $response->assertOk();
+        $image = $response->json('data.0.image');
+        $this->assertIsString($image);
+        $this->assertStringStartsWith('/storage/', $image);
+    }
 
     public function test_public_can_list_categories_with_product_counts(): void
     {

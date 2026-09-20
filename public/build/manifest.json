@@ -10,19 +10,19 @@
       "_index-BDNn4-kg.js"
     ]
   },
-  "_productImage-DYPGZZw7.js": {
-    "file": "assets/productImage-DYPGZZw7.js",
+  "_productImage-DTeroCyd.js": {
+    "file": "assets/productImage-DTeroCyd.js",
     "name": "productImage"
   },
   "resources/application/catalog/main.tsx": {
-    "file": "assets/main-D-XZfTqI.js",
+    "file": "assets/main-D5sjqGDH.js",
     "name": "main",
     "src": "resources/application/catalog/main.tsx",
     "isEntry": true,
     "imports": [
       "_index-BDNn4-kg.js",
       "_index-Bi-9y4L0.js",
-      "_productImage-DYPGZZw7.js"
+      "_productImage-DTeroCyd.js"
     ],
     "css": [
       "assets/main-Bl1H5FTW.css"
@@ -42,16 +42,16 @@
     ]
   },
   "resources/application/homepage/main.tsx": {
-    "file": "assets/main-D5Yg3MbW.js",
+    "file": "assets/main-BxZT3QkH.js",
     "name": "main",
     "src": "resources/application/homepage/main.tsx",
     "isEntry": true,
     "imports": [
       "_index-BDNn4-kg.js",
-      "_productImage-DYPGZZw7.js"
+      "_productImage-DTeroCyd.js"
     ],
     "css": [
-      "assets/main-DSuCHa-E.css"
+      "assets/main-Ut15jHvp.css"
     ]
   }
 }

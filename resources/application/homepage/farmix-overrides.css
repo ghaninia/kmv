@@ -1836,9 +1836,7 @@ body.farmix-body {
 
 .farmix-theme .farmix-category-card__visual {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     width: 100%;
     min-height: 168px;
     margin-bottom: 12px;
@@ -1849,9 +1847,11 @@ body.farmix-body {
 }
 
 .farmix-theme .farmix-category-card__visual img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     width: 100%;
     height: 100%;
-    min-height: inherit;
     object-fit: cover;
     display: block;
     transition: transform 0.35s ease;
@@ -3248,9 +3248,22 @@ body.farmix-body .cm-shop-page {
 }
 
 /* Product cards — aligned with category cards */
+.farmix-theme .farmix-products-grid > [class*='col-'] {
+    display: flex;
+    min-width: 0;
+}
+
+.farmix-theme .farmix-products-grid .farmix-product-card {
+    width: 100%;
+    min-width: 0;
+}
+
 .farmix-theme .farmix-product-card {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     height: 100%;
+    min-height: 100%;
     border-radius: 18px;
     border: 1px solid #e0ebe3;
     background: #fff;
@@ -3274,8 +3287,10 @@ body.farmix-body .cm-shop-page {
 
 .farmix-theme .farmix-product-card__link {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
-    height: 100%;
+    width: 100%;
+    min-height: 100%;
     padding: 12px 12px 14px;
     color: inherit;
     text-decoration: none;
@@ -3283,12 +3298,10 @@ body.farmix-body .cm-shop-page {
 
 .farmix-theme .farmix-product-card__visual {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
     width: 100%;
-    min-height: 168px;
-    margin-bottom: 12px;
+    aspect-ratio: 1;
+    margin-bottom: 10px;
     border-radius: 14px;
     background: #f0f5f1;
     border: 1px solid #ecf2ed;
@@ -3300,18 +3313,27 @@ body.farmix-body .cm-shop-page {
 }
 
 .farmix-theme .farmix-product-card__visual img {
-    width: 86%;
-    height: 86%;
-    max-height: 156px;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10%;
+    box-sizing: border-box;
     object-fit: contain;
     transition: transform 0.35s ease;
 }
 
 .farmix-theme .farmix-product-card__visual--placeholder img {
-    width: 44%;
-    height: auto;
-    max-height: none;
+    padding: 22%;
     opacity: 0.72;
+}
+
+.farmix-theme .farmix-product-card__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 4.25rem;
 }
 
 .farmix-theme .farmix-product-card:hover .farmix-product-card__visual img {
@@ -3319,16 +3341,22 @@ body.farmix-body .cm-shop-page {
 }
 
 .farmix-theme .farmix-product-card__category {
-    margin: 0 0 4px;
+    flex-shrink: 0;
+    margin: 0 0 6px;
     direction: rtl;
     text-align: right;
     font-size: 0.72rem;
     font-weight: 600;
     color: #6d8074;
     line-height: 1.3;
+    min-height: 1.3em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.farmix-theme .farmix-product-card__category--empty {
+    visibility: hidden;
 }
 
 .farmix-theme .farmix-product-card__title {
@@ -3344,6 +3372,7 @@ body.farmix-body .cm-shop-page {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+    min-height: 2.9em;
 }
 
 .farmix-theme .farmix-product-card:hover .farmix-product-card__title {
@@ -3755,13 +3784,18 @@ body.farmix-body .cm-shop-page {
 }
 
 .farmix-theme .farmix-products-carousel {
-    padding: 14px 4px 8px;
+    margin: 0;
+    padding: 8px 0 4px;
+}
+
+.farmix-theme .farmix-products-carousel.slick-initialized {
+    display: block;
 }
 
 .farmix-theme .farmix-products-carousel .slick-list {
-    overflow: visible;
-    margin: 0 -6px;
-    padding: 10px 6px 24px !important;
+    overflow: hidden;
+    margin: 0;
+    padding: 6px 0 20px !important;
 }
 
 .farmix-theme .farmix-products-grid {
@@ -3818,18 +3852,47 @@ body.farmix-body .cm-shop-page {
     background: #1f4d28 !important;
 }
 
-.farmix-theme .farmix-products-carousel .slick-track {
-    display: flex !important;
-    align-items: stretch;
-}
-
 .farmix-theme .farmix-products-carousel .slick-slide {
     height: auto;
+    padding: 0 8px;
+    box-sizing: border-box;
 }
 
 .farmix-theme .farmix-products-carousel .slick-slide > div {
+    display: block;
+    width: 100%;
     height: 100%;
-    padding: 0 10px;
+    padding: 0;
+}
+
+.farmix-theme .farmix-products-carousel__slide {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Carousel: compact cards (listing grid keeps square visual) */
+.farmix-theme .farmix-products-carousel .farmix-product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.farmix-theme .farmix-products-carousel .farmix-product-card__visual {
+    aspect-ratio: 4 / 3;
+}
+
+.farmix-theme .farmix-products-carousel .farmix-product-card__title {
+    font-size: 0.88rem !important;
+    min-height: 2.55em;
+}
+
+.farmix-theme .farmix-products-carousel .farmix-product-card__content {
+    min-height: 3.5rem;
+}
+
+.farmix-theme .farmix-products-carousel .farmix-product-card__link {
+    padding: 10px 10px 12px;
 }
 
 @media (max-width: 767.98px) {
@@ -4296,12 +4359,13 @@ body.farmix-body .cm-shop-page {
         padding: 10px 10px 12px;
     }
 
-    .farmix-theme .farmix-product-card__visual {
-        min-height: 140px;
-    }
-
     .farmix-theme .farmix-product-card__title {
         font-size: 0.86rem !important;
+        min-height: 2.6em;
+    }
+
+    .farmix-theme .farmix-product-card__content {
+        min-height: 3.75rem;
     }
 
 

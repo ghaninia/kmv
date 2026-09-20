@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom';
-import {
-    PRODUCT_PLACEHOLDER,
-    hasProductCover,
-    isPlaceholderImage,
-    resolveProductImage,
-} from '../../catalog/utils/productImage';
+import { hasProductCover, resolveProductImage } from '../../catalog/utils/productImage';
 import type { PublicCategory } from '../types/storefront';
 import { getCategoryIconClass } from '../utils/categoryIcon';
 import { formatPersianNumber } from '../utils/format';
@@ -39,11 +34,10 @@ export function FarmixCategoryCard({ category, mosaicSlot }: FarmixCategoryCardP
                             src={imageSrc}
                             alt=""
                             loading="lazy"
+                            decoding="async"
                             onError={(event) => {
                                 const target = event.currentTarget;
-                                if (!isPlaceholderImage(target.src)) {
-                                    target.src = PRODUCT_PLACEHOLDER;
-                                }
+                                target.style.visibility = 'hidden';
                             }}
                         />
                     ) : (

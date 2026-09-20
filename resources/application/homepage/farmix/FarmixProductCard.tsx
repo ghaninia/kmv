@@ -37,11 +37,16 @@ export function FarmixProductCard({ name, href, image, categoryLabel }: FarmixPr
                     />
                 </div>
 
-                {categoryLabel ? (
-                    <p className="farmix-product-card__category">{categoryLabel}</p>
-                ) : null}
-
-                <h2 className="farmix-product-card__title">{name}</h2>
+                <div className="farmix-product-card__content">
+                    <p
+                        className={`farmix-product-card__category${
+                            categoryLabel ? '' : ' farmix-product-card__category--empty'
+                        }`}
+                    >
+                        {categoryLabel || '\u00a0'}
+                    </p>
+                    <h2 className="farmix-product-card__title">{name}</h2>
+                </div>
             </Link>
         </article>
     );

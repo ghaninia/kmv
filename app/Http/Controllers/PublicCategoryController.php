@@ -16,6 +16,7 @@ class PublicCategoryController extends Controller
     {
         $categories = Category::query()
             ->active()
+            ->with('media')
             ->withCount(['products as available_products_count' => function ($query) {
                 $query->where('status', true)->where('is_available', true);
             }])
@@ -36,6 +37,7 @@ class PublicCategoryController extends Controller
         $category = Category::query()
             ->active()
             ->where('slug', $slug)
+            ->with('media')
             ->withCount(['products as available_products_count' => function ($query) {
                 $query->where('status', true)->where('is_available', true);
             }])

@@ -52,6 +52,9 @@ export async function initFarmix(): Promise<void> {
             nextArrow:
                 '<button type="button" class="slick-next" aria-label="اسلاید بعدی"><i class="far fa-chevron-right" aria-hidden="true"></i></button>',
             autoplay: readData($el, 'autoplay') === true,
+            adaptiveHeight: false,
+            infinite: true,
+            slidesToScroll: 1,
             slidesToShow,
             centerMode: Boolean(readData($el, 'center-mode')),
             asNavFor: (readData($el, 'asnavfor') as string) || undefined,
