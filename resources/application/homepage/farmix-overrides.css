@@ -1680,6 +1680,81 @@ body.farmix-body {
     box-shadow: none;
 }
 
+.farmix-theme .farmix-about-video-slider {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.farmix-theme .farmix-about-video-slider__stage {
+    position: relative;
+    width: 100%;
+}
+
+.farmix-theme .farmix-about-video-slider__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 8;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 12, 9, 0.55);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.farmix-theme .farmix-about-video-slider__nav:hover {
+    background: rgba(15, 81, 50, 0.92);
+    transform: translateY(-50%) scale(1.06);
+}
+
+.farmix-theme .farmix-about-video-slider__nav--prev {
+    left: 10px;
+}
+
+.farmix-theme .farmix-about-video-slider__nav--next {
+    right: 10px;
+}
+
+.farmix-theme .farmix-about-video-slider__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.farmix-theme .farmix-about-video-slider__dot {
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: rgba(31, 77, 40, 0.28);
+    cursor: pointer;
+    transition: width 0.2s ease, background 0.2s ease;
+}
+
+.farmix-theme .farmix-about-video-slider__dot.is-active {
+    width: 22px;
+    background: var(--secondary-color, #1f4d28);
+}
+
+.farmix-theme .farmix-about-video-slider__dot:hover {
+    background: rgba(31, 77, 40, 0.55);
+}
+
 .farmix-theme .farmix-about-video {
     position: relative;
     z-index: 1;

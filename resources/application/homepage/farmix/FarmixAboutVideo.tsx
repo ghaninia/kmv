@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { ABOUT_VIDEO_POSTER, ABOUT_VIDEO_SRC } from '../constants/aboutVideo';
 
 type FarmixAboutVideoProps = {
+    src: string;
+    poster: string;
+    label?: string;
     className?: string;
 };
 
@@ -15,7 +17,12 @@ function formatTime(seconds: number): string {
     return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export function FarmixAboutVideo({ className = '' }: FarmixAboutVideoProps) {
+export function FarmixAboutVideo({
+    src,
+    poster,
+    label = 'ویدیوی معرفی کارا ماشین وصال',
+    className = '',
+}: FarmixAboutVideoProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const rootRef = useRef<HTMLDivElement>(null);
     const labelId = useId();
@@ -89,15 +96,18 @@ export function FarmixAboutVideo({ className = '' }: FarmixAboutVideoProps) {
         setIsMuted(video.muted);
     }, []);
 
-    const seekTo = useCallback((value: number) => {
-        const video = videoRef.current;
-        if (!video || !Number.isFinite(duration) || duration <= 0) {
-            return;
-        }
-        const next = Math.min(Math.max(value, 0), duration);
-        video.currentTime = next;
-        setCurrentTime(next);
-    }, [duration]);
+    const seekTo = useCallback(
+        (value: number) => {
+            const video = videoRef.current;
+            if (!video || !Number.isFinite(duration) || duration <= 0) {
+                return;
+            }
+            const next = Math.min(Math.max(value, 0), duration);
+            video.currentTime = next;
+            setCurrentTime(next);
+        },
+        [duration],
+    );
 
     const toggleFullscreen = useCallback(async () => {
         const root = rootRef.current;
@@ -179,7 +189,7 @@ export function FarmixAboutVideo({ className = '' }: FarmixAboutVideoProps) {
             className={rootClass}
             tabIndex={0}
             role="group"
-            aria-label="ویدیوی معرفی کارا ماشین وصال"
+            aria-label={label}
             onKeyDown={onContainerKeyDown}
             onMouseMove={() => {
                 setShowControls(true);
@@ -194,7 +204,7 @@ export function FarmixAboutVideo({ className = '' }: FarmixAboutVideoProps) {
             <video
                 ref={videoRef}
                 className="farmix-about-video__media img1"
-                poster={ABOUT_VIDEO_POSTER}
+                poster={poster}
                 preload="metadata"
                 playsInline
                 onClick={togglePlay}
@@ -219,7 +229,7 @@ export function FarmixAboutVideo({ className = '' }: FarmixAboutVideoProps) {
                 }}
                 aria-labelledby={labelId}
             >
-                <source src={ABOUT_VIDEO_SRC} type="video/mp4" />
+                <source src={src} type="video/mp4" />
             </video>
 
             {!isActive && (

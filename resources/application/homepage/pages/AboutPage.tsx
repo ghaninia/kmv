@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { aboutContent } from '../data/homeData';
 import { FarmixPageHero } from '../farmix/FarmixPageHero';
 import { FarmixValuesAccordion } from '../farmix/FarmixValuesAccordion';
-import { FarmixAboutVideo } from '../farmix/FarmixAboutVideo';
+import { FarmixAboutVideoSlider } from '../farmix/FarmixAboutVideoSlider';
 import { farmixAsset } from '../farmix/assets';
 
 const ABOUT_STAT_ICONS = [
@@ -43,7 +43,7 @@ export function AboutPage() {
                         </div>
                         <div className="col-lg-5 order-lg-2">
                             <div className="about-img farmix-about-page-img farmix-about-img">
-                                <FarmixAboutVideo />
+                                <FarmixAboutVideoSlider />
                                 <div className="img-content">
                                     <h2 className="img-title h4">همراه مطمئن مزارع و کشاورزان سراسر کشور</h2>
                                     <Link to="/products" className="vs-btn">مشاهده محصولات</Link>

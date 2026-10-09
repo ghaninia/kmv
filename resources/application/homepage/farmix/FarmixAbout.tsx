@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { aboutContent } from '../data/homeData';
 import { farmixAsset } from './assets';
-import { FarmixAboutVideo } from './FarmixAboutVideo';
+import { FarmixAboutVideoSlider } from './FarmixAboutVideoSlider';
 import { FarmixValuesAccordion } from './FarmixValuesAccordion';
 
 export function FarmixAbout() {
@@ -34,7 +34,7 @@ export function FarmixAbout() {
                     </div>
                     <div className="col-lg-5">
                         <div className="about-img farmix-about-img">
-                            <FarmixAboutVideo />
+                            <FarmixAboutVideoSlider />
                             <div className="img-content">
                                 <h2 className="img-title h4">همراه مطمئن مزارع و کشاورزان سراسر کشور</h2>
                                 <Link to="/about" className="vs-btn">درباره ما</Link>
