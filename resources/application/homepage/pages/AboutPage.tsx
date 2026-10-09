@@ -17,7 +17,7 @@ export function AboutPage() {
         <>
             <FarmixPageHero
                 title={aboutContent.title}
-                subtitle="بیش از یک دهه همراه مزارع و کشاورزان سراسر کشور"
+                subtitle="بیش از دو دهه همراه مزارع و کشاورزان سراسر کشور"
                 align="center"
             />
             <section className="about-layout3 space farmix-about-section farmix-about-page farmix-storefront-page">

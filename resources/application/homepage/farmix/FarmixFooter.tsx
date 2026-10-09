@@ -40,8 +40,9 @@ export function FarmixFooter() {
                                         <FarmixSiteLogo variant="on-dark" width={220} height={52} />
                                     </div>
                                     <p className="footer-text">
-                                        کارا ماشین وصال؛ پیشرو در تأمین تجهیزات و قطعات کشاورزی با کیفیت و
-                                        استاندارد بین‌المللی.
+                                        کارا ماشین وصال با بیش از دو دهه تجربه، یکی از پیشروان تأمین تجهیزات و
+                                        قطعات کشاورزی در ایران است. ما با تکیه بر کیفیت، صداقت و پشتیبانی فنی،
+                                        همراه مطمئن مزارع و کشاورزان سراسر کشور هستیم.
                                     </p>
                                     <div className="footer-social farmix-footer-social">
                                         <a
@@ -58,6 +59,16 @@ export function FarmixFooter() {
                                         <a href={`tel:${contactInfo.phoneTel}`} aria-label="تماس">
                                             <i className="far fa-phone" />
                                         </a>
+                                    </div>
+                                    <div className="farmix-footer-brands">
+                                        <img
+                                            src="/images/footer-brands.png"
+                                            alt="برندهای همکار کارا ماشین وصال"
+                                            width={491}
+                                            height={80}
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
                                     </div>
                                 </div>
                             </div>

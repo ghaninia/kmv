@@ -4512,6 +4512,23 @@ body.farmix-body .cm-shop-page {
     max-width: 26em;
 }
 
+.farmix-theme .farmix-footer .farmix-footer-brands {
+    margin-top: 22px;
+    width: 100%;
+    max-width: 260px;
+    margin-inline: auto;
+    background: none;
+    text-align: center;
+}
+
+.farmix-theme .farmix-footer .farmix-footer-brands img {
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    margin-inline: auto;
+}
+
 /* شبکه‌های اجتماعی */
 .farmix-theme .farmix-footer .farmix-footer-social {
     display: flex;
