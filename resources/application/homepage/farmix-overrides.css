@@ -1665,7 +1665,7 @@ body.farmix-body {
     justify-content: center;
 }
 
-/* About section — ریلز اینستاگرام (۹:۱۶) */
+/* About section — دو ریلز کنار هم (۹:۱۶) */
 .farmix-theme .farmix-about-img.about-img {
     position: relative;
     direction: ltr;
@@ -1680,79 +1680,21 @@ body.farmix-body {
     box-shadow: none;
 }
 
-.farmix-theme .farmix-about-video-slider {
-    position: relative;
+.farmix-theme .farmix-about-img.farmix-about-img--pair {
+    width: 100%;
+    max-width: 560px;
+}
+
+.farmix-theme .farmix-about-video-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
     z-index: 1;
-    width: 100%;
 }
 
-.farmix-theme .farmix-about-video-slider__stage {
-    position: relative;
-    width: 100%;
-}
-
-.farmix-theme .farmix-about-video-slider__nav {
-    position: absolute;
-    top: 50%;
-    z-index: 8;
-    transform: translateY(-50%);
-    width: 36px;
-    height: 36px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(6, 12, 9, 0.55);
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-    backdrop-filter: blur(4px);
-}
-
-.farmix-theme .farmix-about-video-slider__nav:hover {
-    background: rgba(15, 81, 50, 0.92);
-    transform: translateY(-50%) scale(1.06);
-}
-
-.farmix-theme .farmix-about-video-slider__nav--prev {
-    left: 10px;
-}
-
-.farmix-theme .farmix-about-video-slider__nav--next {
-    right: 10px;
-}
-
-.farmix-theme .farmix-about-video-slider__dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.farmix-theme .farmix-about-video-slider__dot {
-    width: 8px;
-    height: 8px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: 999px;
-    background: rgba(31, 77, 40, 0.28);
-    cursor: pointer;
-    transition: width 0.2s ease, background 0.2s ease;
-}
-
-.farmix-theme .farmix-about-video-slider__dot.is-active {
-    width: 22px;
-    background: var(--secondary-color, #1f4d28);
-}
-
-.farmix-theme .farmix-about-video-slider__dot:hover {
-    background: rgba(31, 77, 40, 0.55);
+.farmix-theme .farmix-about-video-pair__item {
+    min-width: 0;
 }
 
 .farmix-theme .farmix-about-video {
@@ -1762,7 +1704,7 @@ body.farmix-body {
     aspect-ratio: 9 / 16;
     margin-inline: auto;
     background: #0a1410;
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
     box-shadow:
         0 22px 56px rgba(15, 40, 24, 0.22),
@@ -1966,6 +1908,12 @@ body.farmix-body {
     text-align: center;
 }
 
+.farmix-theme .farmix-about-img--pair .img-content,
+.farmix-theme .about-layout3 .farmix-about-img--pair .img-content {
+    max-width: min(100%, 420px);
+    width: calc(100% - 40px);
+}
+
 .farmix-theme .farmix-about-img .img-content .img-title,
 .farmix-theme .about-layout3 .farmix-about-img .img-content .img-title {
     margin: 0 0 10px;
@@ -2006,6 +1954,10 @@ body.farmix-body {
         padding-bottom: 32px;
     }
 
+    .farmix-theme .farmix-about-img.farmix-about-img--pair {
+        width: min(100%, 520px);
+    }
+
     .farmix-theme .about-layout3 .farmix-about-img .img-content {
         position: absolute;
         left: 50%;
@@ -2017,9 +1969,29 @@ body.farmix-body {
         padding: 10px 12px 12px;
     }
 
+    .farmix-theme .about-layout3 .farmix-about-img--pair .img-content {
+        max-width: min(100%, 360px);
+        width: calc(100% - 28px);
+    }
+
+    .farmix-theme .farmix-about-video-pair {
+        gap: 10px;
+    }
+
     .farmix-theme .farmix-about-video {
         width: 100%;
         aspect-ratio: 9 / 16;
+        border-radius: 14px;
+    }
+
+    .farmix-theme .farmix-about-video__poster-play {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        min-height: 56px;
+        max-width: 56px;
+        max-height: 56px;
+        font-size: 18px;
     }
 }
 
@@ -2029,9 +2001,22 @@ body.farmix-body {
         padding-bottom: 28px;
     }
 
+    .farmix-theme .farmix-about-img.farmix-about-img--pair {
+        width: 100%;
+        max-width: none;
+    }
+
     .farmix-theme .about-layout3 .farmix-about-img .img-content {
         max-width: 240px;
         padding: 9px 10px 11px;
+    }
+
+    .farmix-theme .about-layout3 .farmix-about-img--pair .img-content {
+        max-width: calc(100% - 20px);
+    }
+
+    .farmix-theme .farmix-about-video-pair {
+        gap: 8px;
     }
 
     .farmix-theme .farmix-about-img .img-content .img-title,
