@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SITE_LOGO, SITE_LOGO_ALT } from '../constants/siteLogo';
+import { FarmixSiteLogo } from './FarmixSiteLogo';
 import { contactInfo, navItems } from '../data/homeData';
 import { farmixAsset } from './assets';
 
@@ -37,9 +37,7 @@ export function FarmixFooter() {
                             <div className="widget footer-widget farmix-footer-about">
                                 <div className="vs-widget-about">
                                     <div className="footer-logo">
-                                        <Link className="farmix-site-logo" to="/">
-                                            <img src={SITE_LOGO} alt={SITE_LOGO_ALT} width={220} height={52} />
-                                        </Link>
+                                        <FarmixSiteLogo variant="on-dark" width={220} height={52} />
                                     </div>
                                     <p className="footer-text">
                                         کارا ماشین وصال؛ پیشرو در تأمین تجهیزات و قطعات کشاورزی با کیفیت و
