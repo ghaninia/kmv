@@ -63,9 +63,9 @@ export const heroSlides: HeroSlide[] = [
 ];
 
 export const contactInfo = {
-    address: 'تهران , پونک , کوچه ای کربلایی احمد , پلاک 7',
-    phone: '۰۲۱-۴۴۶۲۵۲۹۵',
-    phoneTel: '02144625295',
+    address: 'تهران, شهرک صنعتی شمس آباد, بلوار نارنجستان, گلبرگ شش',
+    phone: '۰۲۱-۵۶۲۳۲۲۳۱',
+    phoneTel: '02156232231',
     fax: '٤٤٦١٢٤٠٣',
     email: 'info@caramachine.com',
     instagram: 'https://www.instagram.com/es.plasticgroup/',
