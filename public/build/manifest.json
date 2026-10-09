@@ -1,57 +1,57 @@
 {
-  "_index-BDNn4-kg.js": {
-    "file": "assets/index-BDNn4-kg.js",
-    "name": "index"
+  "_jsx-runtime-DpR1dQUG.js": {
+    "file": "assets/jsx-runtime-DpR1dQUG.js",
+    "name": "jsx-runtime"
   },
-  "_index-Bi-9y4L0.js": {
-    "file": "assets/index-Bi-9y4L0.js",
-    "name": "index",
-    "imports": [
-      "_index-BDNn4-kg.js"
-    ]
-  },
-  "_productImage-DTeroCyd.js": {
-    "file": "assets/productImage-DTeroCyd.js",
+  "_productImage-CIW6vBCX.js": {
+    "file": "assets/productImage-CIW6vBCX.js",
     "name": "productImage"
   },
+  "_x-CjC2_tm-.js": {
+    "file": "assets/x-CjC2_tm-.js",
+    "name": "x",
+    "imports": [
+      "_jsx-runtime-DpR1dQUG.js"
+    ]
+  },
   "resources/application/catalog/main.tsx": {
-    "file": "assets/main-D5sjqGDH.js",
+    "file": "assets/main-DYZfqwFS.js",
     "name": "main",
     "src": "resources/application/catalog/main.tsx",
     "isEntry": true,
     "imports": [
-      "_index-BDNn4-kg.js",
-      "_index-Bi-9y4L0.js",
-      "_productImage-DTeroCyd.js"
+      "_jsx-runtime-DpR1dQUG.js",
+      "_x-CjC2_tm-.js",
+      "_productImage-CIW6vBCX.js"
     ],
     "css": [
-      "assets/main-Bl1H5FTW.css"
+      "assets/main-mCxDAgWh.css"
     ]
   },
   "resources/application/dashboard/app.jsx": {
-    "file": "assets/app-DgXCPXNq.js",
+    "file": "assets/app-Dzcu3w2q.js",
     "name": "app",
     "src": "resources/application/dashboard/app.jsx",
     "isEntry": true,
     "imports": [
-      "_index-BDNn4-kg.js",
-      "_index-Bi-9y4L0.js"
+      "_jsx-runtime-DpR1dQUG.js",
+      "_x-CjC2_tm-.js"
     ],
     "css": [
-      "assets/app-DsMWc0TV.css"
+      "assets/app-B6qOCGpi.css"
     ]
   },
   "resources/application/homepage/main.tsx": {
-    "file": "assets/main-BxZT3QkH.js",
+    "file": "assets/main-CTdtHCrv.js",
     "name": "main",
     "src": "resources/application/homepage/main.tsx",
     "isEntry": true,
     "imports": [
-      "_index-BDNn4-kg.js",
-      "_productImage-DTeroCyd.js"
+      "_jsx-runtime-DpR1dQUG.js",
+      "_productImage-CIW6vBCX.js"
     ],
     "css": [
-      "assets/main-Ut15jHvp.css"
+      "assets/main-DYnVqORc.css"
     ]
   }
 }

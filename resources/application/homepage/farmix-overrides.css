@@ -911,6 +911,7 @@ body.farmix-body {
 
 /* Inner pages: menu bar over page header (not homepage hero) */
 .farmix-theme .vs-header:not(:has(+ .farmix-hero)) .sticky-wrapper {
+    position: relative;
     background: linear-gradient(180deg, rgba(8, 18, 12, 0.5) 0%, transparent 100%);
 }
 
@@ -1427,17 +1428,22 @@ body.farmix-body {
     text-decoration: none;
 }
 
+.farmix-theme .farmix-site-logo__img,
 .farmix-theme .farmix-site-logo img {
     display: block;
     width: auto;
-    max-width: min(210px, 46vw);
+    max-width: min(240px, 52vw);
     height: auto;
-    max-height: 48px;
     object-fit: contain;
 }
 
-.farmix-theme .header-logo img {
-    max-height: 48px;
+.farmix-theme .header-logo .farmix-site-logo {
+    display: inline-block !important;
+}
+
+.farmix-theme .header-logo img,
+.farmix-theme .header-logo .farmix-site-logo__img {
+    max-height: 70px;
     width: auto;
 }
 
@@ -1651,6 +1657,313 @@ body.farmix-body {
 
 .farmix-theme .farmix-about-page-img.about-img {
     direction: ltr;
+}
+
+.farmix-theme .farmix-about-row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* About section — ریلز اینستاگرام (۹:۱۶) */
+.farmix-theme .farmix-about-img.about-img {
+    position: relative;
+    direction: ltr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(100%, 360px);
+    margin-inline: auto;
+    padding-bottom: 36px;
+    overflow: visible;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.farmix-theme .farmix-about-video {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    margin-inline: auto;
+    background: #0a1410;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+        0 22px 56px rgba(15, 40, 24, 0.22),
+        0 0 0 1px rgba(15, 40, 24, 0.08);
+}
+
+.farmix-theme .farmix-about-video__media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background: #0a1410;
+}
+
+.farmix-theme .farmix-about-video__poster-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    box-sizing: border-box;
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    min-height: 72px;
+    max-width: 72px;
+    max-height: 72px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(15, 81, 50, 0.92);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.farmix-theme .farmix-about-video__poster-play::before,
+.farmix-theme .farmix-about-video__poster-play::after {
+    display: none;
+    content: none;
+}
+
+.farmix-theme .farmix-about-video__poster-play:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+    background-color: #1f4d28;
+}
+
+.farmix-theme .farmix-about-video__poster-play i {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0 0 0 3px;
+    padding: 0;
+    line-height: 1;
+    background: none;
+    border-radius: 0;
+    color: inherit;
+    font-size: inherit;
+}
+
+.farmix-theme .farmix-about-video--active .farmix-about-video__poster-play {
+    display: none;
+}
+
+.farmix-theme .farmix-about-video__controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    padding: 12px 12px 14px;
+    background: linear-gradient(180deg, transparent 0%, rgba(6, 12, 9, 0.9) 50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+}
+
+.farmix-theme .farmix-about-video__controls.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.farmix-theme .farmix-about-video:not(.farmix-about-video--active) .farmix-about-video__controls {
+    display: none;
+}
+
+.farmix-theme .farmix-about-video__progress-wrap {
+    position: relative;
+    height: 4px;
+    margin-bottom: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.farmix-theme .farmix-about-video__buffer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.28);
+    pointer-events: none;
+}
+
+.farmix-theme .farmix-about-video__progress {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 4px;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.farmix-theme .farmix-about-video__progress::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--theme-color, #ffd800);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.farmix-theme .farmix-about-video__progress::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--theme-color, #ffd800);
+    border: 2px solid #fff;
+}
+
+.farmix-theme .farmix-about-video__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.farmix-theme .farmix-about-video__btn {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.farmix-theme .farmix-about-video__btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: var(--theme-color, #ffd800);
+}
+
+.farmix-theme .farmix-about-video__btn--end {
+    margin-left: auto;
+}
+
+.farmix-theme .farmix-about-video__time {
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    opacity: 0.92;
+    min-width: 5rem;
+}
+
+.farmix-theme .farmix-about-img .img-content,
+.farmix-theme .about-layout3 .farmix-about-img .img-content {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 20;
+    width: calc(100% - 28px);
+    max-width: 280px;
+    margin: 0;
+    padding: 12px 14px 14px;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    background-color: var(--secondary-color, #1f4d28);
+    box-shadow: 0 14px 32px rgba(15, 40, 24, 0.28);
+    text-align: center;
+}
+
+.farmix-theme .farmix-about-img .img-content .img-title,
+.farmix-theme .about-layout3 .farmix-about-img .img-content .img-title {
+    margin: 0 0 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.55;
+    color: #fff;
+}
+
+.farmix-theme .farmix-about-img .img-content .vs-btn,
+.farmix-theme .about-layout3 .farmix-about-img .img-content .vs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    line-height: 1.2;
+}
+
+.farmix-theme .farmix-about-video:fullscreen {
+    border-radius: 0;
+    aspect-ratio: auto;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+}
+
+.farmix-theme .farmix-about-video:fullscreen .farmix-about-video__media {
+    object-fit: contain;
+    height: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .farmix-theme .farmix-about-img.about-img {
+        width: min(100%, 320px);
+        padding-bottom: 32px;
+    }
+
+    .farmix-theme .about-layout3 .farmix-about-img .img-content {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: calc(100% - 24px);
+        max-width: 260px;
+        margin-top: 0;
+        padding: 10px 12px 12px;
+    }
+
+    .farmix-theme .farmix-about-video {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .farmix-theme .farmix-about-img.about-img {
+        width: min(100%, 280px);
+        padding-bottom: 28px;
+    }
+
+    .farmix-theme .about-layout3 .farmix-about-img .img-content {
+        max-width: 240px;
+        padding: 9px 10px 11px;
+    }
+
+    .farmix-theme .farmix-about-img .img-content .img-title,
+    .farmix-theme .about-layout3 .farmix-about-img .img-content .img-title {
+        font-size: 0.76rem;
+        margin-bottom: 8px;
+    }
 }
 
 .farmix-theme .farmix-about-stats {
@@ -2466,8 +2779,10 @@ body.farmix-body {
 }
 
 .farmix-theme .sticky-wrapper.will-sticky .header-logo .farmix-site-logo img {
-    max-height: 46px;
-    max-width: 200px;
+    max-height: 70px;
+    max-width: 220px;
+    width: auto;
+    height: auto;
 }
 
 .farmix-theme .sticky-wrapper.will-sticky .menu-area {
@@ -3947,14 +4262,25 @@ body.farmix-body .cm-shop-page {
     transform: translateY(42%);
     margin-bottom: 0;
     direction: rtl;
+    overflow: visible;
+}
+
+.farmix-theme .farmix-newsletter.subscribe-layout1 .container {
+    overflow: visible;
 }
 
 .farmix-theme .farmix-subscribe-style1 {
+    position: relative;
     direction: rtl;
     text-align: right;
     border-radius: 20px;
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.14);
     padding: 40px 44px !important;
+    overflow: visible;
+}
+
+.farmix-theme .farmix-subscribe-style1 > .row {
+    overflow: visible;
 }
 
 .farmix-theme .farmix-subscribe-inner {
@@ -4028,16 +4354,37 @@ body.farmix-body .cm-shop-page {
 }
 
 .farmix-theme .farmix-subscribe-img {
-    position: relative !important;
+    position: absolute !important;
     right: auto !important;
-    left: 0;
-    transform: none !important;
+    left: 48px !important;
+    top: 50%;
+    z-index: 6;
+    display: block;
+    width: min(540px, 56vw);
+    max-width: none;
+    margin: 0;
+    line-height: 0;
     text-align: left;
+    overflow: visible;
+    border-radius: 0;
+    transform: translateY(-58%) !important;
+    pointer-events: none;
+}
+
+.farmix-theme .farmix-subscribe-img::after {
+    content: none;
+    display: none;
 }
 
 .farmix-theme .farmix-subscribe-img img {
-    max-width: 100%;
+    display: block;
+    width: 100%;
+    max-width: none;
     height: auto;
+    /* سایه دنبال شکل شفاف آیتم‌های PNG */
+    filter:
+        drop-shadow(0 14px 24px rgba(0, 0, 0, 0.42))
+        drop-shadow(0 6px 12px rgba(0, 0, 0, 0.28));
 }
 
 @media (max-width: 991.98px) {
@@ -4474,8 +4821,14 @@ body.farmix-body .cm-shop-page {
         border: 0;
     }
 
-    .farmix-theme .header-logo img {
-        max-height: 44px;
+    .farmix-theme .header-logo img,
+    .farmix-theme .header-logo .farmix-site-logo__img {
+        max-height: 56px;
+    }
+
+    .farmix-theme .sticky-wrapper.will-sticky .header-logo .farmix-site-logo img {
+        max-height: 56px;
+        max-width: 200px;
     }
 
     .farmix-theme .farmix-hero-actions.hero-bottom {

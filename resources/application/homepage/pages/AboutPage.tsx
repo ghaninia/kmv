@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { aboutContent } from '../data/homeData';
 import { FarmixPageHero } from '../farmix/FarmixPageHero';
 import { FarmixValuesAccordion } from '../farmix/FarmixValuesAccordion';
+import { FarmixAboutVideo } from '../farmix/FarmixAboutVideo';
 import { farmixAsset } from '../farmix/assets';
 
 const ABOUT_STAT_ICONS = [
@@ -21,8 +22,8 @@ export function AboutPage() {
             />
             <section className="about-layout3 space farmix-about-section farmix-about-page farmix-storefront-page">
                 <div className="container">
-                    <div className="row gy-5 gx-5 align-items-center">
-                        <div className="col-lg-6 order-lg-1">
+                    <div className="row gy-5 gx-5 align-items-center farmix-about-row">
+                        <div className="col-lg-7 order-lg-1">
                             <div className="about-content">
                                 <div className="farmix-about-page-body">
                                     <p className="farmix-about-page-tagline">{aboutContent.companyStory.tagline}</p>
@@ -40,13 +41,9 @@ export function AboutPage() {
                                 />
                             </div>
                         </div>
-                        <div className="col-lg-6 order-lg-2">
-                            <div className="about-img farmix-about-page-img">
-                                <img
-                                    src={farmixAsset('img/about/about-bg-2-1.jpg')}
-                                    alt="کارا ماشین وصال"
-                                    className="img1"
-                                />
+                        <div className="col-lg-5 order-lg-2">
+                            <div className="about-img farmix-about-page-img farmix-about-img">
+                                <FarmixAboutVideo />
                                 <div className="img-content">
                                     <h2 className="img-title h4">همراه مطمئن مزارع و کشاورزان سراسر کشور</h2>
                                     <Link to="/products" className="vs-btn">مشاهده محصولات</Link>

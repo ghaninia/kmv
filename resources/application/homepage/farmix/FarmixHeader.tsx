@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { SITE_LOGO, SITE_LOGO_ALT } from '../constants/siteLogo';
+import { FarmixSiteLogo } from './FarmixSiteLogo';
 import { contactInfo, navItems } from '../data/homeData';
 import { farmixAsset } from './assets';
 import { HamburgerIcon } from './HamburgerIcon';
@@ -94,9 +94,7 @@ export function FarmixHeader() {
                         <i className="fal fa-times" />
                     </button>
                     <div className="mobile-logo">
-                        <Link className="farmix-site-logo" to="/" onClick={closeMenu}>
-                            <img src={SITE_LOGO} alt={SITE_LOGO_ALT} width={200} height={48} />
-                        </Link>
+                        <FarmixSiteLogo variant="on-light" onClick={closeMenu} />
                     </div>
                     <nav className="vs-mobile-menu farmix-drawer-nav" aria-label="منوی اصلی">
                         <ul>
@@ -165,9 +163,7 @@ export function FarmixHeader() {
                             <div className="container">
                                 <div className="farmix-header-bar">
                                     <div className="header-logo">
-                                        <Link className="farmix-site-logo" to="/">
-                                            <img src={SITE_LOGO} alt={SITE_LOGO_ALT} width={200} height={48} />
-                                        </Link>
+                                        <FarmixSiteLogo variant="auto" lightBackground={headerStuck} />
                                     </div>
 
                                     <div className="farmix-header-actions">
